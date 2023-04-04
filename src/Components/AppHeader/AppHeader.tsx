@@ -6,13 +6,13 @@ import styles from './AppHeader.module.css'
 
 const AppHeader = () => {
   return (
-    <div className={styles.app_header}>
+    <header className={styles.app_header}>
       <div className={styles.content}>
         <Navigation />
         <Logo />
         <Account />
       </div>
-    </div>
+    </header>
   );
 };
 

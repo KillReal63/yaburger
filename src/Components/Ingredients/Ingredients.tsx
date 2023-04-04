@@ -18,7 +18,7 @@ const Ingredients = () => {
                 <div className={`${styles.item} mt-6 mb-10`} key={item._id}>
                   <img
                     src={item.image}
-                    alt='Ingerdient'
+                    alt={item.name}
                     className={`${styles.ingredient_image} mr-4 ml-4`}
                   />
                   <Counter
@@ -52,7 +52,7 @@ const Ingredients = () => {
                 <div className={`${styles.item} mt-6 mb-8`} key={item._id}>
                   <img
                     src={item.image}
-                    alt='Ingerdient'
+                    alt={item.name}
                     className={`${styles.ingredient_image} mr-4 ml-4`}
                   />
                   <Counter
@@ -86,7 +86,7 @@ const Ingredients = () => {
                 <div className={`${styles.item} mt-6 mb-8`} key={item._id}>
                   <img
                     src={item.image}
-                    alt='Ingerdient'
+                    alt={item.name}
                     className={`${styles.ingredient_image} mr-4 ml-4`}
                   />
                   <Counter
