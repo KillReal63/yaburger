@@ -24,6 +24,7 @@
   text-align: center;
   height: 208px;
   width: 272px;
+  cursor: pointer;
 }
 
 .price {
@@ -34,8 +35,4 @@
 
 .ingredient_name {
   height: 48px;
-}
-
-.counter{
-  z-index: 100;
 }

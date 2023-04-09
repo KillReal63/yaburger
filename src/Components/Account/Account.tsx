@@ -1,6 +1,6 @@
 import React from 'react';
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './Account.module.css'
+import styles from './Account.module.css';
 
 const Account = () => {
   return (

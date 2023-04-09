@@ -1,0 +1,25 @@
+.modal_order {
+  width: 720px;
+  max-height: 718px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal_header {
+  width: 640px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.order_info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.order_img {
+  width: 120px;
+  height: 120px;
+}

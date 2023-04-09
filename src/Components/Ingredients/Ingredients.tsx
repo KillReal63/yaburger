@@ -3,19 +3,36 @@ import {
   CurrencyIcon,
   Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { data } from '../../Utils/data.js';
 import styles from './Ingredients.module.css';
+import ModalOverlay from '../ModalOverlay/ModalOverlay';
+import IngredientDetails from '../IngredientDetails/IngredientDetails';
+import { useModalReducer } from '../Hooks/useModalReducer';
 
-const Ingredients = () => {
+export type IngredientsProps = {
+  ingredient: object[];
+};
+
+const Ingredients = ({ ingredient }: IngredientsProps) => {
+  const value = useModalReducer();
+
+  const data = Object.values(ingredient);
+
   return (
     <div className={styles.ingredients}>
       <section>
         <span className='text text_type_main-medium'>Булки</span>
         <div className={`${styles.categories} pl-4 pr-4`}>
-          {data.map((item) => {
+          {data.map((item: any) => {
             if (item.type === 'bun') {
               return (
-                <div className={`${styles.item} mt-6 mb-10`} key={item._id}>
+                <div
+                  className={`${styles.item} mt-6 mb-10`}
+                  key={item._id}
+                  onClick={() =>
+                    // @ts-ignore
+                    value.dispatch({ type: 'open', payload: { ...item } })
+                  }
+                >
                   <img
                     src={item.image}
                     alt={item.name}
@@ -46,10 +63,17 @@ const Ingredients = () => {
       <section>
         <span className='text text_type_main-medium'>Соусы</span>
         <div className={`${styles.categories} pl-4 pr-4`}>
-          {data.map((item) => {
+          {data.map((item: any) => {
             if (item.type === 'sauce') {
               return (
-                <div className={`${styles.item} mt-6 mb-8`} key={item._id}>
+                <div
+                  className={`${styles.item} mt-6 mb-8`}
+                  key={item._id}
+                  onClick={() =>
+                    // @ts-ignore
+                    value.dispatch({ type: 'open', payload: { ...item } })
+                  }
+                >
                   <img
                     src={item.image}
                     alt={item.name}
@@ -80,10 +104,17 @@ const Ingredients = () => {
       <section>
         <span className='text text_type_main-medium'>Начинки</span>
         <div className={`${styles.categories} pl-4 pr-4`}>
-          {data.map((item) => {
+          {data.map((item: any) => {
             if (item.type === 'main') {
               return (
-                <div className={`${styles.item} mt-6 mb-8`} key={item._id}>
+                <div
+                  className={`${styles.item} mt-6 mb-8`}
+                  key={item._id}
+                  onClick={() =>
+                    // @ts-ignore
+                    value.dispatch({ type: 'open', payload: { ...item } })
+                  }
+                >
                   <img
                     src={item.image}
                     alt={item.name}
@@ -111,6 +142,15 @@ const Ingredients = () => {
           })}
         </div>
       </section>
+      {value.isOpen && (
+        <ModalOverlay>
+          <IngredientDetails
+            //@ts-ignore
+            onClick={() => value.dispatch({ type: 'close' })}
+            {...value.itemProps}
+          />
+        </ModalOverlay>
+      )}
     </div>
   );
 };
