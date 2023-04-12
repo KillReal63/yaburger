@@ -1,21 +1,23 @@
+//@ts-nocheck
+
 import React from 'react';
 import {
   CurrencyIcon,
   Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Ingredients.module.css';
-import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
-import { useModalReducer } from '../Hooks/useModalReducer';
+import { useModalReducer } from '../../Hooks/useModalReducer';
+import Modal from '../Modal/Modal';
 
 export type IngredientsProps = {
-  ingredient: object[];
+  ingredients: object[];
 };
 
-const Ingredients = ({ ingredient }: IngredientsProps) => {
+const Ingredients = ({ ingredients }: IngredientsProps) => {
   const value = useModalReducer();
 
-  const data = Object.values(ingredient);
+  const data = Object.values(ingredients);
 
   return (
     <div className={styles.ingredients}>
@@ -28,10 +30,7 @@ const Ingredients = ({ ingredient }: IngredientsProps) => {
                 <div
                   className={`${styles.item} mt-6 mb-10`}
                   key={item._id}
-                  onClick={() =>
-                    // @ts-ignore
-                    value.dispatch({ type: 'open', payload: { ...item } })
-                  }
+                  // onClick={}
                 >
                   <img
                     src={item.image}
@@ -143,13 +142,9 @@ const Ingredients = ({ ingredient }: IngredientsProps) => {
         </div>
       </section>
       {value.isOpen && (
-        <ModalOverlay>
-          <IngredientDetails
-            //@ts-ignore
-            onClick={() => value.dispatch({ type: 'close' })}
-            {...value.itemProps}
-          />
-        </ModalOverlay>
+        <Modal headerInfo="Добавить ингредиент">
+          <IngredientDetails {...value.itemProps} />
+        </Modal>
       )}
     </div>
   );

@@ -4,11 +4,11 @@ import Main from '../Main/Main';
 import styles from './App.module.css';
 
 function App() {
-  const [ingredient, setIngredient] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
 
   useEffect(() => {
     const url = 'https://norma.nomoreparties.space/api/ingredients';
-    const getIngredient = async () => {
+    const getIngredients = async () => {
       try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -16,18 +16,18 @@ function App() {
         }
         const result = await response.json();
         const { success, data } = result;
-        setIngredient(data);
+        setIngredients(data);
       } catch (error) {
         console.error();
       }
     };
-    getIngredient();
+    getIngredients();
   }, []);
 
   return (
     <div className={styles.app}>
       <AppHeader />
-      <Main ingredient={ingredient} />
+      <Main ingredients={ingredients} />
     </div>
   );
 }

@@ -1,3 +1,11 @@
 .modal {
   background-color: rgba(28, 28, 33);
 }
+
+.modal_header {
+  width: 640px;
+  margin: 40px 40px 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

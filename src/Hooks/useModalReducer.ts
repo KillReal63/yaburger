@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { useEffect, useReducer } from 'react';
 
 type initReducerValueTypes = {
@@ -32,9 +33,6 @@ const openModalReducer = (
     case 'close':
       return { isOpen: false };
       break;
-    case 'Esc':
-      return { isOpen: false };
-      break;
     default:
       return { ...initValue, isOpen: false };
       break;
@@ -47,19 +45,22 @@ export const useModalReducer = () => {
     openModalReducer,
     initValue
   );
-  useEffect(() => {
-    document.addEventListener('keydown', () =>
-      //@ts-ignore
-      dispatch({ type: 'Esc' })
-    );
-    return () =>
-      document.removeEventListener('keydown', () =>
-        //@ts-ignore
-        dispatch({ type: 'Esc' })
-      );
-  });
 
-  const value = { isOpen, itemProps, dispatch };
+  const openPopup = () => {
+    const action = {
+      type: 'open',
+    };
+    dispatch(action);
+  };
+
+  const closePopup = () => {
+    const action = {
+      type: 'close',
+    };
+    dispatch(action);
+  };
+
+  const value = { isOpen, itemProps, dispatch, closePopup, openPopup };
 
   return value;
 };

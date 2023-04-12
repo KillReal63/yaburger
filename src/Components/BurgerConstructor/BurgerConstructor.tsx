@@ -1,5 +1,5 @@
 import React from 'react';
-import { useModalReducer } from '../Hooks/useModalReducer';
+import { useModalReducer } from '../../Hooks/useModalReducer';
 import {
   ConstructorElement,
   Button,
@@ -9,12 +9,12 @@ import {
 import { IngredientsProps } from '../Ingredients/Ingredients';
 import styles from './BurgerConstructor.module.css';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import ModalOverlay from '../ModalOverlay/ModalOverlay';
+import Modal from '../Modal/Modal';
 
-const BurgerConstructor = ({ ingredient }: IngredientsProps) => {
+const BurgerConstructor = ({ ingredients }: IngredientsProps) => {
   const value = useModalReducer();
 
-  const data = Object.values(ingredient);
+  const data = Object.values(ingredients);
 
   return (
     <div className={`${styles.burger_constructor} ml-10 pl-4 pr-4`}>
@@ -60,22 +60,16 @@ const BurgerConstructor = ({ ingredient }: IngredientsProps) => {
             htmlType='button'
             type='primary'
             size='large'
-            onClick={() =>
-              //@ts-ignore
-              value.dispatch({ type: 'open' })
-            }
+            onClick={value.openPopup}
           >
             Нажми на меня
           </Button>
         </div>
       </div>
       {value.isOpen && (
-        <ModalOverlay>
-          <OrderDetails
-            //@ts-ignore
-            onClick={() => value.dispatch({ type: 'close' })}
-          />
-        </ModalOverlay>
+        <Modal>
+          <OrderDetails />
+        </Modal>
       )}
     </div>
   );

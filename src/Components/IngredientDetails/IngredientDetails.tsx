@@ -1,16 +1,11 @@
 //@ts-nocheck
 
 import React from 'react';
-import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './IngredientDetails.module.css';
 
 const IngredientDetails = ({ ...itemProps }) => {
   return (
     <div className={styles.modal_ingredient}>
-      <header className={`${styles.modal_header} text text_type_main-large`}>
-        Детали игредиента
-        <CloseIcon type='primary' onClick={itemProps.onClick} />
-      </header>
       <img
         className={styles.modal_img}
         src={itemProps.image}
