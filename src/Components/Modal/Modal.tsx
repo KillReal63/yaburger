@@ -1,23 +1,28 @@
 //@ts-nocheck
+
 import React, { useEffect } from 'react';
-import style from './Modal.module.css';
-import { useModalReducer } from '../../Hooks/useModalReducer';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { createPortal } from 'react-dom';
+import style from './Modal.module.css';
 
-const modalHTML = document.getElementById('modals');
+const modal = document.getElementById('modals');
 
-const Modal = ({ children, headerInfo }: { children?: React.ReactNode }) => {
-  const { closePopup, isOpen } = useModalReducer();
-  
-  
+const Modal = ({
+  children,
+  headerInfo,
+  closePopup,
+  isOpen,
+}: {
+  children?: React.ReactNode;
+}) => {
   useEffect(() => {
-    const closeByEscape = (event: any) => {
-      if (event.keys === 'Escape') {
+    const closeByEscape = (event) => {
+      if (event.key === 'Escape') {
         closePopup();
       }
     };
+
     if (isOpen) {
       document.addEventListener('keydown', closeByEscape);
       return () => {
@@ -28,16 +33,19 @@ const Modal = ({ children, headerInfo }: { children?: React.ReactNode }) => {
 
   return createPortal(
     <>
-      {/* <ModalOverlay onClick={closePopup}/> */}
+      <ModalOverlay onClick={closePopup} />
       <div className={style.modal}>
-        <header className={`${style.modal_header} text text_type_main-large`}>
+        <header
+          className={`${style.modal_header} text text_type_main-large mt-10`}
+        >
           {headerInfo}
-          <CloseIcon type='primary' onClick={console.log('exit')} />
+
+          <CloseIcon type='primary' onClick={closePopup} />
         </header>
         <div>{children}</div>
       </div>
     </>,
-    modalHTML
+    modal
   );
 };
 

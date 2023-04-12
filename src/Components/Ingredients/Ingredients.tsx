@@ -15,7 +15,10 @@ export type IngredientsProps = {
 };
 
 const Ingredients = ({ ingredients }: IngredientsProps) => {
-  const value = useModalReducer();
+  const { isOpen, closePopup, itemProps, dispatch } = useModalReducer();
+
+  const setModalItem = (item) =>
+    dispatch({ type: 'open', payload: { ...item } });
 
   const data = Object.values(ingredients);
 
@@ -30,7 +33,7 @@ const Ingredients = ({ ingredients }: IngredientsProps) => {
                 <div
                   className={`${styles.item} mt-6 mb-10`}
                   key={item._id}
-                  // onClick={}
+                  onClick={() => setModalItem(item)}
                 >
                   <img
                     src={item.image}
@@ -68,10 +71,7 @@ const Ingredients = ({ ingredients }: IngredientsProps) => {
                 <div
                   className={`${styles.item} mt-6 mb-8`}
                   key={item._id}
-                  onClick={() =>
-                    // @ts-ignore
-                    value.dispatch({ type: 'open', payload: { ...item } })
-                  }
+                  onClick={() => setModalItem(item)}
                 >
                   <img
                     src={item.image}
@@ -109,10 +109,7 @@ const Ingredients = ({ ingredients }: IngredientsProps) => {
                 <div
                   className={`${styles.item} mt-6 mb-8`}
                   key={item._id}
-                  onClick={() =>
-                    // @ts-ignore
-                    value.dispatch({ type: 'open', payload: { ...item } })
-                  }
+                  onClick={() => setModalItem(item)}
                 >
                   <img
                     src={item.image}
@@ -141,9 +138,13 @@ const Ingredients = ({ ingredients }: IngredientsProps) => {
           })}
         </div>
       </section>
-      {value.isOpen && (
-        <Modal headerInfo="Добавить ингредиент">
-          <IngredientDetails {...value.itemProps} />
+      {isOpen && (
+        <Modal
+          headerInfo='Добавить ингредиент'
+          closePopup={closePopup}
+          isOpen={isOpen}
+        >
+          <IngredientDetails {...itemProps} />
         </Modal>
       )}
     </div>

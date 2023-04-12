@@ -1,14 +1,8 @@
 import React from 'react';
-import Modal from '../Modal/Modal';
 import style from './ModalOverlay.module.css';
 
-const ModalOverlay = () => {
-  return (
-    <>
-      <div className={style.modal_overlay} />
-      <Modal />
-    </>
-  );
+const ModalOverlay = ({ ...otherProps }) => {
+  return <div className={style.modal_overlay} {...otherProps} />;
 };
 
 export default ModalOverlay;

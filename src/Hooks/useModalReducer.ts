@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { useEffect, useReducer } from 'react';
+import { useReducer } from 'react';
 
 type initReducerValueTypes = {
   isOpen?: boolean;
@@ -35,29 +35,21 @@ const openModalReducer = (
       break;
     default:
       return { ...initValue, isOpen: false };
-      break;
   }
 };
 
 export const useModalReducer = () => {
-  // @ts-ignore
   const [{ isOpen, ...itemProps }, dispatch] = useReducer<useReducerProps>(
     openModalReducer,
     initValue
   );
 
   const openPopup = () => {
-    const action = {
-      type: 'open',
-    };
-    dispatch(action);
+    dispatch({ type: 'open' });
   };
 
   const closePopup = () => {
-    const action = {
-      type: 'close',
-    };
-    dispatch(action);
+    dispatch({ type: 'close' });
   };
 
   const value = { isOpen, itemProps, dispatch, closePopup, openPopup };
