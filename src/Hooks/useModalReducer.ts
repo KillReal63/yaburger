@@ -1,4 +1,5 @@
-import { useEffect, useReducer } from 'react';
+//@ts-nocheck
+import { useReducer } from 'react';
 
 type initReducerValueTypes = {
   isOpen?: boolean;
@@ -32,34 +33,26 @@ const openModalReducer = (
     case 'close':
       return { isOpen: false };
       break;
-    case 'Esc':
-      return { isOpen: false };
-      break;
     default:
       return { ...initValue, isOpen: false };
-      break;
   }
 };
 
 export const useModalReducer = () => {
-  // @ts-ignore
   const [{ isOpen, ...itemProps }, dispatch] = useReducer<useReducerProps>(
     openModalReducer,
     initValue
   );
-  useEffect(() => {
-    document.addEventListener('keydown', () =>
-      //@ts-ignore
-      dispatch({ type: 'Esc' })
-    );
-    return () =>
-      document.removeEventListener('keydown', () =>
-        //@ts-ignore
-        dispatch({ type: 'Esc' })
-      );
-  });
 
-  const value = { isOpen, itemProps, dispatch };
+  const openPopup = () => {
+    dispatch({ type: 'open' });
+  };
+
+  const closePopup = () => {
+    dispatch({ type: 'close' });
+  };
+
+  const value = { isOpen, itemProps, dispatch, closePopup, openPopup };
 
   return value;
 };

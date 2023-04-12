@@ -4,11 +4,11 @@ import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import styles from './Main.module.css';
 import { type IngredientsProps } from '../Ingredients/Ingredients';
 
-const Main = ({ ingredient }: IngredientsProps) => {
+const Main = ({ ingredients }: IngredientsProps) => {
   return (
     <main className={styles.main}>
-      <BurgerIngredients ingredient={ingredient} />
-      <BurgerConstructor ingredient={ingredient} />
+      <BurgerIngredients ingredients={ingredients} />
+      <BurgerConstructor ingredients={ingredients} />
     </main>
   );
 };
