@@ -1,8 +1,8 @@
 import React from 'react';
 import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './Сollector.module.css';
+import styles from './CollectorBurger.module.css';
 
-const Collector = () => {
+const CollectorBurger = () => {
   return (
     <div className={`${styles.collector} pt-4 pr-5 pb-4 pl-5`}>
       <BurgerIcon type='primary' />
@@ -11,4 +11,4 @@ const Collector = () => {
   );
 };
 
-export default Collector;
+export default CollectorBurger;

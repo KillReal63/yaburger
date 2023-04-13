@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import React from 'react';
 import { useModalReducer } from '../../Hooks/useModalReducer';
 import {
@@ -8,15 +6,14 @@ import {
   CurrencyIcon,
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IngredientsProps } from '../Ingredients/Ingredients';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import Modal from '../Modal/Modal';
 import styles from './BurgerConstructor.module.css';
 
-const BurgerConstructor = ({ ingredients }: IngredientsProps) => {
+const BurgerConstructor = (ingredients) => {
   const { isOpen, closePopup, openPopup } = useModalReducer();
 
-  const data = Object.values(ingredients);
+  const data = Object.values(ingredients.ingredients);
 
   return (
     <>
@@ -31,7 +28,7 @@ const BurgerConstructor = ({ ingredients }: IngredientsProps) => {
             extraClass='ml-6 mb-4'
           />
           <div className={styles.items}>
-            {data.map((item: any) => {
+            {data.map((item) => {
               if (item.type === 'sauce' || item.type === 'main') {
                 return (
                   <div className={`${styles.cart_item} mb-4`} key={item._id}>
@@ -43,7 +40,7 @@ const BurgerConstructor = ({ ingredients }: IngredientsProps) => {
                     />
                   </div>
                 );
-              }
+              } else return null;
             })}
           </div>
           <ConstructorElement
@@ -63,7 +60,7 @@ const BurgerConstructor = ({ ingredients }: IngredientsProps) => {
               htmlType='button'
               type='primary'
               size='large'
-              onClick={openPopup}
+              onClick={() => openPopup()}
             >
               Нажми на меня
             </Button>

@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import React, { useEffect } from 'react';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -8,14 +6,7 @@ import style from './Modal.module.css';
 
 const modal = document.getElementById('modals');
 
-const Modal = ({
-  children,
-  headerInfo,
-  closePopup,
-  isOpen,
-}: {
-  children?: React.ReactNode;
-}) => {
+const Modal = ({ children, headerInfo, closePopup, isOpen }) => {
   useEffect(() => {
     const closeByEscape = (event) => {
       if (event.key === 'Escape') {

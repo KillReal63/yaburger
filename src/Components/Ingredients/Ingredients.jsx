@@ -1,33 +1,26 @@
-//@ts-nocheck
-
 import React from 'react';
 import {
   CurrencyIcon,
   Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './Ingredients.module.css';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { useModalReducer } from '../../Hooks/useModalReducer';
 import Modal from '../Modal/Modal';
+import styles from './Ingredients.module.css';
 
-export type IngredientsProps = {
-  ingredients: object[];
-};
-
-const Ingredients = ({ ingredients }: IngredientsProps) => {
+const Ingredients = (props) => {
   const { isOpen, closePopup, itemProps, dispatch } = useModalReducer();
 
   const setModalItem = (item) =>
     dispatch({ type: 'open', payload: { ...item } });
 
-  const data = Object.values(ingredients);
-
+  const data = Object.values(props.ingredients);
   return (
     <div className={styles.ingredients}>
       <section>
         <span className='text text_type_main-medium'>Булки</span>
         <div className={`${styles.categories} pl-4 pr-4`}>
-          {data.map((item: any) => {
+          {data.map((item) => {
             if (item.type === 'bun') {
               return (
                 <div
@@ -58,14 +51,14 @@ const Ingredients = ({ ingredients }: IngredientsProps) => {
                   </span>
                 </div>
               );
-            }
+            } else return null;
           })}
         </div>
       </section>
       <section>
         <span className='text text_type_main-medium'>Соусы</span>
         <div className={`${styles.categories} pl-4 pr-4`}>
-          {data.map((item: any) => {
+          {data.map((item) => {
             if (item.type === 'sauce') {
               return (
                 <div
@@ -96,14 +89,14 @@ const Ingredients = ({ ingredients }: IngredientsProps) => {
                   </span>
                 </div>
               );
-            }
+            } else return null;
           })}
         </div>
       </section>
       <section>
         <span className='text text_type_main-medium'>Начинки</span>
         <div className={`${styles.categories} pl-4 pr-4`}>
-          {data.map((item: any) => {
+          {data.map((item) => {
             if (item.type === 'main') {
               return (
                 <div
@@ -134,7 +127,7 @@ const Ingredients = ({ ingredients }: IngredientsProps) => {
                   </span>
                 </div>
               );
-            }
+            } else return null;
           })}
         </div>
       </section>

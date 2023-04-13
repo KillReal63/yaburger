@@ -15,7 +15,7 @@ function App() {
           throw new Error('Нет ответа сети');
         }
         const result = await response.json();
-        const { success, data } = result;
+        const { data } = result;
         setIngredients(data);
       } catch (error) {
         console.error();
@@ -27,7 +27,7 @@ function App() {
   return (
     <div className={styles.app}>
       <AppHeader />
-      <Main ingredients={ingredients} />
+      <Main {...ingredients} />
     </div>
   );
 }
