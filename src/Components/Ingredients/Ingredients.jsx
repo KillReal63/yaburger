@@ -6,15 +6,16 @@ import {
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { useModalReducer } from '../../Hooks/useModalReducer';
 import Modal from '../Modal/Modal';
+import PropTypes from 'prop-types';
 import styles from './Ingredients.module.css';
 
-const Ingredients = (props) => {
+const Ingredients = ({ ingredients }) => {
   const { isOpen, closePopup, itemProps, dispatch } = useModalReducer();
 
   const setModalItem = (item) =>
     dispatch({ type: 'open', payload: { ...item } });
 
-  const data = Object.values(props.ingredients);
+  const data = Object.values(ingredients.ingredients);
   return (
     <div className={styles.ingredients}>
       <section>
@@ -142,6 +143,10 @@ const Ingredients = (props) => {
       )}
     </div>
   );
+};
+
+Ingredients.propTypes = {
+  ingredients: PropTypes.object,
 };
 
 export default Ingredients;

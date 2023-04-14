@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './IngredientDetails.module.css';
 
 const IngredientDetails = ({ ...itemProps }) => {
@@ -41,6 +42,10 @@ const IngredientDetails = ({ ...itemProps }) => {
       </div>
     </div>
   );
+};
+
+IngredientDetails.propTypes = {
+  itemProps: PropTypes.array,
 };
 
 export default IngredientDetails;

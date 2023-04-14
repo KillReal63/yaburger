@@ -27,7 +27,7 @@ function App() {
   return (
     <div className={styles.app}>
       <AppHeader />
-      <Main {...ingredients} />
+      <Main ingredients={ingredients} />
     </div>
   );
 }

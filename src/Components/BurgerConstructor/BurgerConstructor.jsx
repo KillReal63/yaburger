@@ -8,9 +8,10 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import Modal from '../Modal/Modal';
+import PropTypes from 'prop-types';
 import styles from './BurgerConstructor.module.css';
 
-const BurgerConstructor = (ingredients) => {
+const BurgerConstructor = ({ ingredients }) => {
   const { isOpen, closePopup, openPopup } = useModalReducer();
 
   const data = Object.values(ingredients.ingredients);
@@ -74,6 +75,10 @@ const BurgerConstructor = (ingredients) => {
       )}
     </>
   );
+};
+
+BurgerConstructor.propTypes = {
+  ingredients: PropTypes.object,
 };
 
 export default BurgerConstructor;

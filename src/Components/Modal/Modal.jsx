@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { createPortal } from 'react-dom';
+import PropTypes from 'prop-types';
+
 import style from './Modal.module.css';
 
 const modal = document.getElementById('modals');
@@ -30,7 +32,6 @@ const Modal = ({ children, headerInfo, closePopup, isOpen }) => {
           className={`${style.modal_header} text text_type_main-large mt-10`}
         >
           {headerInfo}
-
           <CloseIcon type='primary' onClick={closePopup} />
         </header>
         <div>{children}</div>
@@ -38,6 +39,13 @@ const Modal = ({ children, headerInfo, closePopup, isOpen }) => {
     </>,
     modal
   );
+};
+
+Modal.propTypes = {
+  children: PropTypes.element,
+  headerInfo: PropTypes.string,
+  closePopup: PropTypes.func,
+  isOpen: PropTypes.bool,
 };
 
 export default Modal;
