@@ -15,13 +15,14 @@ const Ingredients = ({ ingredients }) => {
   const setModalItem = (item) =>
     dispatch({ type: 'open', payload: { ...item } });
 
-  const data = Object.values(ingredients.ingredients);
+  if (ingredients.length === 0) return <div>...Loading</div>;
+
   return (
     <div className={styles.ingredients}>
       <section>
         <span className='text text_type_main-medium'>Булки</span>
         <div className={`${styles.categories} pl-4 pr-4`}>
-          {data.map((item) => {
+          {ingredients.map((item) => {
             if (item.type === 'bun') {
               return (
                 <div
@@ -59,7 +60,7 @@ const Ingredients = ({ ingredients }) => {
       <section>
         <span className='text text_type_main-medium'>Соусы</span>
         <div className={`${styles.categories} pl-4 pr-4`}>
-          {data.map((item) => {
+          {ingredients.map((item) => {
             if (item.type === 'sauce') {
               return (
                 <div
@@ -97,7 +98,7 @@ const Ingredients = ({ ingredients }) => {
       <section>
         <span className='text text_type_main-medium'>Начинки</span>
         <div className={`${styles.categories} pl-4 pr-4`}>
-          {data.map((item) => {
+          {ingredients.map((item) => {
             if (item.type === 'main') {
               return (
                 <div
@@ -146,7 +147,7 @@ const Ingredients = ({ ingredients }) => {
 };
 
 Ingredients.propTypes = {
-  ingredients: PropTypes.object,
+  ingredients: PropTypes.array.isRequired,
 };
 
 export default Ingredients;

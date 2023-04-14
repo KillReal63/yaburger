@@ -42,7 +42,7 @@ const Modal = ({ children, headerInfo, closePopup, isOpen }) => {
 };
 
 Modal.propTypes = {
-  children: PropTypes.element,
+  children: PropTypes.node,
   headerInfo: PropTypes.string,
   closePopup: PropTypes.func,
   isOpen: PropTypes.bool,

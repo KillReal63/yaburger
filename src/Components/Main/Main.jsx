@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import styles from './Main.module.css';
 
-const Main = (ingredients) => {
+const Main = ({ ingredients }) => {
   return (
     <main className={styles.main}>
       <BurgerIngredients ingredients={ingredients} />
@@ -15,8 +15,7 @@ const Main = (ingredients) => {
 };
 
 Main.propTypes = {
-  ingredients: PropTypes.array
-}; 
-
+  ingredients: PropTypes.array.isRequired,
+};
 
 export default Main;

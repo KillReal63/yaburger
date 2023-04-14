@@ -14,7 +14,7 @@ import styles from './BurgerConstructor.module.css';
 const BurgerConstructor = ({ ingredients }) => {
   const { isOpen, closePopup, openPopup } = useModalReducer();
 
-  const data = Object.values(ingredients.ingredients);
+  if (ingredients.length === 0) return <div>...Loading</div>;
 
   return (
     <>
@@ -29,7 +29,7 @@ const BurgerConstructor = ({ ingredients }) => {
             extraClass='ml-6 mb-4'
           />
           <div className={styles.items}>
-            {data.map((item) => {
+            {ingredients.map((item) => {
               if (item.type === 'sauce' || item.type === 'main') {
                 return (
                   <div className={`${styles.cart_item} mb-4`} key={item._id}>
@@ -78,7 +78,7 @@ const BurgerConstructor = ({ ingredients }) => {
 };
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.object,
+  ingredients: PropTypes.array.isRequired,
 };
 
 export default BurgerConstructor;
