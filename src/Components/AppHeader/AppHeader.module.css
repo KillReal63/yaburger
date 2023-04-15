@@ -1,0 +1,14 @@
+.app_header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 88px;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+}

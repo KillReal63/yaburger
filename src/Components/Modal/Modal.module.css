@@ -1,0 +1,19 @@
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(28, 28, 33);
+}
+
+.modal_header {
+  width: 640px;
+  margin: 40px 40px 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal_header > svg {
+  margin-left: auto;
+}

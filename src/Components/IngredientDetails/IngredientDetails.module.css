@@ -1,0 +1,23 @@
+.modal_ingredient {
+  width: 720px;
+  height: 539px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.modal_img {
+  width: 480px;
+  height: 240px;
+}
+
+.modal_about {
+  display: flex;
+}
+
+.modal_info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

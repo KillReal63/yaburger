@@ -11,6 +11,8 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@ya.praktikum/react-developer-burger-ui-components": "^1.14.0",
+    "core-js": "^3.29.1",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^2.1.3",
