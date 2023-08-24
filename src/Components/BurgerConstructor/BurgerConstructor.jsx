@@ -1,84 +1,112 @@
 import React from 'react';
-import { useModalReducer } from '../../Hooks/useModalReducer';
 import {
   ConstructorElement,
   Button,
   CurrencyIcon,
-  DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDrop } from 'react-dnd';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import Modal from '../Modal/Modal';
-import PropTypes from 'prop-types';
+import { addIngredient, toggleBun } from '../../Services/Slices/cart';
+import BurgerConstructorElement from '../BurgerConstructorElement/BurgerConstructorElement';
+import { increment } from '../../Services/Slices/counter';
+import { open } from '../../Services/Slices/order';
+import { useSelector, useDispatch } from 'react-redux';
 import styles from './BurgerConstructor.module.css';
 
-const BurgerConstructor = ({ ingredients }) => {
-  const { isOpen, closePopup, openPopup } = useModalReducer();
+const BurgerConstructor = () => {
+  const dispatch = useDispatch();
 
-  if (ingredients.length === 0) return <div>...Loading</div>;
+  const { totalPrice, bun, isOpen, ingredients } = useSelector((store) => ({
+    totalPrice: store.cart.ingredients.reduce(
+      (acc, item) => acc + item.price,
+      0
+    ),
+    isOpen: store.order.isOpen,
+    bun: store.cart.bun,
+    ingredients: store.cart.ingredients,
+  }));
+
+  let randomNumber = Math.floor(Math.random() * 900000) + 100000;
+
+  const addItem = (item) => {
+    if (item.type !== 'bun') {
+      dispatch(addIngredient(item));
+      dispatch(increment(item.id));
+    }
+  };
+
+  const addBun = (item) => {
+    if (item.type === 'bun') {
+      dispatch(toggleBun(item));
+    }
+  };
+
+  const [, drop] = useDrop(() => ({
+    accept: 'box',
+    drop: (item) => addItem(item),
+  }));
+
+  const [, dropBun] = useDrop(() => ({
+    accept: 'box',
+    drop: (item) => addBun(item),
+  }));
 
   return (
     <>
-      <div className={`${styles.burger_constructor} ml-10 pl-4 pr-4`}>
-        <div className='mt-25'>
-          <ConstructorElement
-            type='top'
-            isLocked={true}
-            text='Краторная булка N-200i (верх)'
-            price={1255}
-            thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
-            extraClass='ml-6 mb-4'
-          />
-          <div className={styles.items}>
-            {ingredients.map((item) => {
-              if (item.type === 'sauce' || item.type === 'main') {
-                return (
-                  <div className={`${styles.cart_item} mb-4`} key={item._id}>
-                    <DragIcon type='primary' />
-                    <ConstructorElement
-                      text={item.name}
-                      price={item.price}
-                      thumbnail={item.image}
-                    />
-                  </div>
-                );
-              } else return null;
-            })}
-          </div>
-          <ConstructorElement
-            type='bottom'
-            isLocked={true}
-            text='Краторная булка N-200i (низ)'
-            price={1255}
-            thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
-            extraClass='ml-6 mt-4'
-          />
-          <div className={`${styles.cart_controll} mt-10`}>
-            <div className={`${styles.cart_price} mr-10`}>
-              <div className='text text_type_digits-medium mr-2'>999</div>
-              <CurrencyIcon type='primary' />
+      <div
+        ref={dropBun}
+        className={`${styles.burger_constructor} ml-10 mt-20 pl-4 pr-4`}
+      >
+        <ConstructorElement
+          type='top'
+          isLocked={true}
+          text={bun.name}
+          price={bun.price}
+          thumbnail={bun.image}
+          extraClass={`${styles.bun} ml-6 mb-4`}
+        />
+        <div ref={drop} className={styles.items}>
+          {ingredients.map((item, index) => (
+            <BurgerConstructorElement
+              ingredient={item}
+              index={index}
+              key={item.unID}
+            />
+          ))}
+        </div>
+        <ConstructorElement
+          type='bottom'
+          isLocked={true}
+          text={bun.name}
+          price={bun.price}
+          thumbnail={bun.image}
+          extraClass={`${styles.bun} ml-6 mt-4`}
+        />
+        <div className={`${styles.cart_controll} mt-10`}>
+          <div className={`${styles.cart_price} mr-10`}>
+            <div className='text text_type_digits-medium mr-2'>
+              {totalPrice || bun.price ? totalPrice + bun.price * 2 : 0}
             </div>
-            <Button
-              htmlType='button'
-              type='primary'
-              size='large'
-              onClick={() => openPopup()}
-            >
-              Нажми на меня
-            </Button>
+            <CurrencyIcon type='primary' />
           </div>
+          <Button
+            htmlType='button'
+            type='primary'
+            size='large'
+            onClick={() => dispatch(open())}
+          >
+            Нажми на меня
+          </Button>
         </div>
       </div>
       {isOpen && (
-        <Modal closePopup={closePopup} isOpen={isOpen}>
-          <OrderDetails />
+        <Modal>
+          <OrderDetails randomNumber={randomNumber} />
         </Modal>
       )}
     </>
   );
-};
-
-BurgerConstructor.propTypes = {
-  ingredients: PropTypes.array.isRequired,
 };
 
 export default BurgerConstructor;
