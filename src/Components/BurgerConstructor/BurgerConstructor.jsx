@@ -12,6 +12,7 @@ import BurgerConstructorElement from '../BurgerConstructorElement/BurgerConstruc
 import { increment } from '../../Services/Slices/counter';
 import { open } from '../../Services/Slices/order';
 import { useSelector, useDispatch } from 'react-redux';
+import { createOrder } from '../../Services/Slices/order';
 import styles from './BurgerConstructor.module.css';
 
 const BurgerConstructor = () => {
@@ -28,6 +29,12 @@ const BurgerConstructor = () => {
   }));
 
   let randomNumber = Math.floor(Math.random() * 900000) + 100000;
+
+  const getOrder = () => {
+    const items = { bun, ingredients };
+    dispatch(createOrder(items));
+    dispatch(open());
+  };
 
   const addItem = (item) => {
     if (item.type !== 'bun') {
@@ -94,7 +101,7 @@ const BurgerConstructor = () => {
             htmlType='button'
             type='primary'
             size='large'
-            onClick={() => dispatch(open())}
+            onClick={() => getOrder()}
           >
             Нажми на меня
           </Button>

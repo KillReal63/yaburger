@@ -1,20 +1,27 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-export const createOrder = createAsyncThunk('order/create-order', async () => {
-  try {
-    const response = await fetch('/orders', {
-      method: 'POST',
-      body: JSON.stringify(),
-    });
-    if (!response.ok) {
-      throw new Error('Нет ответа сети');
+export const createOrder = createAsyncThunk(
+  'order/create-order',
+  async (items) => {
+    try {
+      const response = await fetch('/order', {
+        method: 'POST',
+        body: JSON.stringify(items),
+        headers: {
+          'Content-type': 'applicaton/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Нет ответа сети');
+      }
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error();
+      throw error;
     }
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error();
   }
-});
+);
 
 const orderSlice = createSlice({
   name: 'order',
@@ -23,6 +30,7 @@ const orderSlice = createSlice({
     loading: false,
     error: null,
     orderNumber: null,
+    order: [],
   },
   reducers: {
     open(state, action) {
@@ -40,8 +48,8 @@ const orderSlice = createSlice({
       })
       .addCase(createOrder.fulfilled, (state, { payload }) => {
         state.loading = false;
-        state.data = payload.data;
-        state.orderNumber = payload;
+        state.order = payload;
+        state.orderNumber = payload.orderNumber
       })
       .addCase(createOrder.rejected, (state, action) => {
         state.loading = false;
