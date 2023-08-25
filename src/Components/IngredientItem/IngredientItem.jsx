@@ -71,7 +71,7 @@ const IngredientItem = ({ onClick, _id, image, name, price, type }) => {
       />
       {Object.keys(bun).length > 1 ? (
         <Counter
-          count={bun.id === _id ? 2 : 0}
+          count={bun.id === _id ? 2 : <></>}
           size='default'
           extraClass={styles.counter}
         />

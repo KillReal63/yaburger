@@ -18,7 +18,12 @@ export const createOrder = createAsyncThunk('order/create-order', async () => {
 
 const orderSlice = createSlice({
   name: 'order',
-  initialState: { isOpen: false, loading: false, error: null, data: [] },
+  initialState: {
+    isOpen: false,
+    loading: false,
+    error: null,
+    orderNumber: null,
+  },
   reducers: {
     open(state, action) {
       state.isOpen = true;
