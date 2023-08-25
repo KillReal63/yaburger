@@ -7,12 +7,6 @@ import styles from './BurgerIngredients.module.css';
 const BurgerIngredients = () => {
   const [activeTab, setActiveTab] = useState('buns');
 
-  const setTab = (tab) => {
-    setActiveTab(tab);
-    const element = document.getElementById(tab);
-    if (element) element.scrollIntoView({ behavior: "smooth" });
-  };
-
   const [bunsRef, inViewBuns] = useInView({
     threshold: 0,
   });
