@@ -1,20 +1,21 @@
 import React, { useEffect } from 'react';
-import ModalOverlay from '../ModalOverlay/ModalOverlay';
+import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { createPortal } from 'react-dom';
-import PropTypes from 'prop-types';
 import { close } from '../../Services/Slices/currentIngredient';
 import { close as closeOrder } from '../../Services/Slices/order';
-import style from './Modal.module.css';
 import { useDispatch, useSelector } from 'react-redux';
+import ModalOverlay from '../ModalOverlay/ModalOverlay';
+import style from './Modal.module.css';
 
 const modal = document.getElementById('modals');
 
+const getIsOpen = (store) => store.currentIngredient.isOpen;
+const getOpen = (store) => store.order.isOpen;
+
 const Modal = ({ children, headerInfo }) => {
-  const { isOpen, open } = useSelector((store) => ({
-    isOpen: store.currentIngredient.isOpen,
-    open: store.order.isOpen,
-  }));
+  const isOpen = useSelector(getIsOpen);
+  const open = useSelector(getOpen);
 
   const dispatch = useDispatch();
 
@@ -40,7 +41,7 @@ const Modal = ({ children, headerInfo }) => {
 
   return createPortal(
     <>
-      <ModalOverlay onClick={() => dispatch(close())} />
+      <ModalOverlay onClick={() => allClose()} />
       <div className={style.modal}>
         <header
           className={`${style.modal_header} text text_type_main-large mt-10`}
@@ -58,8 +59,6 @@ const Modal = ({ children, headerInfo }) => {
 Modal.propTypes = {
   children: PropTypes.node,
   headerInfo: PropTypes.string,
-  closePopup: PropTypes.func,
-  isOpen: PropTypes.bool,
 };
 
 export default Modal;

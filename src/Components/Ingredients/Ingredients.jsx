@@ -1,11 +1,11 @@
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { useDispatch, useSelector } from 'react-redux';
+import { open } from '../../Services/Slices/currentIngredient';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
+import IngredientItem from '../IngredientItem/IngredientItem';
 import Modal from '../Modal/Modal';
 import styles from './Ingredients.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import IngredientItem from '../IngredientItem/IngredientItem';
-import { v4 as uuidv4 } from 'uuid';
-import { open } from '../../Services/Slices/currentIngredient';
 
 const categories = [
   { name: 'Булки', slug: 'bun' },

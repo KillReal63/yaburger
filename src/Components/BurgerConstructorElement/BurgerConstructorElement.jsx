@@ -1,11 +1,10 @@
-import React from 'react';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import {
   ConstructorElement,
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
 import {
   deleteIngredient,
   constructorReorder,
@@ -44,7 +43,7 @@ const BurgerConstructorElement = ({ ingredient, index }) => {
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
-      dispatch(constructorReorder({to: dragIndex, from: hoverIndex}));
+      dispatch(constructorReorder({ to: dragIndex, from: hoverIndex }));
       item.index = hoverIndex;
     },
   });

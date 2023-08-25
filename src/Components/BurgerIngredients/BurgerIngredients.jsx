@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Ingredients from '../Ingredients/Ingredients';
 import Tabs from '../Tabs/Tabs';
 import { useInView } from 'react-intersection-observer';
-
 import styles from './BurgerIngredients.module.css';
 
 const BurgerIngredients = () => {
@@ -21,9 +20,6 @@ const BurgerIngredients = () => {
   });
 
   const refs = { bunsRef, saucesRef, mainsRef };
-
-
- 
 
   useEffect(() => {
     if (inViewBuns) {
