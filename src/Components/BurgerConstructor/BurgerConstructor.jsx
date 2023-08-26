@@ -18,21 +18,22 @@ import styles from './BurgerConstructor.module.css';
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
 
-  const { totalPrice, bun, isOpen, ingredients } = useSelector((store) => ({
-    totalPrice: store.cart.ingredients.reduce(
-      (acc, item) => acc + item.price,
-      0
-    ),
-    isOpen: store.order.isOpen,
-    bun: store.cart.bun,
-    ingredients: store.cart.ingredients,
-  }));
-
-  let randomNumber = Math.floor(Math.random() * 900000) + 100000;
+  const { totalPrice, bun, isOpen, ingredients, ingId, orderNumber } =
+    useSelector((store) => ({
+      totalPrice: store.cart.ingredients.reduce(
+        (acc, item) => acc + item.price,
+        0
+      ),
+      isOpen: store.order.isOpen,
+      bun: store.cart.bun,
+      ingredients: store.cart.ingredients,
+      ingId: store.cart.ingredients.map((item) => item.id),
+      orderNumber: store.cart.orderNumber,
+    }));
 
   const getOrder = () => {
-    const items = { bun, ingredients };
-    dispatch(createOrder(items));
+    const arr = [].concat(bun.id, ingId);
+    dispatch(createOrder(arr));
     dispatch(open());
   };
 
@@ -109,7 +110,7 @@ const BurgerConstructor = () => {
       </div>
       {isOpen && (
         <Modal>
-          <OrderDetails randomNumber={randomNumber} />
+          <OrderDetails orderNumber={orderNumber} />
         </Modal>
       )}
     </>
