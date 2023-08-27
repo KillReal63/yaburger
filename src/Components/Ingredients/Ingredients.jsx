@@ -1,153 +1,86 @@
 import React from 'react';
-import {
-  CurrencyIcon,
-  Counter,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { v4 as uuidv4 } from 'uuid';
+import { useDispatch, useSelector } from 'react-redux';
+import { open } from '../../Services/Slices/currentIngredient';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
-import { useModalReducer } from '../../Hooks/useModalReducer';
+import IngredientItem from '../IngredientItem/IngredientItem';
 import Modal from '../Modal/Modal';
-import PropTypes from 'prop-types';
 import styles from './Ingredients.module.css';
 
-const Ingredients = ({ ingredients }) => {
-  const { isOpen, closePopup, itemProps, dispatch } = useModalReducer();
+const categories = [
+  { name: 'Булки', slug: 'bun' },
+  { name: 'Соусы', slug: 'sauce' },
+  { name: 'Начинки', slug: 'main' },
+];
 
-  const setModalItem = (item) =>
-    dispatch({ type: 'open', payload: { ...item } });
+const Ingredients = ({ refs }) => {
+  const { data, loading, isOpen } = useSelector((store) => ({
+    data: store.ingredients.data,
+    isOpen: store.currentIngredient.isOpen,
+  }));
+  const dispatch = useDispatch();
 
-  if (ingredients.length === 0) return <div>...Loading</div>;
+  const setModalItem = (item) => dispatch(open(item));
+
+  if (loading || data.length === 0) return <div>...Loading</div>;
 
   return (
     <div className={styles.ingredients}>
-      <section>
-        <span className='text text_type_main-medium'>Булки</span>
-        <div className={`${styles.categories} pl-4 pr-4`}>
-          {ingredients.map((item) => {
-            if (item.type === 'bun') {
-              return (
-                <div
-                  className={`${styles.item} mt-6 mb-10`}
-                  key={item._id}
-                  onClick={() => setModalItem(item)}
-                >
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className={`${styles.ingredient_image} mr-4 ml-4`}
+      {categories.map(({ name, slug }) =>
+        slug === 'bun' ? (
+          <section key={name} ref={refs.bunsRef}>
+            <span className='text text_type_main-medium'>{name}</span>
+            <div className={`${styles.categories} pl-4 pr-4`}>
+              {data
+                .filter((item) => item.type === slug)
+                .map((item) => (
+                  <IngredientItem
+                    key={uuidv4()}
+                    onClick={() => setModalItem(item)}
+                    {...item}
                   />
-                  <Counter
-                    count={1}
-                    size='default'
-                    extraClass={styles.counter}
+                ))}
+            </div>
+          </section>
+        ) : slug === 'sauce' ? (
+          <section key={name} ref={refs.saucesRef}>
+            <span className='text text_type_main-medium'>{name}</span>
+            <div className={`${styles.categories} pl-4 pr-4`}>
+              {data
+                .filter((item) => item.type === slug)
+                .map((item) => (
+                  <IngredientItem
+                    key={uuidv4()}
+                    onClick={() => setModalItem(item)}
+                    {...item}
                   />
-                  <div
-                    className={`${styles.price} text text_type_digits-default mt-1 mb-1`}
-                  >
-                    <span className='mr-2'>{item.price}</span>
-                    <CurrencyIcon type='primary' />
-                  </div>
-                  <span
-                    className={`${styles.ingredient_name} text text_type_main-default`}
-                  >
-                    {item.name}
-                  </span>
-                </div>
-              );
-            } else return null;
-          })}
-        </div>
-      </section>
-      <section>
-        <span className='text text_type_main-medium'>Соусы</span>
-        <div className={`${styles.categories} pl-4 pr-4`}>
-          {ingredients.map((item) => {
-            if (item.type === 'sauce') {
-              return (
-                <div
-                  className={`${styles.item} mt-6 mb-8`}
-                  key={item._id}
-                  onClick={() => setModalItem(item)}
-                >
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className={`${styles.ingredient_image} mr-4 ml-4`}
+                ))}
+            </div>
+          </section>
+        ) : (
+          <section key={name} ref={refs.mainsRef}>
+            <span className='text text_type_main-medium'>{name}</span>
+            <div className={`${styles.categories} pl-4 pr-4`}>
+              {data
+                .filter((item) => item.type === slug)
+                .map((item) => (
+                  <IngredientItem
+                    key={uuidv4()}
+                    onClick={() => setModalItem(item)}
+                    {...item}
                   />
-                  <Counter
-                    count={1}
-                    size='default'
-                    extraClass={styles.counter}
-                  />
-                  <div
-                    className={`${styles.price} text text_type_digits-default mt-1 mb-1`}
-                  >
-                    <span className='mr-2'>{item.price}</span>
-                    <CurrencyIcon type='primary' />
-                  </div>
-                  <span
-                    className={`${styles.ingredient_name} text text_type_main-default`}
-                  >
-                    {item.name}
-                  </span>
-                </div>
-              );
-            } else return null;
-          })}
-        </div>
-      </section>
-      <section>
-        <span className='text text_type_main-medium'>Начинки</span>
-        <div className={`${styles.categories} pl-4 pr-4`}>
-          {ingredients.map((item) => {
-            if (item.type === 'main') {
-              return (
-                <div
-                  className={`${styles.item} mt-6 mb-8`}
-                  key={item._id}
-                  onClick={() => setModalItem(item)}
-                >
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className={`${styles.ingredient_image} mr-4 ml-4`}
-                  />
-                  <Counter
-                    count={1}
-                    size='default'
-                    extraClass={styles.counter}
-                  />
-                  <div
-                    className={`${styles.price} text text_type_digits-default mt-1 mb-1`}
-                  >
-                    <span className='mr-2'>{item.price}</span>
-                    <CurrencyIcon type='primary' />
-                  </div>
-                  <span
-                    className={`${styles.ingredient_name} text text_type_main-default`}
-                  >
-                    {item.name}
-                  </span>
-                </div>
-              );
-            } else return null;
-          })}
-        </div>
-      </section>
+                ))}
+            </div>
+          </section>
+        )
+      )}
       {isOpen && (
-        <Modal
-          headerInfo='Добавить ингредиент'
-          closePopup={closePopup}
-          isOpen={isOpen}
-        >
-          <IngredientDetails {...itemProps} />
+        <Modal headerInfo='Добавить ингредиент'>
+          <IngredientDetails />
         </Modal>
       )}
     </div>
   );
-};
-
-Ingredients.propTypes = {
-  ingredients: PropTypes.array.isRequired,
 };
 
 export default Ingredients;
