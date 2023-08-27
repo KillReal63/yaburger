@@ -1,15 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
+const url = 'https://norma.nomoreparties.space/api/orders';
+
 export const createOrder = createAsyncThunk(
   'order/create-order',
-  async (items) => {
+  async (data) => {
     try {
-      const response = await fetch('/order', {
+      const response = await fetch(url, {
         method: 'POST',
-        body: JSON.stringify(items),
         headers: {
-          'Content-type': 'applicaton/json',
+          'Content-Type': 'application/json;charset=utf-8',
         },
+        body: JSON.stringify({
+          ingredients: data,
+        }),
       });
       if (!response.ok) {
         throw new Error('Нет ответа сети');
@@ -49,7 +53,7 @@ const orderSlice = createSlice({
       .addCase(createOrder.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.order = payload;
-        state.orderNumber = payload.orderNumber;
+        state.orderNumber = payload.order.number;
       })
       .addCase(createOrder.rejected, (state, action) => {
         state.loading = false;

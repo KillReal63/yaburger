@@ -18,8 +18,8 @@ import styles from './BurgerConstructor.module.css';
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
 
-  const { totalPrice, bun, isOpen, ingredients, ingId, orderNumber } =
-    useSelector((store) => ({
+  const { totalPrice, bun, isOpen, ingredients, ingId } = useSelector(
+    (store) => ({
       totalPrice: store.cart.ingredients.reduce(
         (acc, item) => acc + item.price,
         0
@@ -28,8 +28,10 @@ const BurgerConstructor = () => {
       bun: store.cart.bun,
       ingredients: store.cart.ingredients,
       ingId: store.cart.ingredients.map((item) => item.id),
-      orderNumber: store.cart.orderNumber,
-    }));
+    })
+  );
+
+  console.log(bun);
 
   const getOrder = () => {
     const arr = [].concat(bun.id, ingId);
@@ -98,19 +100,30 @@ const BurgerConstructor = () => {
             </div>
             <CurrencyIcon type='primary' />
           </div>
-          <Button
-            htmlType='button'
-            type='primary'
-            size='large'
-            onClick={() => getOrder()}
-          >
-            Нажми на меня
-          </Button>
+          {Object.keys(bun).length > 1 ? (
+            <Button
+              htmlType='button'
+              type='primary'
+              size='large'
+              onClick={() => getOrder()}
+            >
+              Нажми на меня
+            </Button>
+          ) : (
+            <Button
+              htmlType='button'
+              type='primary'
+              size='large'
+              disabled
+            >
+              Нажми на меня
+            </Button>
+          )}
         </div>
       </div>
       {isOpen && (
         <Modal>
-          <OrderDetails orderNumber={orderNumber} />
+          <OrderDetails />
         </Modal>
       )}
     </>

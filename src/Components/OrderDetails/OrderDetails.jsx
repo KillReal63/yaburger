@@ -1,8 +1,11 @@
 import React from 'react';
 import styles from './OrderDetails.module.css';
 import Done from '../../Images/done.jpg';
+import { useSelector } from 'react-redux';
 
-const OrderDetails = ({ orderNumber }) => {
+const OrderDetails = () => {
+  const orderNumber = useSelector((store) => store.order.orderNumber);
+
   return (
     <div className={styles.modal_order}>
       <div className={styles.order_info}>
