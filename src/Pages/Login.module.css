@@ -1,0 +1,21 @@
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-position-x: 25vw;
+  background-repeat: no-repeat;
+}
+
+.form {
+  display: flex;
+  width: 240px;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 15vh;
+}
+
+.heading {
+  font-size: 40px;
+  color: white;
+}

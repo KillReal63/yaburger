@@ -1,9 +1,18 @@
 import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AppHeader from '../AppHeader/AppHeader';
 import Main from '../Main/Main';
-import styles from './App.module.css';
 import { fetchIngredients } from '../../Services/Slices/ingredients';
-import { useDispatch } from 'react-redux';
+import {
+  ForgotPasswordPage,
+  LoginPage,
+  IngredientsPage,
+  RegisterPage,
+  ResetPasswordPage,
+  UserPage,
+} from '../../Pages/index';
+import styles from './App.module.css';
 
 const url = 'https://norma.nomoreparties.space/api/ingredients';
 
@@ -15,10 +24,29 @@ function App() {
   }, []);
 
   return (
-    <div className={styles.app}>
-      <AppHeader />
-      <Main />
-    </div>
+    <>
+      <Router>
+        <Routes>
+          <Route
+            path='/'
+            element={
+              <div className={styles.app}>
+                <AppHeader />
+                <Main />
+              </div>
+            }
+          />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/register' element={<RegisterPage />} />
+          <Route path='/forgot-password' element={<ForgotPasswordPage />} />
+          <Route path='/reset-password' element={<ResetPasswordPage />} />
+          <Route path='/profile' element={<UserPage />}>
+            {/* {!loggedIn ? <Navigate to='/log-in' /> : <UserProfile />} */}
+          </Route>
+          <Route path='/ingredients/:id' element={<IngredientsPage />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
 
