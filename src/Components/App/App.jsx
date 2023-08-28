@@ -25,13 +25,13 @@ function App() {
 
   return (
     <>
+      <AppHeader />
       <Router>
         <Routes>
           <Route
             path='/'
             element={
               <div className={styles.app}>
-                <AppHeader />
                 <Main />
               </div>
             }
