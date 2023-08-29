@@ -7,7 +7,7 @@ import { fetchIngredients } from '../../Services/Slices/ingredients';
 import {
   ForgotPasswordPage,
   LoginPage,
-  IngredientsPage,
+  IngredientPage,
   RegisterPage,
   ResetPasswordPage,
   UserPage,
@@ -43,7 +43,7 @@ function App() {
           <Route path='/profile' element={<UserPage />}>
             {/* {!loggedIn ? <Navigate to='/log-in' /> : <UserProfile />} */}
           </Route>
-          <Route path='/ingredients/:id' element={<IngredientsPage />} />
+          <Route path='/ingredients/:id' element={<IngredientPage />} />
         </Routes>
       </Router>
     </>

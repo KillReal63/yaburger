@@ -1,6 +1,6 @@
 import { ForgotPasswordPage } from './ForgotPassword';
 import { LoginPage } from './Login';
-import { IngredientsPage } from './Ingredients';
+import { IngredientPage } from './IngredientInfo';
 import { RegisterPage } from './Register';
 import { ResetPasswordPage } from './ResetPassword';
 import { UserPage } from './User'
@@ -8,7 +8,7 @@ import { UserPage } from './User'
 export {
   ForgotPasswordPage,
   LoginPage,
-  IngredientsPage,
+  IngredientPage,
   RegisterPage,
   ResetPasswordPage,
   UserPage

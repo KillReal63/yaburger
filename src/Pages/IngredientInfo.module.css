@@ -1,0 +1,30 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal_ingredient {
+  width: 640px;
+  height: 575px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal_img {
+  width: 480px;
+  height: 240px;
+}
+
+.modal_about {
+  display: flex;
+}
+
+.modal_info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
