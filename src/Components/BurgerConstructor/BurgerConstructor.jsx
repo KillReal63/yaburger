@@ -31,8 +31,6 @@ const BurgerConstructor = () => {
     })
   );
 
-  console.log(bun);
-
   const getOrder = () => {
     const arr = [].concat(bun.id, ingId);
     dispatch(createOrder(arr));
@@ -110,12 +108,7 @@ const BurgerConstructor = () => {
               Нажми на меня
             </Button>
           ) : (
-            <Button
-              htmlType='button'
-              type='primary'
-              size='large'
-              disabled
-            >
+            <Button htmlType='button' type='primary' size='large' disabled>
               Нажми на меня
             </Button>
           )}
