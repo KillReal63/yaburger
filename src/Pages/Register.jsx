@@ -1,40 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Input,
   EmailInput,
   PasswordInput,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { registerUser } from '../Services/Slices/user';
+import { useDispatch } from 'react-redux';
 import styles from './Register.module.css';
 
 export const RegisterPage = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const onSubmit = () => {
+    dispatch(registerUser({ email, password, name }));
+    navigate('/login')
+  };
+
   return (
     <div className={styles.wrapper}>
       <h1>Регистрация</h1>
       <Input
         type={'text'}
         placeholder={'Имя'}
-        //onChange={e => setValue(e.target.value)}
-        //value={value}
-        //ref={inputRef}
+        onChange={(e) => setName(e.target.value)}
+        value={name}
         size={'default'}
         extraClass='ml-1'
       />
       <EmailInput
-        //onChange={onChange}
-        //value={value}
+        onChange={(e) => setEmail(e.target.value)}
+        value={email}
         extraClass='mt-6'
         name={'email'}
         isIcon={false}
       />
       <PasswordInput
-        //onChange={onChange}
-        //value={value}
+        onChange={(e) => setPassword(e.target.value)}
+        value={password}
         name={'password'}
         extraClass='mb-6 mt-6'
       />
-      <Button htmlType='submit' type='primary' size='large' extraClass='mb-20'>
+      <Button
+        htmlType='submit'
+        type='primary'
+        size='large'
+        extraClass='mb-20'
+        onClick={() => onSubmit()}
+      >
         Зарегестрироваться
       </Button>
       <div className={`mb-4 ${styles.login}`}>

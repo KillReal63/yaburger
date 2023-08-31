@@ -12,7 +12,7 @@ export const ResetPasswordPage = () => {
   const [password, setPassword] = useState('');
   const [code, setCode] = useState('');
 
-  const onSubmit = (password, code) => {
+  const onSubmit = () => {
     resetPassword(password, code);
   };
 
@@ -39,7 +39,7 @@ export const ResetPasswordPage = () => {
         type='primary'
         size='large'
         extraClass='mb-20'
-        onClick={() => onSubmit(password, code)}
+        onClick={() => onSubmit()}
       >
         Сохранить
       </Button>

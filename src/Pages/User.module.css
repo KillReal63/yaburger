@@ -24,3 +24,13 @@
   align-items: center;
   padding-top: 0;
 }
+
+.navButton {
+  font-size: 24px;
+  color: var(--dark-grey);
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-shadow: none;
+}

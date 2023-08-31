@@ -12,21 +12,27 @@ import {
   ResetPasswordPage,
   UserPage,
 } from '../../Pages/index';
+import { getCookie } from '../../Services/utils';
+import { getUser } from '../../Services/Slices/user';
 import styles from './App.module.css';
 
 const url = 'https://norma.nomoreparties.space/api/ingredients';
 
 function App() {
   const dispatch = useDispatch();
+  const token = getCookie('accessToken');
+
+  console.log(token);
 
   useEffect(() => {
     dispatch(fetchIngredients(url));
-  }, []);
+    dispatch(getUser(token));
+  }, [dispatch]);
 
   return (
     <>
-      <AppHeader />
       <Router>
+        <AppHeader />
         <Routes>
           <Route
             path='/'
