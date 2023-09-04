@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getCookie } from '../utils';
-import { refreshToken } from '../auth';
+import { getRefreshToken } from '../auth';
 
 export const registerUser = createAsyncThunk(
   'user/register-user',
@@ -50,9 +50,11 @@ export const loginUser = createAsyncThunk(
       }
       const result = await response.json();
 
-      const { accessToken, refreshToken } = result;
+      const { accessToken, refreshToken, user } = result;
       document.cookie = `refreshToken=${refreshToken}`;
       document.cookie = `accessToken=${accessToken}`;
+      document.cookie = `user=${JSON.stringify(user)}`;
+      document.cookie = `isAuth=${true}`;
       return result;
     } catch (error) {
       console.error();
@@ -61,7 +63,7 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-export const getUser = createAsyncThunk('user/get-user', async (token) => {
+export const authUser = createAsyncThunk('user/auth', async (token) => {
   try {
     const response = await fetch(
       'https://norma.nomoreparties.space/api/auth/user',
@@ -72,22 +74,20 @@ export const getUser = createAsyncThunk('user/get-user', async (token) => {
       }
     );
     if (!response.ok) {
-      throw new Error('Нет ответа сети');
+      console.log('Нет ответа сети');
     }
     const result = await response.json();
-    return result;
-  } catch (error) {
-    if (error.message === 'jwt expired') {
-      try {
-        const { accessToken, refreshToken: newRefreshToken } =
-          await refreshToken(getCookie('refreshToken'));
-        document.cookie = `refreshToken=${newRefreshToken};`;
-        document.cookie = `accessToken=${accessToken};`;
-      } catch (err) {
-        return console.error('Token failed');
-      }
-      return;
+    if (result.message === 'jwt expired') {
+      const oldRefreshToken = getCookie('refreshToken');
+      const { refreshToken, accessToken } = await getRefreshToken(
+        oldRefreshToken
+      );
+      document.cookie = `refreshToken=${refreshToken};`;
+      document.cookie = `accessToken=${accessToken};`;
+      return { accessToken, refreshToken };
     }
+  } catch (e) {
+    console.log(e, 'error');
   }
 });
 
@@ -117,20 +117,12 @@ const userSlice = createSlice({
     error: null,
   },
   reducers: {
-    addUser(state, { payload }) {
-      state.user = [...state.user, payload];
-    },
-    deleteUser(state, { payload }) {
+    deleteUser(state, action) {
       state.email = '';
       state.name = '';
       state.password = '';
       state.isAuth = false;
     },
-    updateUser(state, { payload }) {
-      state.email = payload.user.email;
-      state.name = payload.user.name;
-      state.password = payload.user.password;
-    }
   },
   extraReducers: (builder) => {
     builder
@@ -159,9 +151,24 @@ const userSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(authUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(authUser.fulfilled, (state, action) => {
+        const { email, name, isAuth } = JSON.parse(getCookie('user'));
+        state.email = email;
+        state.name = name;
+        state.password = '123456';
+        state.isAuth = isAuth;
+        state.loading = false;
+      })
+      .addCase(authUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });
 
-export const { addUser, deleteUser } = userSlice.actions;
+export const { deleteUser } = userSlice.actions;
 export default userSlice.reducer;

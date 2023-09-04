@@ -3,43 +3,45 @@ import styles from './IngredientDetails.module.css';
 import { useSelector } from 'react-redux';
 
 const IngredientDetails = () => {
-  const { compound } = useSelector((store) => store.currentIngredient);
+  const currentIngredient = useSelector(
+    (store) => store.currentIngredient.ingredient
+  );
 
   return (
     <div className={styles.modal_ingredient}>
       <img
         className={styles.modal_img}
-        src={compound.image}
-        alt={compound.name}
+        src={currentIngredient.image}
+        alt={currentIngredient.name}
       />
       <span className='text text_type_main-medium mt-4 mb-8 '>
-        {compound.name}
+        {currentIngredient.name}
       </span>
       <div className={`${styles.modal_about} mb-15`}>
         <div
           className={`${styles.modal_info} text text_type_main-medium text_color_inactive mr-4`}
         >
           <span className='mb-4'>Калории,ккал</span>
-          {compound.calories}
+          {currentIngredient.calories}
         </div>
         <div
           className={`${styles.modal_info} text text_type_main-medium text_color_inactive mr-4`}
         >
           <span className='mb-4'>Белки, г</span>
 
-          {compound.proteins}
+          {currentIngredient.proteins}
         </div>
         <div
           className={`${styles.modal_info} text text_type_main-medium text_color_inactive mr-4`}
         >
           <span className='mb-4'>Жиры, г</span>
-          {compound.fat}
+          {currentIngredient.fat}
         </div>
         <div
           className={`${styles.modal_info} text text_type_main-medium text_color_inactive `}
         >
           <span className='mb-4'>Углеводы, г</span>
-          {compound.carbohydrates}
+          {currentIngredient.carbohydrates}
         </div>
       </div>
     </div>

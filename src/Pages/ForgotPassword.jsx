@@ -12,30 +12,34 @@ export const ForgotPasswordPage = () => {
 
   const [value, setValue] = useState('');
 
-  const nextPage = () => {
-    forgotPassword(value);
-    navigate('/reset-password');
+  const nextPage = (e) => {
+    e.preventDefault();
+    if (value !== '') {
+      forgotPassword(value);
+      navigate('/reset-password');
+    }
   };
 
   return (
     <div className={styles.wrapper}>
       <h1>Восстановление пароля</h1>
-      <EmailInput
-        onChange={(e) => setValue(e.target.value)}
-        value={value}
-        extraClass='m-6'
-        name={'email'}
-        isIcon={false}
-      />
-      <Button
-        htmlType='submit'
-        type='primary'
-        size='large'
-        extraClass='mb-20'
-        onClick={() => nextPage()}
-      >
-        Восстановить
-      </Button>
+      <form className={styles.form} onSubmit={nextPage}>
+        <EmailInput
+          onChange={(e) => setValue(e.target.value)}
+          value={value}
+          extraClass='m-6'
+          name={'email'}
+          isIcon={false}
+        />
+        <Button
+          htmlType='submit'
+          type='primary'
+          size='large'
+          extraClass='mb-20'
+        >
+          Восстановить
+        </Button>
+      </form>
       <div className={styles.login}>
         <p className='text text_type_main-default text_color_inactive'>
           Вспомнили пароль?

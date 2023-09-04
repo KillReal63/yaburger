@@ -12,37 +12,39 @@ export const ResetPasswordPage = () => {
   const [password, setPassword] = useState('');
   const [code, setCode] = useState('');
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
     resetPassword(password, code);
   };
 
   return (
     <div className={styles.wrapper}>
       <h1>Восстановление пароля</h1>
-      <PasswordInput
-        onChange={(e) => setPassword(e.target.value)}
-        value={password}
-        placeholder={'Введите новый пароль'}
-        name={'password'}
-        extraClass='mb-6 mt-6'
-      />
-      <Input
-        type={'text'}
-        placeholder={'Введите код из письма'}
-        onChange={(e) => setCode(e.target.value)}
-        value={code}
-        size={'default'}
-        extraClass='ml-1 mb-6'
-      />
-      <Button
-        htmlType='button'
-        type='primary'
-        size='large'
-        extraClass='mb-20'
-        onClick={() => onSubmit()}
-      >
-        Сохранить
-      </Button>
+      <form className={styles.form} onSubmit={onSubmit}>
+        <PasswordInput
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          placeholder={'Введите новый пароль'}
+          name={'password'}
+          extraClass='mb-6 mt-6'
+        />
+        <Input
+          type={'text'}
+          placeholder={'Введите код из письма'}
+          onChange={(e) => setCode(e.target.value)}
+          value={code}
+          size={'default'}
+          extraClass='ml-1 mb-6'
+        />
+        <Button
+          htmlType='button'
+          type='primary'
+          size='large'
+          extraClass='mb-20'
+        >
+          Сохранить
+        </Button>
+      </form>
       <div className={styles.login}>
         <p className='text text_type_main-default text_color_inactive'>
           Вспомнили пароль?

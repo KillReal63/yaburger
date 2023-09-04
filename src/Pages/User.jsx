@@ -4,15 +4,17 @@ import {
   EmailInput,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styles from './User.module.css';
 import { deleteUser, logoutUser } from '../Services/Slices/user';
 import { useNavigate } from 'react-router-dom';
+import { deleteCookie, getCookie } from '../Services/utils';
 
 export const UserPage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
-  const user = useSelector((store) => store.user);
+  const navigate = useNavigate();
+
+  const user = JSON.parse(getCookie('user'));
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -21,14 +23,9 @@ export const UserPage = () => {
   const logout = () => {
     dispatch(deleteUser());
     dispatch(logoutUser());
-    navigate('/')
+    deleteCookie();
+    navigate('/');
   };
-
-  useEffect(() => {
-    setName(user.name);
-    setEmail(user.email);
-    setPassword(user.password);
-  }, [user]);
 
   return (
     <div className={styles.wrapper}>
@@ -57,30 +54,32 @@ export const UserPage = () => {
         </p>
       </div>
       <div className={`ml-25 ${styles.inputs}`}>
-        <Input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          type={'text'}
-          placeholder={'Имя'}
-          size={'default'}
-          extraClass='ml-1'
-          icon='EditIcon'
-          name={'name'}
-        />
-        <EmailInput
-          extraClass='mt-6'
-          onChange={(e) => setEmail(e.target.value)}
-          name={'email'}
-          isIcon={true}
-          value={email}
-        />
-        <PasswordInput
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          name={'password'}
-          extraClass='mb-6 mt-6'
-          icon='EditIcon'
-        />
+        <form>
+          <Input
+            onChange={(e) => setName(e.target.value)}
+            value={user.name}
+            type={'text'}
+            placeholder={'Имя'}
+            size={'default'}
+            extraClass='ml-1'
+            icon='EditIcon'
+            name={'name'}
+          />
+          <EmailInput
+            extraClass='mt-6'
+            onChange={(e) => setEmail(e.target.value)}
+            name={'email'}
+            isIcon={true}
+            value={user.email}
+          />
+          <PasswordInput
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            name={'password'}
+            extraClass='mb-6 mt-6'
+            icon='EditIcon'
+          />
+        </form>
       </div>
     </div>
   );

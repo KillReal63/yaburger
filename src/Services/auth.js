@@ -18,11 +18,11 @@ export const resetPassword = (password, token) => {
   }).then((res) => res.json());
 };
 
-export const refreshToken = (token) =>
+  export const getRefreshToken = (oldRefreshToken) =>
   fetch(`https://norma.nomoreparties.space/api/auth/token`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ token }),
+    body: JSON.stringify({ token: oldRefreshToken }),
   }).then((res) => res.json());

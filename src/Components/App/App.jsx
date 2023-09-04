@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AppHeader from '../AppHeader/AppHeader';
 import Main from '../Main/Main';
-import { fetchIngredients } from '../../Services/Slices/ingredients';
 import {
   ForgotPasswordPage,
   LoginPage,
@@ -13,20 +12,20 @@ import {
   UserPage,
 } from '../../Pages/index';
 import { getCookie } from '../../Services/utils';
-import { getUser } from '../../Services/Slices/user';
+import { authUser } from '../../Services/Slices/user';
+import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
 import styles from './App.module.css';
-
-const url = 'https://norma.nomoreparties.space/api/ingredients';
 
 function App() {
   const dispatch = useDispatch();
   const token = getCookie('accessToken');
 
-  console.log(token);
+  const { _id } = useSelector((store) => store.currentIngredient.ingredient);
 
   useEffect(() => {
-    dispatch(fetchIngredients(url));
-    dispatch(getUser(token));
+    if (!token === undefined) {
+      dispatch(authUser(token));
+    }
   }, [dispatch]);
 
   return (
@@ -42,14 +41,27 @@ function App() {
               </div>
             }
           />
-          <Route path='/login' element={<LoginPage />} />
-          <Route path='/register' element={<RegisterPage />} />
-          <Route path='/forgot-password' element={<ForgotPasswordPage />} />
-          <Route path='/reset-password' element={<ResetPasswordPage />} />
-          <Route path='/profile' element={<UserPage />}>
-            {/* {!loggedIn ? <Navigate to='/log-in' /> : <UserProfile />} */}
-          </Route>
-          <Route path='/ingredients/:id' element={<IngredientPage />} />
+          <Route path={`'/ingredients/'${_id}`} element={<IngredientPage />} />
+          <Route
+            path='/login'
+            element={<ProtectedRouteElement element={<LoginPage />} />}
+          />
+          <Route
+            path='/register'
+            element={<ProtectedRouteElement element={<RegisterPage />} />}
+          />
+          <Route
+            path='/forgot-password'
+            element={<ProtectedRouteElement element={<ForgotPasswordPage />} />}
+          />
+          <Route
+            path='/reset-password'
+            element={<ProtectedRouteElement element={<ResetPasswordPage />} />}
+          />
+          <Route
+            path='/profile'
+            element={<ProtectedRouteElement element={<UserPage />} auth />}
+          />
         </Routes>
       </Router>
     </>

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { open } from '../../Services/Slices/currentIngredient';
+import { fetchIngredients } from '../../Services/Slices/ingredients';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import IngredientItem from '../IngredientItem/IngredientItem';
 import Modal from '../Modal/Modal';
@@ -13,12 +14,19 @@ const categories = [
   { name: 'Начинки', slug: 'main' },
 ];
 
+const url = 'https://norma.nomoreparties.space/api/ingredients';
+
 const Ingredients = ({ refs }) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchIngredients(url));
+  }, [dispatch]);
+
   const { data, loading, isOpen } = useSelector((store) => ({
     data: store.ingredients.data,
     isOpen: store.currentIngredient.isOpen,
   }));
-  const dispatch = useDispatch();
 
   const setModalItem = (item) => dispatch(open(item));
 

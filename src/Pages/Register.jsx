@@ -17,44 +17,46 @@ export const RegisterPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
     dispatch(registerUser({ email, password, name }));
-    navigate('/login')
+    navigate('/login');
   };
 
   return (
     <div className={styles.wrapper}>
       <h1>Регистрация</h1>
-      <Input
-        type={'text'}
-        placeholder={'Имя'}
-        onChange={(e) => setName(e.target.value)}
-        value={name}
-        size={'default'}
-        extraClass='ml-1'
-      />
-      <EmailInput
-        onChange={(e) => setEmail(e.target.value)}
-        value={email}
-        extraClass='mt-6'
-        name={'email'}
-        isIcon={false}
-      />
-      <PasswordInput
-        onChange={(e) => setPassword(e.target.value)}
-        value={password}
-        name={'password'}
-        extraClass='mb-6 mt-6'
-      />
-      <Button
-        htmlType='submit'
-        type='primary'
-        size='large'
-        extraClass='mb-20'
-        onClick={() => onSubmit()}
-      >
-        Зарегестрироваться
-      </Button>
+      <form className={styles.form} onSubmit={onSubmit}>
+        <Input
+          type={'text'}
+          placeholder={'Имя'}
+          onChange={(e) => setName(e.target.value)}
+          value={name}
+          size={'default'}
+          extraClass='ml-1'
+        />
+        <EmailInput
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
+          extraClass='mt-6'
+          name={'email'}
+          isIcon={false}
+        />
+        <PasswordInput
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          name={'password'}
+          extraClass='mb-6 mt-6'
+        />
+        <Button
+          htmlType='submit'
+          type='primary'
+          size='large'
+          extraClass='mb-20'
+        >
+          Зарегестрироваться
+        </Button>
+      </form>
       <div className={`mb-4 ${styles.login}`}>
         <p className='text text_type_main-default text_color_inactive mr-2'>
           Уже зарегестрированы?

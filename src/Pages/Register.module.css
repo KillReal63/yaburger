@@ -5,6 +5,14 @@
   justify-content: center;
   margin-top: 180px;
 }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .login {
   display: flex;
   justify-content: space-between;

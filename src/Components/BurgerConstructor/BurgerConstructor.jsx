@@ -13,6 +13,7 @@ import { increment } from '../../Services/Slices/counter';
 import { open } from '../../Services/Slices/order';
 import { useSelector, useDispatch } from 'react-redux';
 import { createOrder } from '../../Services/Slices/order';
+import { getCookie } from '../../Services/utils';
 import styles from './BurgerConstructor.module.css';
 
 const BurgerConstructor = () => {
@@ -30,6 +31,8 @@ const BurgerConstructor = () => {
       ingId: store.cart.ingredients.map((item) => item.id),
     })
   );
+
+  const isAuth = getCookie('isAuth');
 
   const getOrder = () => {
     const arr = [].concat(bun.id, ingId);
@@ -98,7 +101,7 @@ const BurgerConstructor = () => {
             </div>
             <CurrencyIcon type='primary' />
           </div>
-          {Object.keys(bun).length > 1 ? (
+          {Object.keys(bun).length > 1 && isAuth ? (
             <Button
               htmlType='button'
               type='primary'
