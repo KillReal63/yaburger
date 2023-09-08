@@ -2,3 +2,19 @@
   display: flex;
   align-items: center;
 }
+
+.link {
+  text-decoration: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.disabled {
+  text-decoration: none;
+  color: grey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -7,7 +7,7 @@ const Navigation = ({pathname}) => {
   return (
     <nav className={styles.navigation}>
       <CollectorBurger pathname={pathname} />
-      <OrderFeed />
+      <OrderFeed pathname={pathname}/>
     </nav>
   );
 };

@@ -106,6 +106,36 @@ export const logoutUser = createAsyncThunk('user/logout-user', async () => {
   return result;
 });
 
+export const updateUser = createAsyncThunk(
+  'user/update-user',
+  async ({ email, name }) => {
+    const token = getCookie('accessToken');
+    const response = await fetch(
+      `https://norma.nomoreparties.space/api/auth/user`,
+      {
+        method: 'PATCH',
+        headers: {
+          authorization: token,
+        },
+        body: JSON.stringify({ email, name }),
+      }
+    );
+    const result = await response.json();
+    if (result.message === 'jwt expired') {
+      const oldRefreshToken = getCookie('refreshToken');
+      const { refreshToken, accessToken } = await getRefreshToken(
+        oldRefreshToken
+      );
+      document.cookie = `refreshToken=${refreshToken};`;
+      document.cookie = `accessToken=${accessToken};`;
+      return { accessToken, refreshToken };
+    }
+    const { user } = result;
+    document.cookie = `user=${JSON.stringify(user)}`;
+    return result;
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -164,6 +194,17 @@ const userSlice = createSlice({
         state.loading = false;
       })
       .addCase(authUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateUser.fulfilled, (state, { payload }) => {
+        console.log(payload);
+        state.loading = false;
+      })
+      .addCase(updateUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

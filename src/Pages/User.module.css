@@ -27,10 +27,16 @@
 
 .navButton {
   font-size: 24px;
-  color: var(--dark-grey);
+  color: darkgrey;
   background-color: transparent;
   border: none;
   padding: 0;
   cursor: pointer;
   text-shadow: none;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

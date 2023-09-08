@@ -3,28 +3,38 @@ import {
   Input,
   EmailInput,
   PasswordInput,
+  Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
 import styles from './User.module.css';
-import { deleteUser, logoutUser } from '../Services/Slices/user';
+import { deleteUser, logoutUser, updateUser } from '../Services/Slices/user';
 import { useNavigate } from 'react-router-dom';
 import { deleteCookie, getCookie } from '../Services/utils';
 
 export const UserPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const user = JSON.parse(getCookie('user'));
-
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isDirty, setIsDirty] = useState(false);
+
+  useEffect(() => {
+    const user = JSON.parse(getCookie('user'));
+    setName(user.name);
+    setEmail(user.email);
+  }, []);
 
   const logout = () => {
     dispatch(deleteUser());
     dispatch(logoutUser());
     deleteCookie();
     navigate('/');
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch(updateUser(email, name));
   };
 
   return (
@@ -54,31 +64,56 @@ export const UserPage = () => {
         </p>
       </div>
       <div className={`ml-25 ${styles.inputs}`}>
-        <form>
+        <form onSubmit={onSubmit}>
           <Input
-            onChange={(e) => setName(e.target.value)}
-            value={user.name}
+            onChange={(e) => {
+              setName(e.target.value);
+              setIsDirty(true);
+            }}
+            value={name}
             type={'text'}
             placeholder={'Имя'}
-            size={'default'}
             extraClass='ml-1'
             icon='EditIcon'
             name={'name'}
           />
           <EmailInput
             extraClass='mt-6'
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setIsDirty(true);
+            }}
+            type={'text'}
             name={'email'}
             isIcon={true}
-            value={user.email}
+            value={email}
           />
           <PasswordInput
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setIsDirty(true);
+            }}
             name={'password'}
+            type={'text'}
             extraClass='mb-6 mt-6'
             icon='EditIcon'
           />
+          {isDirty && (
+            <div className={styles.buttons}>
+              <Button
+                htmlType='button'
+                type='primary'
+                size='large'
+                onClick={() => setIsDirty(false)}
+              >
+                Отмена
+              </Button>
+              <Button htmlType='submit' type='primary' size='large'>
+                Сохранить
+              </Button>
+            </div>
+          )}
         </form>
       </div>
     </div>

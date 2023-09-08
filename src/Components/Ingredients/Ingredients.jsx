@@ -1,11 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { open } from '../../Services/Slices/currentIngredient';
-import { fetchIngredients } from '../../Services/Slices/ingredients';
-import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import IngredientItem from '../IngredientItem/IngredientItem';
-import Modal from '../Modal/Modal';
 import styles from './Ingredients.module.css';
 
 const categories = [
@@ -14,21 +11,16 @@ const categories = [
   { name: 'Начинки', slug: 'main' },
 ];
 
-const url = 'https://norma.nomoreparties.space/api/ingredients';
-
 const Ingredients = ({ refs }) => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchIngredients(url));
-  }, [dispatch]);
-
-  const { data, loading, isOpen } = useSelector((store) => ({
+  const { data, loading } = useSelector((store) => ({
     data: store.ingredients.data,
-    isOpen: store.currentIngredient.isOpen,
   }));
 
-  const setModalItem = (item) => dispatch(open(item));
+  const setModalItem = (item) => {
+    dispatch(open(item));
+  };
 
   if (loading || data.length === 0) return <div>...Loading</div>;
 
@@ -81,11 +73,6 @@ const Ingredients = ({ refs }) => {
             </div>
           </section>
         )
-      )}
-      {isOpen && (
-        <Modal headerInfo='Добавить ингредиент'>
-          <IngredientDetails />
-        </Modal>
       )}
     </div>
   );

@@ -16,7 +16,7 @@ export const ForgotPasswordPage = () => {
     e.preventDefault();
     if (value !== '') {
       forgotPassword(value);
-      navigate('/reset-password');
+      navigate('/reset-password?reset=true');
     }
   };
 

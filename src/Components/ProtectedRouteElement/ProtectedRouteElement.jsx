@@ -3,10 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { getCookie } from '../../Services/utils';
 
 const ProtectedRouteElement = ({ auth, element }) => {
-  
   const isAuth = getCookie('isAuth');
-
-
   if (auth && !isAuth) {
     return <Navigate to='/login' />;
   }
@@ -14,8 +11,6 @@ const ProtectedRouteElement = ({ auth, element }) => {
   if (!auth && isAuth) {
     return <Navigate to='/' />;
   }
-
-
 
   return element;
 };

@@ -1,43 +1,57 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import styles from './IngredientInfo.module.css';
 
 export const IngredientPage = () => {
+  const { pathname } = useLocation();
+
+  const id = pathname.replace('/ingredients/', '');
+
+  const { data } = useSelector((store) => ({
+    data: store.ingredients.data,
+  }));
+
+  const ingredient = data.find((item) => item._id === id);
+
+  if (data.length === 0) return <div>Loading...</div>;
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.modal_ingredient}>
-        <h1>Детали Ингредиента</h1>
         <img
           className={styles.modal_img}
-          src={'https://code.s3.yandex.net/react/code/meat-01.png'}
-          alt={'Биокотлета из марсианской Магнолии'}
+          src={ingredient.image}
+          alt={ingredient.name}
         />
         <span className='text text_type_main-medium mt-4 mb-8 '>
-          Биокотлета из марсианской Магнолии
+          {ingredient.name}
         </span>
         <div className={`${styles.modal_about} mb-15`}>
           <div
             className={`${styles.modal_info} text text_type_main-medium text_color_inactive mr-4`}
           >
             <span className='mb-4'>Калории,ккал</span>
-            4242
+            {ingredient.calories}
           </div>
           <div
             className={`${styles.modal_info} text text_type_main-medium text_color_inactive mr-4`}
           >
             <span className='mb-4'>Белки, г</span>
-            420
+
+            {ingredient.proteins}
           </div>
           <div
             className={`${styles.modal_info} text text_type_main-medium text_color_inactive mr-4`}
           >
             <span className='mb-4'>Жиры, г</span>
-            142
+            {ingredient.fat}
           </div>
           <div
             className={`${styles.modal_info} text text_type_main-medium text_color_inactive `}
           >
             <span className='mb-4'>Углеводы, г</span>
-            242
+            {ingredient.carbohydrates}
           </div>
         </div>
       </div>

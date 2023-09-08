@@ -10,14 +10,16 @@ import Modal from '../Modal/Modal';
 import { addIngredient, toggleBun } from '../../Services/Slices/cart';
 import BurgerConstructorElement from '../BurgerConstructorElement/BurgerConstructorElement';
 import { increment } from '../../Services/Slices/counter';
-import { open } from '../../Services/Slices/order';
+import { open, close } from '../../Services/Slices/order';
 import { useSelector, useDispatch } from 'react-redux';
 import { createOrder } from '../../Services/Slices/order';
 import { getCookie } from '../../Services/utils';
+import { useLocation } from 'react-router-dom';
 import styles from './BurgerConstructor.module.css';
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const { totalPrice, bun, isOpen, ingredients, ingId } = useSelector(
     (store) => ({
@@ -33,6 +35,8 @@ const BurgerConstructor = () => {
   );
 
   const isAuth = getCookie('isAuth');
+
+  const onClose = () => dispatch(close());
 
   const getOrder = () => {
     const arr = [].concat(bun.id, ingId);
@@ -68,6 +72,7 @@ const BurgerConstructor = () => {
       <div
         ref={dropBun}
         className={`${styles.burger_constructor} ml-10 mt-20 pl-4 pr-4`}
+        state={{ background: location }}
       >
         <ConstructorElement
           type='top'
@@ -118,7 +123,7 @@ const BurgerConstructor = () => {
         </div>
       </div>
       {isOpen && (
-        <Modal>
+        <Modal onClose={onClose}>
           <OrderDetails />
         </Modal>
       )}
