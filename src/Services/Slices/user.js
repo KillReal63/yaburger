@@ -49,7 +49,7 @@ export const loginUser = createAsyncThunk(
         throw new Error('Нет ответа сети');
       }
       const result = await response.json();
-
+      console.log(result);
       const { accessToken, refreshToken, user } = result;
       document.cookie = `refreshToken=${refreshToken}`;
       document.cookie = `accessToken=${accessToken}`;
@@ -111,10 +111,11 @@ export const updateUser = createAsyncThunk(
   async ({ email, name }) => {
     const token = getCookie('accessToken');
     const response = await fetch(
-      `https://norma.nomoreparties.space/api/auth/user`,
+      'https://norma.nomoreparties.space/api/auth/user',
       {
         method: 'PATCH',
         headers: {
+          'Content-Type': 'application/json',
           authorization: token,
         },
         body: JSON.stringify({ email, name }),
@@ -201,7 +202,6 @@ const userSlice = createSlice({
         state.loading = true;
       })
       .addCase(updateUser.fulfilled, (state, { payload }) => {
-        console.log(payload);
         state.loading = false;
       })
       .addCase(updateUser.rejected, (state, action) => {

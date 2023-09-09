@@ -21,8 +21,10 @@ export const UserPage = () => {
 
   useEffect(() => {
     const user = JSON.parse(getCookie('user'));
-    setName(user.name);
-    setEmail(user.email);
+    if (user !== undefined) {
+      setName(user.name);
+      setEmail(user.email);
+    }
   }, []);
 
   const logout = () => {
@@ -32,9 +34,18 @@ export const UserPage = () => {
     navigate('/');
   };
 
+  const cancel = () => {
+    setIsDirty(false);
+    const user = JSON.parse(getCookie('user'));
+    if (user !== undefined) {
+      setName(user.name);
+      setEmail(user.email);
+    }
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateUser(email, name));
+    dispatch(updateUser({ email: email, name: name }));
   };
 
   return (
@@ -105,7 +116,7 @@ export const UserPage = () => {
                 htmlType='button'
                 type='primary'
                 size='large'
-                onClick={() => setIsDirty(false)}
+                onClick={() => cancel()}
               >
                 Отмена
               </Button>
