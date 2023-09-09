@@ -12,6 +12,7 @@ export const fetchIngredients = createAsyncThunk(
       return result;
     } catch (error) {
       console.error();
+      throw error;
     }
   }
 );

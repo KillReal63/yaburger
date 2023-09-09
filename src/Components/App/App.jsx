@@ -1,24 +1,32 @@
 import React, { useEffect } from 'react';
-import AppHeader from '../AppHeader/AppHeader';
-import Main from '../Main/Main';
-import styles from './App.module.css';
-import { fetchIngredients } from '../../Services/Slices/ingredients';
 import { useDispatch } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import Router from '../Router/Router';
+import AppHeader from '../AppHeader/AppHeader';
+import { getCookie } from '../../Services/utils';
+import { authUser } from '../../Services/Slices/user';
+import { fetchIngredients } from '../../Services/Slices/ingredients';
 
 const url = 'https://norma.nomoreparties.space/api/ingredients';
 
 function App() {
   const dispatch = useDispatch();
+  const token = getCookie('accessToken');
 
   useEffect(() => {
+    if (!token === undefined) {
+      dispatch(authUser(token));
+    }
     dispatch(fetchIngredients(url));
-  }, []);
+  }, [dispatch]);
 
   return (
-    <div className={styles.app}>
-      <AppHeader />
-      <Main />
-    </div>
+    <>
+      <BrowserRouter>
+        <AppHeader />
+        <Router />
+      </BrowserRouter>
+    </>
   );
 }
 

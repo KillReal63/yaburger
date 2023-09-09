@@ -1,0 +1,42 @@
+.wrapper {
+  display: flex;
+  margin-top: 120px;
+  justify-content: center;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  width: 320px;
+  height: 64px;
+  border: 2px;
+}
+
+.about {
+  width: 320px;
+  height: 48px;
+  border: 2px;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 0;
+}
+
+.navButton {
+  font-size: 24px;
+  color: darkgrey;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-shadow: none;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

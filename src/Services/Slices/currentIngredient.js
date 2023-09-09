@@ -2,11 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const currentIngredientSlice = createSlice({
   name: 'currentIngredient',
-  initialState: { isOpen: false, compound: {} },
+  initialState: {
+    isOpen: false,
+    ingredient: {},
+  },
   reducers: {
-    open(state, action) {
+    open(state, { payload }) {
       state.isOpen = true;
-      state.compound = action.payload;
+      state.ingredient = payload;
     },
     close(state) {
       state.isOpen = false;

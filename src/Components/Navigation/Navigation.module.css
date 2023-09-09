@@ -3,3 +3,16 @@
   align-items: center;
   margin-right: 112px;
 }
+
+.link {
+  text-decoration: none;
+  color: var(--light-grey);
+  padding: 20px 16px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.linkDisabled {
+  color: var(--dark-grey);
+}

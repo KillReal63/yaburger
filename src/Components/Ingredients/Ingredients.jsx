@@ -2,9 +2,7 @@ import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { open } from '../../Services/Slices/currentIngredient';
-import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import IngredientItem from '../IngredientItem/IngredientItem';
-import Modal from '../Modal/Modal';
 import styles from './Ingredients.module.css';
 
 const categories = [
@@ -14,13 +12,15 @@ const categories = [
 ];
 
 const Ingredients = ({ refs }) => {
-  const { data, loading, isOpen } = useSelector((store) => ({
-    data: store.ingredients.data,
-    isOpen: store.currentIngredient.isOpen,
-  }));
   const dispatch = useDispatch();
 
-  const setModalItem = (item) => dispatch(open(item));
+  const { data, loading } = useSelector((store) => ({
+    data: store.ingredients.data,
+  }));
+
+  const setModalItem = (item) => {
+    dispatch(open(item));
+  };
 
   if (loading || data.length === 0) return <div>...Loading</div>;
 
@@ -73,11 +73,6 @@ const Ingredients = ({ refs }) => {
             </div>
           </section>
         )
-      )}
-      {isOpen && (
-        <Modal headerInfo='Добавить ингредиент'>
-          <IngredientDetails />
-        </Modal>
       )}
     </div>
   );

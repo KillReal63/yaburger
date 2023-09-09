@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link, useLocation } from 'react-router-dom';
+import { useDrag } from 'react-dnd';
+import { useSelector } from 'react-redux';
 import {
   Counter,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDrag } from 'react-dnd';
-import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './IngredientItem.module.css';
 
@@ -15,6 +16,8 @@ const getBun = (state) => state.cart.bun;
 const IngredientItem = ({ onClick, _id, image, name, price, type }) => {
   const ids = useSelector(getIds);
   const bun = useSelector(getBun);
+  const location = useLocation();
+
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'box',
@@ -27,12 +30,14 @@ const IngredientItem = ({ onClick, _id, image, name, price, type }) => {
   const opacity = isDragging ? 0.4 : 1;
 
   return type !== 'bun' ? (
-    <div
+    <Link
       className={`${styles.item} mt-6 mb-10`}
       onClick={onClick}
       ref={drag}
       data-testid={`box`}
       style={{ opacity }}
+      to={`ingredients/${_id}`}
+      state={{ background: location }}
     >
       <img
         src={image}
@@ -55,14 +60,16 @@ const IngredientItem = ({ onClick, _id, image, name, price, type }) => {
       <span className={`${styles.ingredient_name} text text_type_main-default`}>
         {name}
       </span>
-    </div>
+    </Link>
   ) : (
-    <div
+    <Link
       className={`${styles.item} mt-6 mb-10`}
       onClick={onClick}
       ref={drag}
       data-testid={`box`}
       style={{ opacity }}
+      to={`/ingredients/${_id}`}
+      state={{ background: location }}
     >
       <img
         src={image}
@@ -85,7 +92,7 @@ const IngredientItem = ({ onClick, _id, image, name, price, type }) => {
       <span className={`${styles.ingredient_name} text text_type_main-default`}>
         {name}
       </span>
-    </div>
+    </Link>
   );
 };
 
