@@ -2,7 +2,12 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { getCookie } from '../../Helpers';
 
-const ProtectedRouteElement = ({ auth, element }) => {
+interface elem {
+  auth: boolean;
+  element: any;
+}
+
+const ProtectedRouteElement = ({ auth, element }: elem) => {
   const isAuth = getCookie('isAuth');
   if (auth && !isAuth) {
     return <Navigate to='/login' />;

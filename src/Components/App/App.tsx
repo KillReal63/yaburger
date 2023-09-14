@@ -6,16 +6,17 @@ import AppHeader from '../AppHeader/AppHeader';
 import { getCookie } from '../../Helpers';
 import { authUser } from '../../Api/userApi';
 import { fetchIngredients } from '../../Api/ingredientsApi';
+import { Token } from '../../Shared/Types/Token';
 
 const url = 'https://norma.nomoreparties.space/api/ingredients';
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch: any= useDispatch();
   const token = getCookie('accessToken');
 
   useEffect(() => {
     if (!token === undefined) {
-      dispatch(authUser(token));
+      dispatch(authUser(token as Token));
     }
     dispatch(fetchIngredients(url));
   }, [dispatch]);

@@ -65,14 +65,14 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-export const authUser = createAsyncThunk('user/auth', async (token: string) => {
+export const authUser = createAsyncThunk('user/auth', async (token: Token) => {
   try {
     const response = await fetch(
       'https://norma.nomoreparties.space/api/auth/user',
       {
         headers: {
           authorization: token,
-        },
+        } as Token,
       }
     );
     if (!response.ok) {

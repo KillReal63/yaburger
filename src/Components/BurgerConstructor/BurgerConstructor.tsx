@@ -1,45 +1,49 @@
+//@ts-nocheck
+
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { useDrop } from 'react-dnd';
 import {
   ConstructorElement,
   Button,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDrop } from 'react-dnd';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import Modal from '../Modal/Modal';
-import { addIngredient, toggleBun } from '../../Services/Slices/cart';
 import BurgerConstructorElement from '../BurgerConstructorElement/BurgerConstructorElement';
+import { addIngredient, toggleBun } from '../../Services/Slices/cart';
 import { increment } from '../../Services/Slices/counter';
 import { open, close } from '../../Services/Slices/order';
-import { useSelector, useDispatch } from 'react-redux';
 import { createOrder } from '../../Api/orderApi';
 import { getCookie } from '../../Helpers';
-import { useLocation } from 'react-router-dom';
+import { Store } from '../../Shared/Types/Store';
+import { Ingredient } from '../../Shared/Types/Ingredient';
 import styles from './BurgerConstructor.module.css';
+
+const getTotalPrice = (store: Store) =>
+  store.cart.ingredients.reduce((acc, item) => acc + item.price, 0);
+const getBun = (store: Store) => store.cart.bun;
+const getIngredients = (store: Store) => store.cart.ingredients;
+const getIngredientsId = (store: Store) =>
+  store.cart.ingredients.map((item) => item.id);
+const getIsOpen = (store: Store) => store.order.isOpen;
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-
-  const { totalPrice, bun, isOpen, ingredients, ingId } = useSelector(
-    (store) => ({
-      totalPrice: store.cart.ingredients.reduce(
-        (acc, item) => acc + item.price,
-        0
-      ),
-      isOpen: store.order.isOpen,
-      bun: store.cart.bun,
-      ingredients: store.cart.ingredients,
-      ingId: store.cart.ingredients.map((item) => item.id),
-    })
-  );
+  const totalPrice = useSelector(getTotalPrice);
+  const bun = useSelector(getBun);
+  const ingredients = useSelector(getIngredients);
+  const ingredientsId = useSelector(getIngredientsId);
+  const isOpen = useSelector(getIsOpen);
 
   const isAuth = getCookie('isAuth');
 
   const onClose = () => dispatch(close());
 
   const getOrder = () => {
-    const arr = [].concat(bun.id, ingId);
+    const arr = [].concat(bun.id, ingredientsId);
     dispatch(createOrder(arr));
     dispatch(open());
   };

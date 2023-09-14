@@ -3,12 +3,12 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styles from './IngredientDetails.module.css';
 
+const getData = (store) => store.ingredients.data;
+
 const IngredientDetails = () => {
   const { id } = useParams();
 
-  const { data } = useSelector((store) => ({
-    data: store.ingredients.data,
-  }));
+  const data = useSelector(getData);
 
   const ingredient = data.find((item) => item._id === id);
 

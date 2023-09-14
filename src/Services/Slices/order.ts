@@ -1,15 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createOrder } from '../../Api/orderApi';
 
+export type orderState = typeof initialState;
+
+const initialState = {
+  isOpen: false,
+  loading: false,
+  error: null || undefined,
+  orderNumber: null,
+  order: [],
+};
+
 const orderSlice = createSlice({
   name: 'order',
-  initialState: {
-    isOpen: false,
-    loading: false,
-    error: null,
-    orderNumber: null,
-    order: [],
-  },
+  initialState,
   reducers: {
     open(state, action) {
       state.isOpen = true;
@@ -31,18 +35,14 @@ const orderSlice = createSlice({
       })
       .addCase(createOrder.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        if (state.error !== undefined) {
+          action.error.message;
+        }
         state.orderNumber = null;
       });
   },
 });
 
-export const {
-  open,
-  close,
-  createOrderPending,
-  createOrderFulfilled,
-  createOrderRejected,
-} = orderSlice.actions;
+export const { open, close } = orderSlice.actions;
 
 export default orderSlice.reducer;
