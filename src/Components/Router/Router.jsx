@@ -13,8 +13,8 @@ import {
   IngredientPage,
 } from '../../Pages/index';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
-import { getCookie } from '../../Services/utils';
-import { authUser } from '../../Services/Slices/user';
+import { getCookie } from '../../Helpers';
+import { authUser } from '../../Api/userApi'; 
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
 import styles from '../App/App.module.css';
 

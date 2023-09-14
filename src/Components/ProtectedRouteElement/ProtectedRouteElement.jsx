@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { getCookie } from '../../Services/utils';
+import { getCookie } from '../../Helpers';
 
 const ProtectedRouteElement = ({ auth, element }) => {
   const isAuth = getCookie('isAuth');

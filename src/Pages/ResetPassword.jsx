@@ -5,7 +5,7 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom';
-import { resetPassword } from '../Services/auth';
+import { resetPassword } from '../Api/passwordApi';
 import styles from './ResetPassword.module.css';
 
 export const ResetPasswordPage = () => {

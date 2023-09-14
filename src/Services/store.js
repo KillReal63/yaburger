@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import ingredientsSlice from '../../Services/Slices/ingredients';
-import cartSlice from '../../Services/Slices/cart';
-import currentIngredientSlice from '../../Services/Slices/currentIngredient';
-import counterSlice from '../../Services/Slices/counter';
-import orderSlice from '../../Services/Slices/order';
-import userSlice from '../../Services/Slices/user'
+import ingredientsSlice from './Slices/ingredients';
+import cartSlice from './Slices/cart';
+import currentIngredientSlice from './Slices/currentIngredient';
+import counterSlice from './Slices/counter';
+import orderSlice from './Slices//order';
+import userSlice from './Slices/user';
 
 const store = configureStore({
   reducer: {

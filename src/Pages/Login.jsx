@@ -6,7 +6,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../Services/Slices/user';
+import { loginUser } from '../Api/userApi';
 import styles from './Login.module.css';
 
 export const LoginPage = () => {

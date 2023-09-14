@@ -6,7 +6,7 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { registerUser } from '../Services/Slices/user';
+import { registerUser } from '../Api/userApi';
 import { useDispatch } from 'react-redux';
 import styles from './Register.module.css';
 

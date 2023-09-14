@@ -7,9 +7,10 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
 import styles from './User.module.css';
-import { deleteUser, logoutUser, updateUser } from '../Services/Slices/user';
+import { deleteUser } from '../Services/Slices/user';
+import { logoutUser, updateUser } from '../Api/userApi';
 import { useNavigate } from 'react-router-dom';
-import { deleteCookie, getCookie } from '../Services/utils';
+import { deleteCookie, getCookie } from '../Helpers';
 
 export const UserPage = () => {
   const dispatch = useDispatch();

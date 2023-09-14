@@ -1,9 +1,10 @@
 import React from 'react';
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink } from 'react-router-dom';
+import { path } from '../../Shared/Types/Pathname';
 import styles from './Account.module.css';
 
-const Account = ({ pathname }) => {
+const Account = ({ pathname }: path) => {
   return (
     <div className={`${styles.account} pt-4 pr-5 pb-4 pl-5`}>
       <NavLink
@@ -14,7 +15,9 @@ const Account = ({ pathname }) => {
             : `${styles.disabled} text text_type_main-default text_color_inactive`
         }`}
       >
-        <ProfileIcon type={`${pathname === '/profile' ? '' : 'secondary'}`} />
+        <ProfileIcon
+          type={`${pathname === '/profile' ? 'primary' : 'secondary'}`}
+        />
         <span className='ml-2'>Личный кабинет</span>
       </NavLink>
     </div>

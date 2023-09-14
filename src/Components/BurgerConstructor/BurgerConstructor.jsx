@@ -12,8 +12,8 @@ import BurgerConstructorElement from '../BurgerConstructorElement/BurgerConstruc
 import { increment } from '../../Services/Slices/counter';
 import { open, close } from '../../Services/Slices/order';
 import { useSelector, useDispatch } from 'react-redux';
-import { createOrder } from '../../Services/Slices/order';
-import { getCookie } from '../../Services/utils';
+import { createOrder } from '../../Api/orderApi';
+import { getCookie } from '../../Helpers';
 import { useLocation } from 'react-router-dom';
 import styles from './BurgerConstructor.module.css';
 

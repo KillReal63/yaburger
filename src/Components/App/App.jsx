@@ -3,9 +3,9 @@ import { useDispatch } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import Router from '../Router/Router';
 import AppHeader from '../AppHeader/AppHeader';
-import { getCookie } from '../../Services/utils';
-import { authUser } from '../../Services/Slices/user';
-import { fetchIngredients } from '../../Services/Slices/ingredients';
+import { getCookie } from '../../Helpers';
+import { authUser } from '../../Api/userApi';
+import { fetchIngredients } from '../../Api/ingredientsApi';
 
 const url = 'https://norma.nomoreparties.space/api/ingredients';
 
