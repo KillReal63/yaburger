@@ -8,6 +8,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Store } from '../../Shared/Types/Store';
 import { Ingredient } from '../../Shared/Types/Ingredient';
+import { ingredientsPath } from '../../Shared/path';
 import styles from './IngredientItem.module.css';
 
 const getIds = (state: Store) => state.counter.ids;
@@ -48,7 +49,7 @@ const IngredientItem: FC<Props> = ({
       ref={drag}
       data-testid={`box`}
       style={{ opacity }}
-      to={`ingredients/${_id}`}
+      to={`${ingredientsPath}/${_id}`}
       state={{ background: location }}
     >
       <img
@@ -80,7 +81,7 @@ const IngredientItem: FC<Props> = ({
       ref={drag}
       data-testid={`box`}
       style={{ opacity }}
-      to={`/ingredients/${_id}`}
+      to={`${ingredientsPath}/${_id}`}
       state={{ background: location }}
     >
       <img

@@ -17,6 +17,15 @@ import { getCookie } from '../../Helpers';
 import { authUser } from '../../Api/userApi';
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
 import { Store } from '../../Shared/Types/Store';
+import {
+  defaultPath,
+  forgotPasswordPath,
+  loginPath,
+  ordersPath,
+  profilePath,
+  registerPath,
+  resetPasswordPath,
+} from '../../Shared/path';
 import styles from '../App/App.module.css';
 
 const getId = (store: Store) => store.currentIngredient.ingredient;
@@ -43,7 +52,7 @@ const Router = () => {
     <>
       <Routes location={background || location}>
         <Route
-          path='/'
+          path={defaultPath}
           element={
             <div className={styles.app}>
               <Main />
@@ -52,27 +61,27 @@ const Router = () => {
         />
         <Route path={`/ingredients/:${_id}`} element={<IngredientPage />} />
         <Route
-          path='/login'
+          path={loginPath}
           element={<ProtectedRouteElement element={<LoginPage />} />}
         />
         <Route
-          path='/register'
+          path={registerPath}
           element={<ProtectedRouteElement element={<RegisterPage />} />}
         />
         <Route
-          path='/forgot-password'
+          path={forgotPasswordPath}
           element={<ProtectedRouteElement element={<ForgotPasswordPage />} />}
         />
         <Route
-          path='/reset-password'
+          path={resetPasswordPath}
           element={<ProtectedRouteElement element={<ResetPasswordPage />} />}
         />
         <Route
-          path='/profile'
+          path={profilePath}
           element={<ProtectedRouteElement element={<UserPage />} auth />}
         />
         <Route
-          path='/order'
+          path={ordersPath}
           element={<ProtectedRouteElement element={<OrderPage />} auth />}
         />
       </Routes>

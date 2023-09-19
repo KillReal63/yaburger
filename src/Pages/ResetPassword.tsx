@@ -6,6 +6,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import { resetPassword } from '../Api/passwordApi';
+import { loginPath, defaultPath, forgotPasswordPath } from '../Shared/path';
 import styles from './ResetPassword.module.css';
 
 export const ResetPasswordPage = () => {
@@ -20,10 +21,10 @@ export const ResetPasswordPage = () => {
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     resetPassword({ password, code });
-    navigate('/login');
+    navigate(loginPath);
   };
 
-  if (!reset) return <Navigate to='/' />;
+  if (!reset) return <Navigate to={defaultPath} />;
 
   return (
     <div className={styles.wrapper}>
@@ -56,7 +57,7 @@ export const ResetPasswordPage = () => {
       <div className={styles.login}>
         <p className='text text_type_main-default text_color_inactive'>
           Вспомнили пароль?
-          <Link to='/forgot-password' className='ml-2'>
+          <Link to={forgotPasswordPath} className='ml-2'>
             Войти
           </Link>
         </p>

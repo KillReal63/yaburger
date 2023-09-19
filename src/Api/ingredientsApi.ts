@@ -8,7 +8,7 @@ export const fetchIngredients = createAsyncThunk(
       if (!response.ok) {
         throw new Error('Нет ответа сети');
       }
-      const result = await response.json();  
+      const result = await response.json();
       return result;
     } catch (error) {
       console.error();

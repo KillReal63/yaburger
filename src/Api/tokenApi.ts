@@ -1,7 +1,10 @@
-import { Token } from "../Shared/Types/Token";
+import { Token } from '../Shared/Types/Token';
+import { urlAuthPath } from '../Shared/path';
+
+const url = `${urlAuthPath}/token`;
 
 export const getRefreshToken = (oldRefreshToken: Token) =>
-  fetch(`https://norma.nomoreparties.space/api/auth/token`, {
+  fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

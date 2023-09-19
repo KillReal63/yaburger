@@ -8,6 +8,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { registerUser } from '../Api/userApi';
 import { useDispatch } from 'react-redux';
+import { loginPath } from '../Shared/path';
 import styles from './Register.module.css';
 
 export const RegisterPage = () => {
@@ -20,7 +21,7 @@ export const RegisterPage = () => {
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(registerUser({ email, password, name }));
-    navigate('/login');
+    navigate(loginPath);
   };
 
   return (
@@ -61,7 +62,7 @@ export const RegisterPage = () => {
         <p className='text text_type_main-default text_color_inactive mr-2'>
           Уже зарегестрированы?
         </p>
-        <Link to='/login'>Войти</Link>
+        <Link to={loginPath}>Войти</Link>
       </div>
     </div>
   );

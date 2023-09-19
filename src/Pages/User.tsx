@@ -6,11 +6,12 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
-import styles from './User.module.css';
 import { deleteUser } from '../Services/Slices/user';
 import { logoutUser, updateUser } from '../Api/userApi';
 import { useNavigate } from 'react-router-dom';
+import { defaultPath } from '../Shared/path';
 import { deleteCookie, getCookie } from '../Helpers';
+import styles from './User.module.css';
 
 export const UserPage = () => {
   const dispatch: any = useDispatch();
@@ -32,7 +33,7 @@ export const UserPage = () => {
     dispatch(deleteUser());
     dispatch(logoutUser());
     deleteCookie();
-    navigate('/');
+    navigate(defaultPath);
   };
 
   const cancel = () => {

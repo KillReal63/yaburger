@@ -108,7 +108,7 @@ const BurgerConstructor = () => {
             </div>
             <CurrencyIcon type='primary' />
           </div>
-          {Object.keys(bun).length > 1 && isAuth ? (
+          {Object.keys(bun).length > 4 && isAuth ? (
             <Button
               htmlType='button'
               type='primary'

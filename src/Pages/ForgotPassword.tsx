@@ -5,7 +5,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { forgotPassword } from '../Api/passwordApi';
-import { User } from '../Shared/Types/User';
+import { loginPath } from '../Shared/path';
 import styles from './ForgotPassword.module.css';
 
 export const ForgotPasswordPage = () => {
@@ -44,7 +44,7 @@ export const ForgotPasswordPage = () => {
       <div className={styles.login}>
         <p className='text text_type_main-default text_color_inactive'>
           Вспомнили пароль?
-          <Link to='/login' className='ml-2'>
+          <Link to={loginPath} className='ml-2'>
             Войти
           </Link>
         </p>

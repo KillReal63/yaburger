@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchIngredients } from '../../Api/ingredientsApi';
 import { Ingredient } from '../../Shared/Types/Ingredient';
+import { setLoading, setError } from '../../Helpers/response';
 
 export type ingredientState = typeof initialState;
 
@@ -16,19 +17,12 @@ const ingredientsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchIngredients.pending, (state) => {
-        state.loading = true;
-      })
+      .addCase(fetchIngredients.pending, setLoading)
       .addCase(fetchIngredients.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.data = payload.data;
       })
-      .addCase(fetchIngredients.rejected, (state, action) => {
-        state.loading = false;
-        if (state.error !== undefined) {
-          action.error.message;
-        }
-      });
+      .addCase(fetchIngredients.rejected, setError);
   },
 });
 

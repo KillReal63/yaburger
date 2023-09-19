@@ -8,6 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../Api/userApi';
 import { Store } from '../Shared/Types/Store';
+import { registerPath, forgotPasswordPath, defaultPath } from '../Shared/path';
 import styles from './Login.module.css';
 
 const getIsAuth = (store: Store) => store.user.isAuth;
@@ -22,7 +23,7 @@ export const LoginPage = () => {
 
   useEffect(() => {
     if (isAuth === true) {
-      navigate('/');
+      navigate(defaultPath);
     }
   }, [isAuth]);
 
@@ -61,12 +62,12 @@ export const LoginPage = () => {
         <p className='text text_type_main-default text_color_inactive mr-2'>
           Вы - новый пользователь?
         </p>
-        <Link to='/register'>Зарегестрироваться</Link>
+        <Link to={registerPath}>Зарегестрироваться</Link>
       </div>
       <div className={styles.forgotPassword}>
         <p className='text text_type_main-default text_color_inactive'>
           Забыли пароль?
-          <Link to='/forgot-password' className='ml-2'>
+          <Link to={forgotPasswordPath} className='ml-2'>
             Восстановить
           </Link>
         </p>

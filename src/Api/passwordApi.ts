@@ -1,7 +1,12 @@
 import { PasswordReset } from '../Shared/Types/PasswordReset';
+import { urlPath } from '../Shared/path';
+
+const url = `${urlPath}/password-reset`;
+const resetUrl = `${urlPath}/password-reset/reset`;
+
 
 export const forgotPassword = ({ email }: PasswordReset) => {
-  fetch('https://norma.nomoreparties.space/api/password-reset', {
+  fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -11,7 +16,7 @@ export const forgotPassword = ({ email }: PasswordReset) => {
 };
 
 export const resetPassword = ({ password, code: token }: PasswordReset) => {
-  fetch('https://norma.nomoreparties.space/api/password-reset/reset', {
+  fetch(resetUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

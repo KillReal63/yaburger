@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createOrder } from '../../Api/orderApi';
+import { setLoading, setError } from '../../Helpers/response';
 
 export type orderState = typeof initialState;
 
@@ -24,22 +25,13 @@ const orderSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(createOrder.pending, (state) => {
-        state.loading = true;
-        state.orderNumber = null;
-      })
+      .addCase(createOrder.pending, setLoading)
       .addCase(createOrder.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.order = payload;
         state.orderNumber = payload.order.number;
       })
-      .addCase(createOrder.rejected, (state, action) => {
-        state.loading = false;
-        if (state.error !== undefined) {
-          action.error.message;
-        }
-        state.orderNumber = null;
-      });
+      .addCase(createOrder.rejected, setError);
   },
 });
 

@@ -5,21 +5,24 @@ import { User } from '../Shared/Types/User';
 import { NewUser } from '../Shared/Types/NewUser';
 import { LoginUser } from '../Shared/Types/LoginUser';
 import { Token } from '../Shared/Types/Token';
+import { urlAuthPath } from '../Shared/path';
+
+const registerUrl = `${urlAuthPath}/register`;
+const loginUrl = `${urlAuthPath}/login`;
+const userUrl = `${urlAuthPath}/user`;
+const logoutUrl = `${urlAuthPath}/logout`;
 
 export const registerUser = createAsyncThunk(
   'user/register-user',
   async ({ email, password, name }: NewUser) => {
     try {
-      const response = await fetch(
-        'https://norma.nomoreparties.space/api/auth/register',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email, password, name }),
-        }
-      );
+      const response = await fetch(registerUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password, name }),
+      });
       if (!response.ok) {
         throw new Error('Нет ответа сети');
       }
@@ -39,16 +42,13 @@ export const loginUser = createAsyncThunk(
   'user/login-user',
   async ({ email, password }: LoginUser) => {
     try {
-      const response = await fetch(
-        'https://norma.nomoreparties.space/api/auth/login',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email, password }),
-        }
-      );
+      const response = await fetch(loginUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
       if (!response.ok) {
         throw new Error('Нет ответа сети');
       }
@@ -70,14 +70,11 @@ export const authUser = createAsyncThunk(
   'user/auth',
   async ({ token }: Token) => {
     try {
-      const response = await fetch(
-        'https://norma.nomoreparties.space/api/auth/user',
-        {
-          headers: {
-            authorization: token,
-          } as Token,
-        }
-      );
+      const response = await fetch(userUrl, {
+        headers: {
+          authorization: token,
+        } as Token,
+      });
       if (!response.ok) {
         console.log('Нет ответа сети');
       }
@@ -98,16 +95,13 @@ export const authUser = createAsyncThunk(
 );
 
 export const logoutUser = createAsyncThunk('user/logout-user', async () => {
-  const response = await fetch(
-    'https://norma.nomoreparties.space/api/auth/logout',
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ token: getCookie('refreshToken') }),
-    }
-  );
+  const response = await fetch(logoutUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ token: getCookie('refreshToken') }),
+  });
   const result = await response.json();
   return result;
 });
@@ -116,17 +110,14 @@ export const updateUser = createAsyncThunk(
   'user/update-user',
   async ({ email, name }: User) => {
     const token = getCookie('accessToken');
-    const response = await fetch(
-      'https://norma.nomoreparties.space/api/auth/user',
-      {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: token,
-        } as Token,
-        body: JSON.stringify({ email, name }),
-      }
-    );
+    const response = await fetch(userUrl, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: token,
+      } as Token,
+      body: JSON.stringify({ email, name }),
+    });
     const result = await response.json();
     if (result.message === 'jwt expired') {
       const oldRefreshToken = getCookie('refreshToken');

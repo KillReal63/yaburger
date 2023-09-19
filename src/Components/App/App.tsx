@@ -7,11 +7,12 @@ import { getCookie } from '../../Helpers';
 import { authUser } from '../../Api/userApi';
 import { fetchIngredients } from '../../Api/ingredientsApi';
 import { Token } from '../../Shared/Types/Token';
+import { urlPath } from '../../Shared/path';
 
-const url = 'https://norma.nomoreparties.space/api/ingredients';
+const url = `${urlPath}/ingredients`;
 
 function App() {
-  const dispatch: any= useDispatch();
+  const dispatch: any = useDispatch();
   const token = getCookie('accessToken');
 
   useEffect(() => {

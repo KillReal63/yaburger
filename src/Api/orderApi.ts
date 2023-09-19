@@ -1,21 +1,21 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { urlPath, ordersPath } from '../Shared/path';
+
+const url = `${urlPath}${ordersPath}`;
 
 export const createOrder = createAsyncThunk(
   'order/create-order',
   async (data: string[]) => {
     try {
-      const response = await fetch(
-        'https://norma.nomoreparties.space/api/orders',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-          },
-          body: JSON.stringify({
-            ingredients: data,
-          }),
-        }
-      );
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+        },
+        body: JSON.stringify({
+          ingredients: data,
+        }),
+      });
       if (!response.ok) {
         throw new Error('Нет ответа сети');
       }

@@ -6,6 +6,7 @@ import {
   updateUser,
 } from '../../Api/userApi';
 import { getCookie } from '../../Helpers';
+import { setLoading, setError } from '../../Helpers/response';
 
 export type userState = typeof initialState;
 
@@ -22,7 +23,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    deleteUser(state, ) {
+    deleteUser(state) {
       state.email = '';
       state.name = '';
       state.password = '';
@@ -31,23 +32,14 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(registerUser.pending, (state) => {
-        state.loading = true;
-      })
+      .addCase(registerUser.pending, setLoading)
       .addCase(registerUser.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.email = payload.user.email;
         state.name = payload.user.name;
       })
-      .addCase(registerUser.rejected, (state, action) => {
-        state.loading = false;
-        if (state.error !== undefined) {
-          action.error.message;
-        }
-      })
-      .addCase(loginUser.pending, (state) => {
-        state.loading = true;
-      })
+      .addCase(registerUser.rejected, setError)
+      .addCase(loginUser.pending, setLoading)
       .addCase(loginUser.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.email = payload.user.email;
@@ -55,15 +47,8 @@ const userSlice = createSlice({
         state.password = '123456';
         state.isAuth = true;
       })
-      .addCase(loginUser.rejected, (state, action) => {
-        state.loading = false;
-        if (state.error !== undefined) {
-          action.error.message;
-        }
-      })
-      .addCase(authUser.pending, (state) => {
-        state.loading = true;
-      })
+      .addCase(loginUser.rejected, setError)
+      .addCase(authUser.pending, setLoading)
       .addCase(authUser.fulfilled, (state, action) => {
         const { email, name, isAuth } = JSON.parse(getCookie('user') as string);
         state.email = email;
@@ -78,18 +63,11 @@ const userSlice = createSlice({
           action.error.message;
         }
       })
-      .addCase(updateUser.pending, (state) => {
-        state.loading = true;
-      })
+      .addCase(updateUser.pending, setLoading)
       .addCase(updateUser.fulfilled, (state, { payload }) => {
         state.loading = false;
       })
-      .addCase(updateUser.rejected, (state, action) => {
-        state.loading = false;
-        if (state.error !== undefined) {
-          action.error.message;
-        }
-      });
+      .addCase(updateUser.rejected, setError);
   },
 });
 
