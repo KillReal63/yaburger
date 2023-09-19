@@ -1,4 +1,4 @@
-import React, { useEffect, FC, ReactNode } from 'react';
+import React, { useEffect, FC, PropsWithChildren } from 'react';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { createPortal } from 'react-dom';
 import { useSelector } from 'react-redux';
@@ -13,11 +13,10 @@ const getOpen = (store: Store) => store.order.isOpen;
 
 type Props = {
   onClose: () => void;
-  children: ReactNode;
   title?: string;
 };
 
-const Modal: FC<Props> = ({ onClose, children, title }) => {
+const Modal: FC<PropsWithChildren<Props>> = ({ onClose, children, title }) => {
   const isOpen = useSelector(getIsOpen);
   const open = useSelector(getOpen);
 

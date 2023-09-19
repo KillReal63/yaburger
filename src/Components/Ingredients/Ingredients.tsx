@@ -13,10 +13,16 @@ const categories = [
   { name: 'Начинки', slug: 'main' },
 ];
 
+type RefsType = {
+  bunsRef: () => void;
+  saucesRef: () => void;
+  mainsRef: () => void;
+};
+
 const getData = (store: Store) => store.ingredients.data;
 const getLoading = (store: Store) => store.ingredients.loading;
 
-const Ingredients = ({ refs }: any) => {
+const Ingredients = ({ refs }: { refs: RefsType }) => {
   const dispatch = useDispatch();
 
   const data = useSelector(getData);
@@ -39,7 +45,7 @@ const Ingredients = ({ refs }: any) => {
                 .filter((item) => item.type === slug)
                 .map((item) => (
                   <IngredientItem
-                    key={uuidv4()}
+                    key={item._id}
                     onClick={() => setModalItem(item)}
                     {...item}
                   />
@@ -54,7 +60,7 @@ const Ingredients = ({ refs }: any) => {
                 .filter((item) => item.type === slug)
                 .map((item) => (
                   <IngredientItem
-                    key={uuidv4()}
+                    key={item._id}
                     onClick={() => setModalItem(item)}
                     {...item}
                   />
@@ -69,7 +75,7 @@ const Ingredients = ({ refs }: any) => {
                 .filter((item) => item.type === slug)
                 .map((item) => (
                   <IngredientItem
-                    key={uuidv4()}
+                    key={item._id}
                     onClick={() => setModalItem(item)}
                     {...item}
                   />
