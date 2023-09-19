@@ -17,7 +17,7 @@ export const IngredientPage = () => {
 
   if (data.length === 0) return <div>Loading...</div>;
 
-  if (ingredient !== undefined)
+  if (ingredient !== undefined) {
     return (
       <div className={styles.wrapper}>
         <div className={styles.modal_ingredient}>
@@ -59,4 +59,5 @@ export const IngredientPage = () => {
         </div>
       </div>
     );
+  } else return <div>Loading...</div>;
 };
