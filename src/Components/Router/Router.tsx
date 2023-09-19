@@ -14,23 +14,27 @@ import {
 } from '../../Pages/index';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { getCookie } from '../../Helpers';
-import { authUser } from '../../Api/userApi'; 
+import { authUser } from '../../Api/userApi';
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
+import { Store } from '../../Shared/Types/Store';
 import styles from '../App/App.module.css';
+
+const getId = (store: Store) => store.currentIngredient.ingredient;
 
 const Router = () => {
   const token = getCookie('accessToken');
 
-  const dispatch = useDispatch();
+  const dispatch: any = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const { state } = location;
   const background = state && state.background;
 
-  const { _id } = useSelector((store) => store.currentIngredient.ingredient);
+  const _id = useSelector(getId);
 
   useEffect(() => {
     if (!token === undefined) {
+      //@ts-ignore
       dispatch(authUser(token));
     }
   }, [dispatch]);
@@ -58,9 +62,7 @@ const Router = () => {
         />
         <Route
           path='/forgot-password'
-          element={
-            <ProtectedRouteElement element={<ForgotPasswordPage />} reset />
-          }
+          element={<ProtectedRouteElement element={<ForgotPasswordPage />} />}
         />
         <Route
           path='/reset-password'

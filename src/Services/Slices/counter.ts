@@ -1,10 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+export type counterState = typeof initialState;
+
+const initialState = {
+  ids: [] as string[],
+};
+
 const counterSlice = createSlice({
   name: 'counter',
-  initialState: {
-    ids: [],
-  },
+  initialState,
   reducers: {
     increment(state, action) {
       state.ids = [...state.ids, action.payload];

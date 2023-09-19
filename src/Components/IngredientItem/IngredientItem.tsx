@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDrag } from 'react-dnd';
 import { useSelector } from 'react-redux';
@@ -8,16 +7,28 @@ import {
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { v4 as uuidv4 } from 'uuid';
+import { Store } from '../../Shared/Types/Store';
+import { Ingredient } from '../../Shared/Types/Ingredient';
 import styles from './IngredientItem.module.css';
 
-const getIds = (state) => state.counter.ids;
-const getBun = (state) => state.cart.bun;
+const getIds = (state: Store) => state.counter.ids;
+const getBun = (state: Store) => state.cart.bun;
 
-const IngredientItem = ({ onClick, _id, image, name, price, type }) => {
+type Props = Ingredient & {
+  onClick: () => void;
+};
+
+const IngredientItem: FC<Props> = ({
+  onClick,
+  _id,
+  image,
+  name,
+  price,
+  type,
+}) => {
   const ids = useSelector(getIds);
   const bun = useSelector(getBun);
   const location = useLocation();
-
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'box',
@@ -78,6 +89,7 @@ const IngredientItem = ({ onClick, _id, image, name, price, type }) => {
       />
       {Object.keys(bun).length > 1 ? (
         <Counter
+          //@ts-ignore
           count={bun.id === _id ? 2 : <></>}
           size='default'
           extraClass={styles.counter}
@@ -94,15 +106,6 @@ const IngredientItem = ({ onClick, _id, image, name, price, type }) => {
       </span>
     </Link>
   );
-};
-
-IngredientItem.propTypes = {
-  onClick: PropTypes.func,
-  _id: PropTypes.string,
-  image: PropTypes.string,
-  name: PropTypes.string,
-  price: PropTypes.number,
-  type: PropTypes.string,
 };
 
 export default IngredientItem;

@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const createOrder = createAsyncThunk(
   'order/create-order',
-  async (data) => {
+  async (data: string[]) => {
     try {
       const response = await fetch(
         'https://norma.nomoreparties.space/api/orders',

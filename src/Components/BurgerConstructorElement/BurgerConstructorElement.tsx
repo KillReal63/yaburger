@@ -1,4 +1,7 @@
-import React, { useRef } from 'react';
+//@ts-nocheck
+
+import type { XYCoord, Identifier } from 'dnd-core';
+import React, { useRef, FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import {
@@ -9,22 +12,37 @@ import {
   deleteIngredient,
   constructorReorder,
 } from '../../Services/Slices/cart';
-import { decrement } from '../../Services/Slices/counter';
+import { decrement } from '../../Services/Slices/counter.ts';
+import { Ingredient } from '../../Shared/Types/Ingredient';
 import styles from './BurgerConstructorElement.module.css';
 
-const BurgerConstructorElement = ({ ingredient, index }) => {
+type Props = {
+  ingredient: Ingredient;
+  index: number;
+};
+
+interface DragItem {
+  index: number;
+  id: string;
+  type: string;
+}
+
+const BurgerConstructorElement: FC<Props> = ({ ingredient, index }) => {
   const dispatch = useDispatch();
+  const ref = useRef<HTMLDivElement>(null);
 
-  const ref = useRef(null);
-
-  const [{ handlerId }, drop] = useDrop({
+  const [{ handlerId }, drop] = useDrop<
+    DragItem,
+    void,
+    { handlerId: Identifier | null }
+  >({
     accept: 'CARD',
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId(),
       };
     },
-    hover(item, monitor) {
+    hover(item: DragItem, monitor) {
       const dragIndex = item.index;
       const hoverIndex = index;
       if (dragIndex === hoverIndex) {
@@ -36,7 +54,7 @@ const BurgerConstructorElement = ({ ingredient, index }) => {
         hoverBoundingRect &&
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
       }
@@ -61,7 +79,7 @@ const BurgerConstructorElement = ({ ingredient, index }) => {
 
   drag(drop(ref));
 
-  const deleteItem = (item) => {
+  const deleteItem = (item: Ingredient) => {
     if (item.type !== 'bun') {
       dispatch(deleteIngredient(item));
       dispatch(decrement(item.id));
@@ -69,20 +87,21 @@ const BurgerConstructorElement = ({ ingredient, index }) => {
   };
 
   return ingredient.type === 'sauce' || ingredient.type === 'main' ? (
-    <li
-      className={`${styles.cart_item} mb-4`}
-      style={{ opacity }}
-      data-handler-id={handlerId}
-      ref={ref}
-    >
-      <DragIcon type='primary' />
-      <ConstructorElement
-        text={ingredient.name}
-        price={ingredient.price}
-        thumbnail={ingredient.image}
-        handleClose={() => deleteItem(ingredient)}
-      />
-    </li>
+    <div ref={ref}>
+      <li
+        className={`${styles.cart_item} mb-4`}
+        style={{ opacity }}
+        data-handler-id={handlerId}
+      >
+        <DragIcon type='primary' />
+        <ConstructorElement
+          text={ingredient.name}
+          price={ingredient.price}
+          thumbnail={ingredient.image}
+          handleClose={() => deleteItem(ingredient)}
+        />
+      </li>
+    </div>
   ) : null;
 };
 

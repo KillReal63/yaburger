@@ -2,9 +2,9 @@ import { configureStore } from '@reduxjs/toolkit';
 import ingredientsSlice from './Slices/ingredients';
 import cartSlice from './Slices/cart';
 import currentIngredientSlice from './Slices/currentIngredient';
-import counterSlice from './Slices/counter';
+import counterSlice from './Slices/counter.ts';
 import orderSlice from './Slices//order';
-import userSlice from './Slices/user';
+import userSlice from './Slices/user.ts';
 
 const store = configureStore({
   reducer: {

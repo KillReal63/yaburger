@@ -3,8 +3,9 @@ import { Navigate } from 'react-router-dom';
 import { getCookie } from '../../Helpers';
 
 interface elem {
-  auth: boolean;
+  auth?: boolean;
   element: any;
+  reset?: boolean;
 }
 
 const ProtectedRouteElement = ({ auth, element }: elem) => {

@@ -1,22 +1,30 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, FC, ReactNode } from 'react';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { createPortal } from 'react-dom';
 import { useSelector } from 'react-redux';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
+import { Store } from '../../Shared/Types/Store';
 import style from './Modal.module.css';
 
-const modal = document.getElementById('modals');
+const modal = document.getElementById('modals') as HTMLElement;
 
-const getIsOpen = (store) => store.currentIngredient.isOpen;
-const getOpen = (store) => store.order.isOpen;
+const getIsOpen = (store: Store) => store.currentIngredient.isOpen;
+const getOpen = (store: Store) => store.order.isOpen;
 
-const Modal = ({ onClose, children, headerInfo }) => {
+type Props = {
+  onClose: () => void;
+  children: ReactNode;
+  title: string;
+};
+
+const Modal: FC<Props> = ({ onClose, children, title }) => {
   const isOpen = useSelector(getIsOpen);
   const open = useSelector(getOpen);
 
   useEffect(() => {
-    const closeByEscape = (event) => {
+    const closeByEscape = (event: KeyboardEvent) => {
+      console.log(event);
+
       if (event.key === 'Escape') {
         onClose();
       }
@@ -37,7 +45,7 @@ const Modal = ({ onClose, children, headerInfo }) => {
         <header
           className={`${style.modal_header} text text_type_main-large mt-10`}
         >
-          {headerInfo}
+          {title}
           <CloseIcon type='primary' onClick={() => onClose()} />
         </header>
         <div>{children}</div>
@@ -45,11 +53,6 @@ const Modal = ({ onClose, children, headerInfo }) => {
     </>,
     modal
   );
-};
-
-Modal.propTypes = {
-  children: PropTypes.node,
-  headerInfo: PropTypes.string,
 };
 
 export default Modal;

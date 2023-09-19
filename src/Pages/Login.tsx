@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, FormEvent } from 'react';
 import {
   EmailInput,
   PasswordInput,
@@ -7,14 +7,23 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../Api/userApi';
+import { Store } from '../Shared/Types/Store';
 import styles from './Login.module.css';
+
+const getIsAuth = (store: Store) => store.user.isAuth;
+
+// export type LoginData = {
+//   email: string;
+//   password: string;
+// };
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch = useDispatch();
+  const dispatch: any = useDispatch();
   const navigate = useNavigate();
-  const isAuth = useSelector((store) => store.user.isAuth);
+
+  const isAuth = useSelector(getIsAuth);
 
   useEffect(() => {
     if (isAuth === true) {
@@ -22,8 +31,9 @@ export const LoginPage = () => {
     }
   }, [isAuth]);
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    //@ts-ignore
     dispatch(loginUser({ email, password }));
   };
 

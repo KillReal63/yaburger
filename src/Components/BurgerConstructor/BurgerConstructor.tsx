@@ -13,13 +13,15 @@ import OrderDetails from '../OrderDetails/OrderDetails';
 import Modal from '../Modal/Modal';
 import BurgerConstructorElement from '../BurgerConstructorElement/BurgerConstructorElement';
 import { addIngredient, toggleBun } from '../../Services/Slices/cart';
-import { increment } from '../../Services/Slices/counter';
+import { increment } from '../../Services/Slices/counter.ts';
 import { open, close } from '../../Services/Slices/order';
 import { createOrder } from '../../Api/orderApi';
 import { getCookie } from '../../Helpers';
 import { Store } from '../../Shared/Types/Store';
 import { Ingredient } from '../../Shared/Types/Ingredient';
 import styles from './BurgerConstructor.module.css';
+
+type buns = {};
 
 const getTotalPrice = (store: Store) =>
   store.cart.ingredients.reduce((acc, item) => acc + item.price, 0);
@@ -30,10 +32,10 @@ const getIngredientsId = (store: Store) =>
 const getIsOpen = (store: Store) => store.order.isOpen;
 
 const BurgerConstructor = () => {
-  const dispatch = useDispatch();
+  const dispatch: any = useDispatch();
   const location = useLocation();
   const totalPrice = useSelector(getTotalPrice);
-  const bun = useSelector(getBun);
+  const bun: Ingredient = useSelector(getBun);
   const ingredients = useSelector(getIngredients);
   const ingredientsId = useSelector(getIngredientsId);
   const isOpen = useSelector(getIsOpen);
@@ -45,17 +47,19 @@ const BurgerConstructor = () => {
   const getOrder = () => {
     const arr = [].concat(bun.id, ingredientsId);
     dispatch(createOrder(arr));
-    dispatch(open());
+    dispatch(open(true));
   };
 
-  const addItem = (item) => {
+  const addItem = (item: Ingredient) => {
+    console.log(item);
+
     if (item.type !== 'bun') {
       dispatch(addIngredient(item));
       dispatch(increment(item.id));
     }
   };
 
-  const addBun = (item) => {
+  const addBun = (item: Ingredient) => {
     if (item.type === 'bun') {
       dispatch(toggleBun(item));
     }
@@ -63,12 +67,12 @@ const BurgerConstructor = () => {
 
   const [, drop] = useDrop(() => ({
     accept: 'box',
-    drop: (item) => addItem(item),
+    drop: (item: Ingredient) => addItem(item),
   }));
 
   const [, dropBun] = useDrop(() => ({
     accept: 'box',
-    drop: (item) => addBun(item),
+    drop: (item: Ingredient) => addBun(item),
   }));
 
   return (

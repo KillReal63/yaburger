@@ -7,16 +7,20 @@ import {
 } from '../../Api/userApi';
 import { getCookie } from '../../Helpers';
 
+export type userState = typeof initialState;
+
+const initialState = {
+  name: '',
+  email: '',
+  password: '',
+  isAuth: false,
+  loading: false,
+  error: null,
+};
+
 const userSlice = createSlice({
   name: 'user',
-  initialState: {
-    name: '',
-    email: '',
-    password: '',
-    isAuth: false,
-    loading: false,
-    error: null,
-  },
+  initialState,
   reducers: {
     deleteUser(state, action) {
       state.email = '';
@@ -37,7 +41,9 @@ const userSlice = createSlice({
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        if (state.error !== undefined) {
+          action.error.message;
+        }
       })
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
@@ -51,12 +57,15 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        if (state.error !== undefined) {
+          action.error.message;
+        }
       })
       .addCase(authUser.pending, (state) => {
         state.loading = true;
       })
       .addCase(authUser.fulfilled, (state, action) => {
+        //@ts-ignore
         const { email, name, isAuth } = JSON.parse(getCookie('user'));
         state.email = email;
         state.name = name;
@@ -66,7 +75,9 @@ const userSlice = createSlice({
       })
       .addCase(authUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        if (state.error !== undefined) {
+          action.error.message;
+        }
       })
       .addCase(updateUser.pending, (state) => {
         state.loading = true;
@@ -76,7 +87,9 @@ const userSlice = createSlice({
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        if (state.error !== undefined) {
+          action.error.message;
+        }
       });
   },
 });

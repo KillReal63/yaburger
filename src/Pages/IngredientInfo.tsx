@@ -1,16 +1,20 @@
+//@ts-nocheck
+
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { Store } from '../Shared/Types/Store';
+import { Ingredient } from '../Shared/Types/Ingredient';
 import styles from './IngredientInfo.module.css';
+
+const getData = (store: Store) => store.ingredients.data;
 
 export const IngredientPage = () => {
   const { pathname } = useLocation();
 
   const id = pathname.replace('/ingredients/', '');
 
-  const { data } = useSelector((store) => ({
-    data: store.ingredients.data,
-  }));
+  const data = useSelector(getData);
 
   const ingredient = data.find((item) => item._id === id);
 

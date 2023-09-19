@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, FormEvent } from 'react';
 import {
   PasswordInput,
   Input,
@@ -17,8 +17,9 @@ export const ResetPasswordPage = () => {
   const [code, setCode] = useState('');
   const navigate = useNavigate();
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    //@ts-ignore
     resetPassword(password, code);
     navigate('/login');
   };

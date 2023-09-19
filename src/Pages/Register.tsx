@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, FormEvent } from 'react';
 import {
   Input,
   EmailInput,
@@ -14,11 +14,12 @@ export const RegisterPage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch = useDispatch();
+  const dispatch: any = useDispatch();
   const navigate = useNavigate();
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    //@ts-ignore
     dispatch(registerUser({ email, password, name }));
     navigate('/login');
   };

@@ -1,11 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+export type currentIngredientState = typeof initialState;
+
+const initialState = {
+  isOpen: false,
+  ingredient: {},
+};
+
 const currentIngredientSlice = createSlice({
   name: 'currentIngredient',
-  initialState: {
-    isOpen: false,
-    ingredient: {},
-  },
+  initialState,
   reducers: {
     open(state, { payload }) {
       state.isOpen = true;

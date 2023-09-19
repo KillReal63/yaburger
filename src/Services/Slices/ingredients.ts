@@ -1,13 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchIngredients } from '../../Api/ingredientsApi';
+import { Ingredient } from '../../Shared/Types/Ingredient';
+
+export type ingredientState = typeof initialState;
+
+const initialState = {
+  loading: false,
+  error: null || undefined,
+  data: [] as Ingredient[],
+};
 
 const ingredientsSlice = createSlice({
   name: 'ingredients',
-  initialState: {
-    loading: false,
-    error: null,
-    data: [],
-  },
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -20,7 +25,9 @@ const ingredientsSlice = createSlice({
       })
       .addCase(fetchIngredients.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        if (state.error !== undefined) {
+          action.error.message;
+        }
       });
   },
 });

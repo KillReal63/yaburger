@@ -3,6 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { open } from '../../Services/Slices/currentIngredient';
 import IngredientItem from '../IngredientItem/IngredientItem';
+import { Store } from '../../Shared/Types/Store';
+import { Ingredient } from '../../Shared/Types/Ingredient';
 import styles from './Ingredients.module.css';
 
 const categories = [
@@ -11,14 +13,16 @@ const categories = [
   { name: 'Начинки', slug: 'main' },
 ];
 
-const Ingredients = ({ refs }) => {
+const getData = (store: Store) => store.ingredients.data;
+const getLoading = (store: Store) => store.ingredients.loading;
+
+const Ingredients = ({ refs }: any) => {
   const dispatch = useDispatch();
 
-  const { data, loading } = useSelector((store) => ({
-    data: store.ingredients.data,
-  }));
+  const data = useSelector(getData);
+  const loading = useSelector(getLoading);
 
-  const setModalItem = (item) => {
+  const setModalItem = (item: Ingredient) => {
     dispatch(open(item));
   };
 

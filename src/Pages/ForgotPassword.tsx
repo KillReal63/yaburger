@@ -1,21 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, FormEvent } from 'react';
 import {
   EmailInput,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { forgotPassword } from '../Api/passwordApi';
+import { User } from '../Shared/Types/User';
 import styles from './ForgotPassword.module.css';
 
 export const ForgotPasswordPage = () => {
   const navigate = useNavigate();
 
-  const [value, setValue] = useState('');
+  const [email, setEmail] = useState('');
 
-  const nextPage = (e) => {
+  const nextPage = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (value !== '') {
-      forgotPassword(value);
+    if (email !== '') {
+      //@ts-ignore
+      forgotPassword(email);
       navigate('/reset-password?reset=true');
     }
   };
@@ -25,8 +27,8 @@ export const ForgotPasswordPage = () => {
       <h1>Восстановление пароля</h1>
       <form className={styles.form} onSubmit={nextPage}>
         <EmailInput
-          onChange={(e) => setValue(e.target.value)}
-          value={value}
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
           extraClass='m-6'
           name={'email'}
           isIcon={false}

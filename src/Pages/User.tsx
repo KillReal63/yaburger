@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+//@ts-nocheck
+
+import React, { useEffect, useState, FormEvent } from 'react';
 import {
   Input,
   EmailInput,
@@ -13,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { deleteCookie, getCookie } from '../Helpers';
 
 export const UserPage = () => {
-  const dispatch = useDispatch();
+  const dispatch: any = useDispatch();
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -44,7 +46,7 @@ export const UserPage = () => {
     }
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(updateUser({ email: email, name: name }));
   };

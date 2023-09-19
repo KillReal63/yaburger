@@ -6,6 +6,7 @@ export type cartState = typeof initialState;
 const initialState = {
   bun: {
     price: 0,
+    id: '',
   },
   ingredients: [] as Ingredient[],
 };
@@ -15,8 +16,6 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addIngredient(state, action) {
-      console.log(state);
-
       state.ingredients = [...state.ingredients, action.payload];
     },
     deleteIngredient(state, action) {
