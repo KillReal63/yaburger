@@ -16,8 +16,7 @@ export const ForgotPasswordPage = () => {
   const nextPage = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (email !== '') {
-      //@ts-ignore
-      forgotPassword(email);
+      forgotPassword({ email });
       navigate('/reset-password?reset=true');
     }
   };

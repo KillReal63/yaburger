@@ -6,7 +6,6 @@ import {
   Counter,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { v4 as uuidv4 } from 'uuid';
 import { Store } from '../../Shared/Types/Store';
 import { Ingredient } from '../../Shared/Types/Ingredient';
 import styles from './IngredientItem.module.css';
@@ -32,13 +31,15 @@ const IngredientItem: FC<Props> = ({
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'box',
-    item: { id: _id, image, name, price, type, unID: uuidv4() },
+    item: { id: _id, image, name, price, type },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   }));
 
   const opacity = isDragging ? 0.4 : 1;
+
+  const Count = bun.id === _id ? 2 : <></>;
 
   return type !== 'bun' ? (
     <Link
@@ -89,8 +90,7 @@ const IngredientItem: FC<Props> = ({
       />
       {Object.keys(bun).length > 1 ? (
         <Counter
-          //@ts-ignore
-          count={bun.id === _id ? 2 : <></>}
+          count={Count as number}
           size='default'
           extraClass={styles.counter}
         />

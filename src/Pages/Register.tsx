@@ -19,7 +19,6 @@ export const RegisterPage = () => {
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //@ts-ignore
     dispatch(registerUser({ email, password, name }));
     navigate('/login');
   };

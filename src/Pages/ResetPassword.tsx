@@ -19,8 +19,7 @@ export const ResetPasswordPage = () => {
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //@ts-ignore
-    resetPassword(password, code);
+    resetPassword({ password, code });
     navigate('/login');
   };
 

@@ -1,9 +1,7 @@
-//@ts-nocheck
-
 import type { XYCoord, Identifier } from 'dnd-core';
 import React, { useRef, FC } from 'react';
 import { useDispatch } from 'react-redux';
-import { useDrag, useDrop } from 'react-dnd';
+import { useDrag, useDrop, DragSourceMonitor } from 'react-dnd';
 import {
   ConstructorElement,
   DragIcon,
@@ -12,7 +10,7 @@ import {
   deleteIngredient,
   constructorReorder,
 } from '../../Services/Slices/cart';
-import { decrement } from '../../Services/Slices/counter.ts';
+import { decrement } from '../../Services/Slices/counter';
 import { Ingredient } from '../../Shared/Types/Ingredient';
 import styles from './BurgerConstructorElement.module.css';
 
@@ -48,7 +46,8 @@ const BurgerConstructorElement: FC<Props> = ({ ingredient, index }) => {
       if (dragIndex === hoverIndex) {
         return;
       }
-      const hoverBoundingRect =
+      //no work with examlpe code
+      const hoverBoundingRect: any =
         ref.current && ref.current.getBoundingClientRect();
       const hoverMiddleY =
         hoverBoundingRect &&
@@ -65,12 +64,13 @@ const BurgerConstructorElement: FC<Props> = ({ ingredient, index }) => {
       item.index = hoverIndex;
     },
   });
+
   const [{ isDragging }, drag] = useDrag({
     type: 'CARD',
     item: () => {
       return { ingredient, index };
     },
-    collect: (monitor) => ({
+    collect: (monitor: DragSourceMonitor) => ({
       isDragging: monitor.isDragging(),
     }),
   });

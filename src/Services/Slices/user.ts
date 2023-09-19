@@ -22,7 +22,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    deleteUser(state, action) {
+    deleteUser(state, ) {
       state.email = '';
       state.name = '';
       state.password = '';
@@ -65,8 +65,7 @@ const userSlice = createSlice({
         state.loading = true;
       })
       .addCase(authUser.fulfilled, (state, action) => {
-        //@ts-ignore
-        const { email, name, isAuth } = JSON.parse(getCookie('user'));
+        const { email, name, isAuth } = JSON.parse(getCookie('user') as string);
         state.email = email;
         state.name = name;
         state.password = '123456';

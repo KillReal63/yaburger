@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Ingredient } from '../../Shared/Types/Ingredient';
+import { v4 as uuidv4 } from 'uuid';
 
 export type cartState = typeof initialState;
 
@@ -7,6 +8,8 @@ const initialState = {
   bun: {
     price: 0,
     id: '',
+    name: '',
+    image: '',
   },
   ingredients: [] as Ingredient[],
 };
@@ -16,7 +19,10 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addIngredient(state, action) {
-      state.ingredients = [...state.ingredients, action.payload];
+      state.ingredients = [
+        ...state.ingredients,
+        { ...action.payload, unID: uuidv4() },
+      ];
     },
     deleteIngredient(state, action) {
       state.ingredients = [...state.ingredients].filter(

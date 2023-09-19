@@ -30,12 +30,11 @@ const Router = () => {
   const { state } = location;
   const background = state && state.background;
 
-  const _id = useSelector(getId);
+  const { _id } = useSelector(getId);
 
   useEffect(() => {
     if (!token === undefined) {
-      //@ts-ignore
-      dispatch(authUser(token));
+      dispatch(authUser({ token }));
     }
   }, [dispatch]);
 

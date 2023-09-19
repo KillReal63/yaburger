@@ -2,11 +2,13 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getCookie } from '../Helpers/index';
 import { getRefreshToken } from './tokenApi';
 import { User } from '../Shared/Types/User';
+import { NewUser } from '../Shared/Types/NewUser';
+import { LoginUser } from '../Shared/Types/LoginUser';
 import { Token } from '../Shared/Types/Token';
 
 export const registerUser = createAsyncThunk(
   'user/register-user',
-  async ({ email, password, name }: User) => {
+  async ({ email, password, name }: NewUser) => {
     try {
       const response = await fetch(
         'https://norma.nomoreparties.space/api/auth/register',
@@ -35,7 +37,7 @@ export const registerUser = createAsyncThunk(
 
 export const loginUser = createAsyncThunk(
   'user/login-user',
-  async ({ email, password }: User) => {
+  async ({ email, password }: LoginUser) => {
     try {
       const response = await fetch(
         'https://norma.nomoreparties.space/api/auth/login',
@@ -51,7 +53,6 @@ export const loginUser = createAsyncThunk(
         throw new Error('Нет ответа сети');
       }
       const result = await response.json();
-      console.log(result);
       const { accessToken, refreshToken, user } = result;
       document.cookie = `refreshToken=${refreshToken}`;
       document.cookie = `accessToken=${accessToken}`;
@@ -65,33 +66,36 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-export const authUser = createAsyncThunk('user/auth', async (token: Token) => {
-  try {
-    const response = await fetch(
-      'https://norma.nomoreparties.space/api/auth/user',
-      {
-        headers: {
-          authorization: token,
-        } as Token,
-      }
-    );
-    if (!response.ok) {
-      console.log('Нет ответа сети');
-    }
-    const result = await response.json();
-    if (result.message === 'jwt expired') {
-      const oldRefreshToken = getCookie('refreshToken');
-      const { refreshToken, accessToken } = await getRefreshToken(
-        oldRefreshToken as Token
+export const authUser = createAsyncThunk(
+  'user/auth',
+  async ({ token }: Token) => {
+    try {
+      const response = await fetch(
+        'https://norma.nomoreparties.space/api/auth/user',
+        {
+          headers: {
+            authorization: token,
+          } as Token,
+        }
       );
-      document.cookie = `refreshToken=${refreshToken};`;
-      document.cookie = `accessToken=${accessToken};`;
-      return { accessToken, refreshToken };
+      if (!response.ok) {
+        console.log('Нет ответа сети');
+      }
+      const result = await response.json();
+      if (result.message === 'jwt expired') {
+        const oldRefreshToken = getCookie('refreshToken');
+        const { refreshToken, accessToken } = await getRefreshToken(
+          oldRefreshToken as Token
+        );
+        document.cookie = `refreshToken=${refreshToken};`;
+        document.cookie = `accessToken=${accessToken};`;
+        return { accessToken, refreshToken };
+      }
+    } catch (e) {
+      console.log(e, 'error');
     }
-  } catch (e) {
-    console.log(e, 'error');
   }
-});
+);
 
 export const logoutUser = createAsyncThunk('user/logout-user', async () => {
   const response = await fetch(

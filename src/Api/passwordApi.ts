@@ -1,7 +1,6 @@
-import { User } from "../Shared/Types/User";
-import { Token } from "../Shared/Types/Token";
+import { PasswordReset } from '../Shared/Types/PasswordReset';
 
-export const forgotPassword = (email: User) => {
+export const forgotPassword = ({ email }: PasswordReset) => {
   fetch('https://norma.nomoreparties.space/api/password-reset', {
     method: 'POST',
     headers: {
@@ -11,7 +10,7 @@ export const forgotPassword = (email: User) => {
   }).then((res) => res.json());
 };
 
-export const resetPassword = (password: User, token: Token) => {
+export const resetPassword = ({ password, code: token }: PasswordReset) => {
   fetch('https://norma.nomoreparties.space/api/password-reset/reset', {
     method: 'POST',
     headers: {

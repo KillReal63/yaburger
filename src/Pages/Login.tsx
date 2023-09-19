@@ -12,11 +12,6 @@ import styles from './Login.module.css';
 
 const getIsAuth = (store: Store) => store.user.isAuth;
 
-// export type LoginData = {
-//   email: string;
-//   password: string;
-// };
-
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -33,7 +28,6 @@ export const LoginPage = () => {
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //@ts-ignore
     dispatch(loginUser({ email, password }));
   };
 

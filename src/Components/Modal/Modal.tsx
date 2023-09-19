@@ -14,7 +14,7 @@ const getOpen = (store: Store) => store.order.isOpen;
 type Props = {
   onClose: () => void;
   children: ReactNode;
-  title: string;
+  title?: string;
 };
 
 const Modal: FC<Props> = ({ onClose, children, title }) => {
@@ -23,8 +23,6 @@ const Modal: FC<Props> = ({ onClose, children, title }) => {
 
   useEffect(() => {
     const closeByEscape = (event: KeyboardEvent) => {
-      console.log(event);
-
       if (event.key === 'Escape') {
         onClose();
       }

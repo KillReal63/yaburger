@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import React, { useEffect, useState, FormEvent } from 'react';
 import {
   Input,
@@ -23,7 +21,7 @@ export const UserPage = () => {
   const [isDirty, setIsDirty] = useState(false);
 
   useEffect(() => {
-    const user = JSON.parse(getCookie('user'));
+    const user = JSON.parse(getCookie('user') as string);
     if (user !== undefined) {
       setName(user.name);
       setEmail(user.email);
@@ -39,7 +37,7 @@ export const UserPage = () => {
 
   const cancel = () => {
     setIsDirty(false);
-    const user = JSON.parse(getCookie('user'));
+    const user = JSON.parse(getCookie('user') as string);
     if (user !== undefined) {
       setName(user.name);
       setEmail(user.email);
@@ -49,6 +47,7 @@ export const UserPage = () => {
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(updateUser({ email: email, name: name }));
+    setIsDirty(false);
   };
 
   return (
@@ -97,7 +96,6 @@ export const UserPage = () => {
               setEmail(e.target.value);
               setIsDirty(true);
             }}
-            type={'text'}
             name={'email'}
             isIcon={true}
             value={email}
@@ -109,7 +107,6 @@ export const UserPage = () => {
               setIsDirty(true);
             }}
             name={'password'}
-            type={'text'}
             extraClass='mb-6 mt-6'
             icon='EditIcon'
           />

@@ -1,7 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export type currentIngredientState = typeof initialState;
-
 const initialState = {
   isOpen: false,
   ingredient: {},

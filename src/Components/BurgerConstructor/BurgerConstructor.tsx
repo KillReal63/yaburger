@@ -1,8 +1,5 @@
-//@ts-nocheck
-
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 import { useDrop } from 'react-dnd';
 import {
   ConstructorElement,
@@ -12,16 +9,15 @@ import {
 import OrderDetails from '../OrderDetails/OrderDetails';
 import Modal from '../Modal/Modal';
 import BurgerConstructorElement from '../BurgerConstructorElement/BurgerConstructorElement';
+import { v4 as uuidv4 } from 'uuid';
 import { addIngredient, toggleBun } from '../../Services/Slices/cart';
-import { increment } from '../../Services/Slices/counter.ts';
+import { increment } from '../../Services/Slices/counter';
 import { open, close } from '../../Services/Slices/order';
 import { createOrder } from '../../Api/orderApi';
 import { getCookie } from '../../Helpers';
 import { Store } from '../../Shared/Types/Store';
 import { Ingredient } from '../../Shared/Types/Ingredient';
 import styles from './BurgerConstructor.module.css';
-
-type buns = {};
 
 const getTotalPrice = (store: Store) =>
   store.cart.ingredients.reduce((acc, item) => acc + item.price, 0);
@@ -33,9 +29,8 @@ const getIsOpen = (store: Store) => store.order.isOpen;
 
 const BurgerConstructor = () => {
   const dispatch: any = useDispatch();
-  const location = useLocation();
   const totalPrice = useSelector(getTotalPrice);
-  const bun: Ingredient = useSelector(getBun);
+  const bun = useSelector(getBun);
   const ingredients = useSelector(getIngredients);
   const ingredientsId = useSelector(getIngredientsId);
   const isOpen = useSelector(getIsOpen);
@@ -45,14 +40,12 @@ const BurgerConstructor = () => {
   const onClose = () => dispatch(close());
 
   const getOrder = () => {
-    const arr = [].concat(bun.id, ingredientsId);
-    dispatch(createOrder(arr));
+    const arr = [bun.id, ...ingredientsId];
+    dispatch(createOrder(arr as string[]));
     dispatch(open(true));
   };
 
   const addItem = (item: Ingredient) => {
-    console.log(item);
-
     if (item.type !== 'bun') {
       dispatch(addIngredient(item));
       dispatch(increment(item.id));
@@ -75,19 +68,20 @@ const BurgerConstructor = () => {
     drop: (item: Ingredient) => addBun(item),
   }));
 
+  const image = bun.image !== '' ? bun.image : null;
+
   return (
     <>
       <div
         ref={dropBun}
         className={`${styles.burger_constructor} ml-10 mt-20 pl-4 pr-4`}
-        state={{ background: location }}
       >
         <ConstructorElement
           type='top'
           isLocked={true}
           text={bun.name}
           price={bun.price}
-          thumbnail={bun.image}
+          thumbnail={image as string}
           extraClass={`${styles.bun} ml-6 mb-4`}
         />
         <div ref={drop} className={styles.items}>
@@ -95,7 +89,7 @@ const BurgerConstructor = () => {
             <BurgerConstructorElement
               ingredient={item}
               index={index}
-              key={item.unID}
+              key={uuidv4()}
             />
           ))}
         </div>
@@ -104,7 +98,7 @@ const BurgerConstructor = () => {
           isLocked={true}
           text={bun.name}
           price={bun.price}
-          thumbnail={bun.image}
+          thumbnail={image as string}
           extraClass={`${styles.bun} ml-6 mt-4`}
         />
         <div className={`${styles.cart_controll} mt-10`}>
