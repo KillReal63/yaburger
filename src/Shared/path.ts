@@ -1,0 +1,11 @@
+export const defaultPath = "/";
+export const resetPasswordPath = "/reset-password";
+export const forgotPasswordPath = "/forgot-password";
+export const loginPath = "/login";
+export const registerPath = "/register";
+export const profilePath = "/profile";
+export const ingredientsPath = "/ingredients";
+export const feedPath = "/feed";
+export const ordersPath = "/orders";
+export const urlAuthPath = "https://norma.nomoreparties.space/api/auth"
+export const urlPath = "https://norma.nomoreparties.space/api";
