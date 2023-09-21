@@ -1,6 +1,6 @@
 import React from 'react';
 
-const OrderPage = () => {
+const FeedPage = () => {
   return (
     <div>
       Comming soon...
@@ -8,4 +8,4 @@ const OrderPage = () => {
   );
 };
 
-export default OrderPage;
+export default FeedPage;

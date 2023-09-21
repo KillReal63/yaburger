@@ -19,6 +19,7 @@ import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElemen
 import { Store } from '../../Shared/Types/Store';
 import {
   defaultPath,
+  feedPath,
   forgotPasswordPath,
   loginPath,
   ordersPath,
@@ -81,7 +82,7 @@ const Router = () => {
           element={<ProtectedRouteElement element={<UserPage />} auth />}
         />
         <Route
-          path={ordersPath}
+          path={feedPath}
           element={<ProtectedRouteElement element={<OrderPage />} auth />}
         />
       </Routes>
