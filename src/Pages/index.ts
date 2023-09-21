@@ -4,7 +4,7 @@ import { IngredientPage } from './IngredientInfo';
 import { RegisterPage } from './Register';
 import { ResetPasswordPage } from './ResetPassword';
 import { UserPage } from './User';
-import OrderPage from './OrderPage';
+import { FeedPage } from './FeedPage';
 
 export {
   ForgotPasswordPage,
@@ -13,5 +13,5 @@ export {
   RegisterPage,
   ResetPasswordPage,
   UserPage,
-  OrderPage,
+  FeedPage,
 };

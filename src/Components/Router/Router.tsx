@@ -9,7 +9,7 @@ import {
   RegisterPage,
   ResetPasswordPage,
   UserPage,
-  OrderPage,
+  FeedPage,
   IngredientPage,
 } from '../../Pages/index';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
@@ -83,7 +83,7 @@ const Router = () => {
         />
         <Route
           path={feedPath}
-          element={<ProtectedRouteElement element={<OrderPage />} auth />}
+          element={<ProtectedRouteElement element={<FeedPage />} auth />}
         />
       </Routes>
       {background && (

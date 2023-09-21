@@ -1,0 +1,41 @@
+.page {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  margin-top: 100px;
+  justify-content: center;
+}
+
+.feed {
+  width: 608px;
+  height: 852px;
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper {
+  width: 584px;
+  height: 214px;
+}
+
+.workspace {
+  width: 580px;
+  height: 626px;
+  display: flex;
+  flex-direction: column;
+}
+
+.monitor {
+  display: flex;
+}
+
+.orders {
+  width: 272px;
+  height: 206px;
+  display: flex;
+  flex-direction: column;
+}
+
+.number {
+  color: rgba(0, 204, 204, 1);
+}
