@@ -29,6 +29,8 @@ import {
   resetPasswordPath,
 } from '../../Shared/path';
 import styles from '../App/App.module.css';
+import { FeedElementPage } from '../../Pages/FeedElementPage';
+import { OrderElementPage } from '../../Pages/OrderElementPage';
 
 const getId = (store: Store) => store.currentIngredient.ingredient;
 
@@ -62,6 +64,8 @@ const Router = () => {
           }
         />
         <Route path={`/ingredients/:${_id}`} element={<IngredientPage />} />
+        <Route path={`/feed/:id`} element={<FeedElementPage />} />
+        <Route path={`/profile/orders/:id`} element={<OrderElementPage />} />
         <Route
           path={loginPath}
           element={<ProtectedRouteElement element={<LoginPage />} />}
