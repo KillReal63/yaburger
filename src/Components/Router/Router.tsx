@@ -11,6 +11,7 @@ import {
   UserPage,
   FeedPage,
   IngredientPage,
+  OrdersHistoryPage,
 } from '../../Pages/index';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { getCookie } from '../../Helpers';
@@ -84,6 +85,12 @@ const Router = () => {
         <Route
           path={feedPath}
           element={<ProtectedRouteElement element={<FeedPage />} auth />}
+        />
+        <Route
+          path={ordersPath}
+          element={
+            <ProtectedRouteElement element={<OrdersHistoryPage />} auth />
+          }
         />
       </Routes>
       {background && (

@@ -5,6 +5,7 @@ import { RegisterPage } from './Register';
 import { ResetPasswordPage } from './ResetPassword';
 import { UserPage } from './User';
 import { FeedPage } from './FeedPage';
+import { OrdersHistoryPage } from './OrdersHistoryPage';
 
 export {
   ForgotPasswordPage,
@@ -14,4 +15,5 @@ export {
   ResetPasswordPage,
   UserPage,
   FeedPage,
+  OrdersHistoryPage,
 };

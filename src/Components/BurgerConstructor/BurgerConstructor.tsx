@@ -84,7 +84,7 @@ const BurgerConstructor = () => {
           thumbnail={image as string}
           extraClass={`${styles.bun} ml-6 mb-4`}
         />
-        <div ref={drop} className={styles.items}>
+        <div ref={drop} className={`${styles.items} ${styles.custom_scroll}`}>
           {ingredients.map((item, index) => (
             <BurgerConstructorElement
               ingredient={item}

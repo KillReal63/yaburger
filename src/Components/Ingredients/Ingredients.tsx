@@ -1,5 +1,4 @@
 import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { open } from '../../Services/Slices/currentIngredient';
 import IngredientItem from '../IngredientItem/IngredientItem';
@@ -35,7 +34,7 @@ const Ingredients = ({ refs }: { refs: RefsType }) => {
   if (loading || data.length === 0) return <div>...Loading</div>;
 
   return (
-    <div className={styles.ingredients}>
+    <div className={`${styles.ingredients} ${styles.custom_scroll}`}>
       {categories.map(({ name, slug }) =>
         slug === 'bun' ? (
           <section key={name} ref={refs.bunsRef}>

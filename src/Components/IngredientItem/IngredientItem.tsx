@@ -9,6 +9,7 @@ import {
 import { Store } from '../../Shared/Types/Store';
 import { Ingredient } from '../../Shared/Types/Ingredient';
 import { ingredientsPath } from '../../Shared/path';
+import { digits_default, text_default } from '../../Shared/Typography';
 import styles from './IngredientItem.module.css';
 
 const getIds = (state: Store) => state.counter.ids;
@@ -40,8 +41,6 @@ const IngredientItem: FC<Props> = ({
 
   const opacity = isDragging ? 0.4 : 1;
 
-  const Count = bun.id === _id ? 2 : <></>;
-
   return type !== 'bun' ? (
     <Link
       className={`${styles.item} mt-6 mb-10`}
@@ -64,13 +63,11 @@ const IngredientItem: FC<Props> = ({
           extraClass={styles.counter}
         />
       ) : null}
-      <div
-        className={`${styles.price} text text_type_digits-default mt-1 mb-1`}
-      >
+      <div className={`${styles.price} ${digits_default} mt-1 mb-1`}>
         <span className='mr-2'>{price}</span>
         <CurrencyIcon type='primary' />
       </div>
-      <span className={`${styles.ingredient_name} text text_type_main-default`}>
+      <span className={`${styles.ingredient_name} ${text_default}`}>
         {name}
       </span>
     </Link>
@@ -89,20 +86,14 @@ const IngredientItem: FC<Props> = ({
         alt={name}
         className={`${styles.ingredient_image} mr-4 ml-4`}
       />
-      {Object.keys(bun).length > 1 ? (
-        <Counter
-          count={Count as number}
-          size='default'
-          extraClass={styles.counter}
-        />
+      {Object.keys(bun).length > 4 && bun.id === _id ? (
+        <Counter count={2} size='default' extraClass={styles.counter} />
       ) : null}
-      <div
-        className={`${styles.price} text text_type_digits-default mt-1 mb-1`}
-      >
+      <div className={`${styles.price} ${digits_default} mt-1 mb-1`}>
         <span className='mr-2'>{price}</span>
         <CurrencyIcon type='primary' />
       </div>
-      <span className={`${styles.ingredient_name} text text_type_main-default`}>
+      <span className={`${styles.ingredient_name} ${text_default}`}>
         {name}
       </span>
     </Link>
