@@ -16,6 +16,7 @@ export const deleteCookie = () => {
   document.cookie = 'user=; path=/; max-age=-1';
 };
 
+
 // export const deleteCookie = () => {
 //   var cookies = document.cookie.split(";");
 

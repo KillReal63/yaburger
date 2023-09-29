@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom';
 import { useSelector } from 'react-redux';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import { Store } from '../../Shared/Types/Store';
+import { digits_medium, text_large } from '../../Shared/Typography';
 import style from './Modal.module.css';
 
 const modal = document.getElementById('modals') as HTMLElement;
@@ -13,7 +14,7 @@ const getOpen = (store: Store) => store.order.isOpen;
 
 type Props = {
   onClose: () => void;
-  title?: string;
+  title?: string | number;
 };
 
 const Modal: FC<PropsWithChildren<Props>> = ({ onClose, children, title }) => {
@@ -39,9 +40,7 @@ const Modal: FC<PropsWithChildren<Props>> = ({ onClose, children, title }) => {
     <>
       <ModalOverlay onClick={() => onClose()} />
       <div className={style.modal}>
-        <header
-          className={`${style.modal_header} text text_type_main-large mt-10`}
-        >
+        <header className={`${style.modal_header} ${text_large} mt-10`}>
           {title}
           <CloseIcon type='primary' onClick={() => onClose()} />
         </header>

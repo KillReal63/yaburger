@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Store } from '../../Shared/Types/Store';
+import { text_inactive, text_medium } from '../../Shared/Typography';
 import styles from './IngredientDetails.module.css';
 
 const getData = (store: Store) => store.ingredients.data;
@@ -22,33 +23,22 @@ const IngredientDetails = () => {
         src={ingredient.image}
         alt={ingredient.name}
       />
-      <span className='text text_type_main-medium mt-4 mb-8 '>
-        {ingredient.name}
-      </span>
+      <p className={`${text_medium} mt-4 mb-8 `}>{ingredient.name}</p>
       <div className={`${styles.modal_about} mb-15`}>
-        <div
-          className={`${styles.modal_info} text text_type_main-medium text_color_inactive mr-4`}
-        >
-          <span className='mb-4'>Калории,ккал</span>
+        <div className={`${styles.modal_info} ${text_inactive} mr-4`}>
+          <p className='mb-4'>Калории,ккал</p>
           {ingredient.calories}
         </div>
-        <div
-          className={`${styles.modal_info} text text_type_main-medium text_color_inactive mr-4`}
-        >
-          <span className='mb-4'>Белки, г</span>
-
+        <div className={`${styles.modal_info} ${text_inactive} mr-4`}>
+          <p className='mb-4'>Белки, г</p>
           {ingredient.proteins}
         </div>
-        <div
-          className={`${styles.modal_info} text text_type_main-medium text_color_inactive mr-4`}
-        >
-          <span className='mb-4'>Жиры, г</span>
+        <div className={`${styles.modal_info} ${text_inactive} mr-4`}>
+          <p className='mb-4'>Жиры, г</p>
           {ingredient.fat}
         </div>
-        <div
-          className={`${styles.modal_info} text text_type_main-medium text_color_inactive `}
-        >
-          <span className='mb-4'>Углеводы, г</span>
+        <div className={`${styles.modal_info} ${text_inactive} `}>
+          <p className='mb-4'>Углеводы, г</p>
           {ingredient.carbohydrates}
         </div>
       </div>

@@ -5,27 +5,21 @@ import {
   digits_default,
   digits_large,
 } from '../Shared/Typography';
+import { Link, useLocation } from 'react-router-dom';
 import styles from './FeedPage.module.css';
 
 export const FeedPage = () => {
+  const location = useLocation();
   return (
     <div className={styles.page}>
       <div className={`${styles.feed} ${styles.custom_scroll}`}>
-        <div className={`${styles.wrapper} mb-4`}>
+        <Link
+          className={`${styles.wrapper} mb-4`}
+          to={'/feed/:id'}
+          state={{ background: location }}
+        >
           <OrderCard />
-        </div>
-        <div className={`${styles.wrapper} mb-4`}>
-          <OrderCard />
-        </div>
-        <div className={`${styles.wrapper} mb-4`}>
-          <OrderCard />
-        </div>
-        <div className={`${styles.wrapper} mb-4`}>
-          <OrderCard />
-        </div>
-        <div className={`${styles.wrapper} mb-4`}>
-          <OrderCard />
-        </div>
+        </Link>
       </div>
       <div className={`${styles.workspace}`}>
         <div className={styles.monitor}>

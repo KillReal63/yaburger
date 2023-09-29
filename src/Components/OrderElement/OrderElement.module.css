@@ -1,12 +1,12 @@
 .element {
-  width: 640px;
-  height: 620px;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-}
-
-.id {
-  text-align: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 50px;
+  padding: 30px;
 }
 
 .status {

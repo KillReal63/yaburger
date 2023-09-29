@@ -5,6 +5,7 @@ import currentIngredientSlice from './Slices/currentIngredient';
 import counterSlice from './Slices/counter.ts';
 import orderSlice from './Slices//order';
 import userSlice from './Slices/user.ts';
+import websoketSlice from './Slices/websoket';
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     order: orderSlice,
     counter: counterSlice,
     user: userSlice,
+    websoket: websoketSlice,
   },
   devTools: process.env.NODE_ENV !== 'production',
   middleware: (getDefaultMiddleware) =>

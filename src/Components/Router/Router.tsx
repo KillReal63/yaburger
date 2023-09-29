@@ -31,6 +31,7 @@ import {
 import styles from '../App/App.module.css';
 import { FeedElementPage } from '../../Pages/FeedElementPage';
 import { OrderElementPage } from '../../Pages/OrderElementPage';
+import OrderElement from '../OrderElement/OrderElement';
 
 const getId = (store: Store) => store.currentIngredient.ingredient;
 
@@ -63,9 +64,17 @@ const Router = () => {
             </div>
           }
         />
-        <Route path={`/ingredients/:${_id}`} element={<IngredientPage />} />
+        <Route
+          path={`/ingredients/:${_id}`}
+          element={<ProtectedRouteElement element={<IngredientPage />} />}
+        />
         <Route path={`/feed/:id`} element={<FeedElementPage />} />
-        <Route path={`/profile/orders/:id`} element={<OrderElementPage />} />
+        <Route
+          path={`/profile/orders/:id`}
+          element={
+            <ProtectedRouteElement element={<OrderElementPage />} auth />
+          }
+        />
         <Route
           path={loginPath}
           element={<ProtectedRouteElement element={<LoginPage />} />}
@@ -86,10 +95,7 @@ const Router = () => {
           path={profilePath}
           element={<ProtectedRouteElement element={<UserPage />} auth />}
         />
-        <Route
-          path={feedPath}
-          element={<ProtectedRouteElement element={<FeedPage />} auth />}
-        />
+        <Route path={feedPath} element={<FeedPage />} />
         <Route
           path={ordersPath}
           element={
@@ -104,6 +110,22 @@ const Router = () => {
             element={
               <Modal onClose={onClose} title='Детали ингредиента'>
                 <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path={`/feed/:id`}
+            element={
+              <Modal onClose={onClose} title={123456}>
+                <OrderElement />
+              </Modal>
+            }
+          />
+          <Route
+            path={`/profile/orders/:id`}
+            element={
+              <Modal onClose={onClose}>
+                <OrderElement />
               </Modal>
             }
           />

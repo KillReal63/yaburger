@@ -2,5 +2,11 @@
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+
+}
+
+.element {
+  width: 640px;
+  height: 620px;
+  padding-top: 60px;
 }
