@@ -17,7 +17,7 @@ import { createOrder } from '../../Api/orderApi';
 import { getCookie } from '../../Helpers';
 import { Store } from '../../Shared/Types/Store';
 import { Ingredient } from '../../Shared/Types/Ingredient';
-import { text_medium } from '../../Shared/Typography';
+import { digits_default } from '../../Shared/Typography';
 import styles from './BurgerConstructor.module.css';
 
 const getTotalPrice = (store: Store) =>
@@ -27,9 +27,11 @@ const getIngredients = (store: Store) => store.cart.ingredients;
 const getIngredientsId = (store: Store) =>
   store.cart.ingredients.map((item) => item.id);
 const getIsOpen = (store: Store) => store.order.isOpen;
+
 const BurgerConstructor = () => {
   const dispatch: any = useDispatch();
   const totalPrice = useSelector(getTotalPrice);
+  const token = getCookie('accessToken');
   const bun = useSelector(getBun);
   const ingredients = useSelector(getIngredients);
   const ingredientsId = useSelector(getIngredientsId);
@@ -39,7 +41,8 @@ const BurgerConstructor = () => {
 
   const getOrder = () => {
     const arr = [bun.id, ...ingredientsId];
-    dispatch(createOrder(arr as string[]));
+    //@ts-ignore
+    dispatch(createOrder({ arr, token }));
     dispatch(open(true));
   };
 
@@ -101,7 +104,7 @@ const BurgerConstructor = () => {
         />
         <div className={`${styles.cart_controll} mt-10`}>
           <div className={`${styles.cart_price} mr-10`}>
-            <div className={`${text_medium} mr-2`}>
+            <div className={`${digits_default} mr-2`}>
               {totalPrice || bun.price ? totalPrice + bun.price * 2 : 0}
             </div>
             <CurrencyIcon type='primary' />
@@ -123,7 +126,7 @@ const BurgerConstructor = () => {
         </div>
       </div>
       {isOpen && (
-        <Modal onClose={onClose}>
+        <Modal onClose={onClose} open>
           <OrderDetails />
         </Modal>
       )}

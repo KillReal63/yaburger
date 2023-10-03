@@ -9,20 +9,10 @@ import { Link, useLocation } from 'react-router-dom';
 import styles from './FeedPage.module.css';
 import { useSelector } from 'react-redux';
 
-import { useSocket } from '../Services/Hooks/useSocket';
-
-const ws = 'wss://norma.nomoreparties.space/orders/all';
-
 export const FeedPage = () => {
   //@ts-ignore
 
   const { orders, total, totalToday } = useSelector((store) => store.feed);
-
-  const { getFeed } = useSocket(ws);
-
-  useEffect(() => {
-    getFeed();
-  }, []);
 
   const location = useLocation();
 
@@ -35,11 +25,11 @@ export const FeedPage = () => {
           return (
             <Link
               className={`${styles.wrapper} mb-4`}
-              to={'/feed/:id'}
+              to={`/feed/${item._id}`}
               state={{ background: location }}
               key={index}
             >
-              <OrderCard  {...item} />
+              <OrderCard {...item} />
             </Link>
           );
         })}

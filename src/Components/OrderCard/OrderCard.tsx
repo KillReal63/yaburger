@@ -27,6 +27,8 @@ const OrderCard: FC<Props> = ({ ingredients, number, createdAt, name }) => {
 
   const items = data.filter(({ _id }) => ingredients.includes(_id));
 
+  const totalPrice = items.reduce((acc, item) => acc + item.price, 0);
+
   const date = () => {
     const dateFromServer = createdAt;
     return (
@@ -70,7 +72,7 @@ const OrderCard: FC<Props> = ({ ingredients, number, createdAt, name }) => {
           )}
         </div>
         <div className={styles.price}>
-          <p className={`${digits_default} mr-2`}>777</p>
+          <p className={`${digits_default} mr-2`}>{totalPrice}</p>
           <CurrencyIcon type='primary' />
         </div>
       </div>

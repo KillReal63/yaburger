@@ -1,40 +1,38 @@
 import React, { useEffect, FC, PropsWithChildren } from 'react';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { createPortal } from 'react-dom';
-import { useSelector } from 'react-redux';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
-import { Store } from '../../Shared/Types/Store';
 import { digits_medium, text_large } from '../../Shared/Typography';
 import style from './Modal.module.css';
 
 const modal = document.getElementById('modals') as HTMLElement;
 
-const getIsOpen = (store: Store) => store.currentIngredient.isOpen;
-const getOpen = (store: Store) => store.order.isOpen;
-
 type Props = {
   onClose: () => void;
   title?: string | number;
+  open: boolean;
 };
 
-const Modal: FC<PropsWithChildren<Props>> = ({ onClose, children, title }) => {
-  const isOpen = useSelector(getIsOpen);
-  const open = useSelector(getOpen);
-
+const Modal: FC<PropsWithChildren<Props>> = ({
+  onClose,
+  children,
+  title,
+  open,
+}) => {
   useEffect(() => {
     const closeByEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         onClose();
       }
     };
-    //@ts-ignore
-    if (isOpen || open) {
+
+    if (open) {
       document.addEventListener('keydown', closeByEscape);
       return () => {
         document.removeEventListener('keydown', closeByEscape);
       };
     }
-  }, [isOpen]);
+  }, []);
 
   return createPortal(
     <>

@@ -1,15 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-interface feedState {
-  orders: [];
-  total: number | null;
-  totalToday: null;
-}
+export type feedState = typeof initialState;
 
-const initialState: feedState = {
+const initialState = {
   orders: [],
   total: null,
   totalToday: null,
+  isOpen: false,
 };
 
 const feedSlice = createSlice({
@@ -21,6 +18,9 @@ const feedSlice = createSlice({
       state.total = payload.total;
       state.totalToday = payload.totalToday;
     },
+    open: (state, {payload}) => {
+      state.isOpen = true
+    }
   },
 });
 

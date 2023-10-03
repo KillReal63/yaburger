@@ -10,17 +10,19 @@ import { text_inactive, text_medium } from '../Shared/Typography';
 import OrderCard from '../Components/OrderCard/OrderCard';
 import styles from './OrdersHistoryPage.module.css';
 import { useSocket } from '../Services/Hooks/useSocket';
+import { getCookie } from '../Helpers/cookie';
 
 const ws = 'wss://norma.nomoreparties.space/orders';
 
 export const OrdersHistoryPage = () => {
+  const token = getCookie('accessToken');
+
   const dispatch: any = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   //@ts-ignore
   const { history } = useSelector((store) => store.history);
 
-  console.log(history);
 
   const logout = () => {
     dispatch(deleteUser());
@@ -32,7 +34,7 @@ export const OrdersHistoryPage = () => {
   const { getHistory } = useSocket(ws);
 
   useEffect(() => {
-    getHistory();
+    getHistory(token as string);
   }, []);
 
   return (
@@ -75,7 +77,7 @@ export const OrdersHistoryPage = () => {
               return (
                 <Link
                   className={`${styles.orders} mb-4`}
-                  to={`/profile/orders/:id`}
+                  to={`/profile/orders/${item._id}`}
                   state={{ background: location }}
                   key={index}
                 >

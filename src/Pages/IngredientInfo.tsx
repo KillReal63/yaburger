@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { Store } from '../Shared/Types/Store';
+import { text_inactive_medium, text_medium } from '../Shared/Typography';
 import styles from './IngredientInfo.module.css';
 
 const getData = (store: Store) => store.ingredients.data;
@@ -26,32 +27,28 @@ export const IngredientPage = () => {
             src={ingredient.image}
             alt={ingredient.name}
           />
-          <span className='text text_type_main-medium mt-4 mb-8 '>
-            {ingredient.name}
-          </span>
+          <span className={`${text_medium} mt-4 mb-8 `}>{ingredient.name}</span>
           <div className={`${styles.modal_about} mb-15`}>
             <div
-              className={`${styles.modal_info} text text_type_main-medium text_color_inactive mr-4`}
+              className={`${styles.modal_info} ${text_inactive_medium} mr-4`}
             >
               <span className='mb-4'>Калории,ккал</span>
               {ingredient.calories}
             </div>
             <div
-              className={`${styles.modal_info} text text_type_main-medium text_color_inactive mr-4`}
+              className={`${styles.modal_info} ${text_inactive_medium} mr-4`}
             >
               <span className='mb-4'>Белки, г</span>
 
               {ingredient.proteins}
             </div>
             <div
-              className={`${styles.modal_info} text text_type_main-medium text_color_inactive mr-4`}
+              className={`${styles.modal_info} ${text_inactive_medium} mr-4`}
             >
               <span className='mb-4'>Жиры, г</span>
               {ingredient.fat}
             </div>
-            <div
-              className={`${styles.modal_info} text text_type_main-medium text_color_inactive `}
-            >
+            <div className={`${styles.modal_info} ${text_inactive_medium} `}>
               <span className='mb-4'>Углеводы, г</span>
               {ingredient.carbohydrates}
             </div>

@@ -8,11 +8,13 @@ import styles from './IngredientDetails.module.css';
 const getData = (store: Store) => store.ingredients.data;
 
 const IngredientDetails = () => {
+
   const { id } = useParams();
 
   const data = useSelector(getData);
 
   const ingredient = data.find((item) => item._id === id);
+  
 
   if (!ingredient) return <div>Loading...</div>;
 
