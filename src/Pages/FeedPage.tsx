@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import OrderCard from '../Components/OrderCard/OrderCard';
 import {
   text_medium,
@@ -7,19 +7,42 @@ import {
 } from '../Shared/Typography';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './FeedPage.module.css';
+import { useSelector } from 'react-redux';
+
+import { useSocket } from '../Services/Hooks/useSocket';
+
+const ws = 'wss://norma.nomoreparties.space/orders/all';
 
 export const FeedPage = () => {
+  //@ts-ignore
+
+  const { orders, total, totalToday } = useSelector((store) => store.feed);
+
+  const { getFeed } = useSocket(ws);
+
+  useEffect(() => {
+    getFeed();
+  }, []);
+
   const location = useLocation();
+
+  if (orders.length === 0) return <div>...Loading</div>;
+
   return (
     <div className={styles.page}>
       <div className={`${styles.feed} ${styles.custom_scroll}`}>
-        <Link
-          className={`${styles.wrapper} mb-4`}
-          to={'/feed/:id'}
-          state={{ background: location }}
-        >
-          <OrderCard />
-        </Link>
+        {orders.map((item: any, index: any) => {
+          return (
+            <Link
+              className={`${styles.wrapper} mb-4`}
+              to={'/feed/:id'}
+              state={{ background: location }}
+              key={index}
+            >
+              <OrderCard  {...item} />
+            </Link>
+          );
+        })}
       </div>
       <div className={`${styles.workspace}`}>
         <div className={styles.monitor}>
@@ -38,11 +61,11 @@ export const FeedPage = () => {
         </div>
         <div className='mt-15 mb-15'>
           <p className={`${text_medium}`}>Выполнено за все время:</p>
-          <p className={digits_large}>{111000}</p>
+          <p className={digits_large}>{total}</p>
         </div>
         <div>
           <p className={text_medium}>Выполнено за сегодня:</p>
-          <p className={digits_large}>{777}</p>
+          <p className={digits_large}>{totalToday}</p>
         </div>
       </div>
     </div>

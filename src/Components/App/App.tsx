@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
@@ -8,23 +10,12 @@ import { authUser } from '../../Api/userApi';
 import { fetchIngredients } from '../../Api/ingredientsApi';
 import { Token } from '../../Shared/Types/Token';
 import { urlPath } from '../../Shared/path';
-import { useSocket } from '../../Services/soket';
 
 const url = `${urlPath}/ingredients`;
 
-const ws = 'wss://norma.nomoreparties.space/orders/all';
-
 function App() {
-  const processEvent = (event: any) => {
-    const data = JSON.parse(event.data);
-    console.log(data);
-  };
-
   const dispatch: any = useDispatch();
   const token = getCookie('accessToken');
-
-  //@ts-ignore
-  //const wsToken = `?${token.replace('Bearer ', '')}`;
 
   useEffect(() => {
     if (!token === undefined) {
@@ -33,11 +24,6 @@ function App() {
     dispatch(fetchIngredients(url));
   }, [dispatch]);
 
-  const { sendData, connect } = useSocket(ws, {
-    onMessage: processEvent,
-  });
-
-  connect()
   return (
     <>
       <BrowserRouter>

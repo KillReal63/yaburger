@@ -6,6 +6,6 @@ export const registerPath = '/register';
 export const profilePath = '/profile';
 export const ingredientsPath = '/ingredients';
 export const feedPath = '/feed';
-export const ordersPath = '/profile/orders';
+export const ordersPath = '/orders';
 export const urlAuthPath = 'https://norma.nomoreparties.space/api/auth';
 export const urlPath = 'https://norma.nomoreparties.space/api';

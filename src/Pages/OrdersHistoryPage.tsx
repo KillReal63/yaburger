@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { profilePath, defaultPath, ordersPath } from '../Shared/path';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteUser } from '../Services/Slices/user';
 import { logoutUser } from '../Api/userApi';
 import { deleteCookie } from '../Helpers';
 import { text_inactive, text_medium } from '../Shared/Typography';
 import OrderCard from '../Components/OrderCard/OrderCard';
 import styles from './OrdersHistoryPage.module.css';
+import { useSocket } from '../Services/Hooks/useSocket';
+
+const ws = 'wss://norma.nomoreparties.space/orders';
 
 export const OrdersHistoryPage = () => {
   const dispatch: any = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  //@ts-ignore
+  const { history } = useSelector((store) => store.history);
+
+  console.log(history);
 
   const logout = () => {
     dispatch(deleteUser());
@@ -19,6 +28,13 @@ export const OrdersHistoryPage = () => {
     deleteCookie();
     navigate(defaultPath);
   };
+
+  const { getHistory } = useSocket(ws);
+
+  useEffect(() => {
+    getHistory();
+  }, []);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.navigation}>
@@ -54,24 +70,20 @@ export const OrdersHistoryPage = () => {
         </p>
       </div>
       <div className={`${styles.orders_history} ${styles.custom_scroll} ml-25`}>
-        <div className={`${styles.orders} mb-4`}>
-          <OrderCard />
-        </div>
-        <div className={`${styles.orders} mb-4`}>
-          <OrderCard />
-        </div>
-        <div className={`${styles.orders} mb-4`}>
-          <OrderCard />
-        </div>
-        <div className={`${styles.orders} mb-4`}>
-          <OrderCard />
-        </div>
-        <div className={`${styles.orders} mb-4`}>
-          <OrderCard />
-        </div>
-        <div className={`${styles.orders} mb-4`}>
-          <OrderCard />
-        </div>
+        {history.length > 0
+          ? history.map((item: any, index: any) => {
+              return (
+                <Link
+                  className={`${styles.orders} mb-4`}
+                  to={`/profile/orders/:id`}
+                  state={{ background: location }}
+                  key={index}
+                >
+                  <OrderCard {...item} />
+                </Link>
+              );
+            })
+          : null}
       </div>
     </div>
   );

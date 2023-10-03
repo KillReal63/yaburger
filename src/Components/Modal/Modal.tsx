@@ -27,7 +27,7 @@ const Modal: FC<PropsWithChildren<Props>> = ({ onClose, children, title }) => {
         onClose();
       }
     };
-
+    //@ts-ignore
     if (isOpen || open) {
       document.addEventListener('keydown', closeByEscape);
       return () => {

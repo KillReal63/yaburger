@@ -1,4 +1,6 @@
-import React from 'react';
+//@ts-nocheck
+
+import React, { FC } from 'react';
 import {
   CurrencyIcon,
   FormattedDate,
@@ -10,10 +12,23 @@ import {
   digits_default,
 } from '../../Shared/Typography';
 import styles from './OrderCard.module.css';
+import { Ingredient } from '../../Shared/Types/Ingredient';
+import { useSelector } from 'react-redux';
 
-const OrderCard = () => {
+type Props = Ingredient & {
+  createdAt: string;
+  ingredients: string[];
+  status: string;
+  number: number;
+};
+
+const OrderCard: FC<Props> = ({ ingredients, number, createdAt, name }) => {
+  const { data } = useSelector((store) => store.ingredients);
+
+  const items = data.filter(({ _id }) => ingredients.includes(_id));
+
   const date = () => {
-    const dateFromServer = '2022-10-10T17:33:32.877Z';
+    const dateFromServer = createdAt;
     return (
       <FormattedDate
         date={new Date(dateFromServer)}
@@ -25,36 +40,34 @@ const OrderCard = () => {
   return (
     <div className={`${styles.wrapper} pl-6 pr-6`}>
       <div className={`${styles.header} mt-6`}>
-        <p className={`${styles.id} ${digits_default}`}>#123456</p>
+        <p className={`${styles.id} ${digits_default}`}>#{number}</p>
         {date()}
       </div>
-      <h2 className={`${styles.name} ${text_medium} mb-6 mt-6`}>
-        Death Star Starship Main бургер
-      </h2>
+      <h2 className={`${styles.name} ${text_medium} mb-6 mt-6`}>{name}</h2>
       <div className={`${styles.info} mb-6`}>
         <div className={styles.ingredients}>
-          <Button
-            htmlType='button'
-            type='secondary'
-            size='small'
-            extraClass={styles.ingredient}
-          >
-            <img
-              src='https://code.s3.yandex.net/react/code/bun-02.png'
-              className={styles.img}
-            />
-          </Button>
-          <Button
-            htmlType='button'
-            type='secondary'
-            size='small'
-            extraClass={styles.ingredient}
-          >
-            <img
-              src='https://code.s3.yandex.net/react/code/bun-02.png'
-              className={styles.img}
-            />
-          </Button>
+          {items.slice(0, 5).map((item) => (
+            <Button
+              htmlType='button'
+              type='secondary'
+              size='small'
+              extraClass={styles.ingredient}
+              key={item._id}
+            >
+              <img src={item.image} className={styles.img} />
+            </Button>
+          ))}
+          {items.length > 5 && (
+            <Button
+              htmlType='button'
+              type='secondary'
+              size='small'
+              extraClass={styles.ingredient}
+            >
+              {items.length - 5}
+              <img src={'123'} className={styles.img} />
+            </Button>
+          )}
         </div>
         <div className={styles.price}>
           <p className={`${digits_default} mr-2`}>777</p>
