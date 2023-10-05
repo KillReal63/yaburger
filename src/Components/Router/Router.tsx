@@ -12,6 +12,8 @@ import {
   FeedPage,
   IngredientPage,
   OrdersHistoryPage,
+  FeedElementPage,
+  OrderElementPage,
 } from '../../Pages/index';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
@@ -26,12 +28,12 @@ import {
   registerPath,
   resetPasswordPath,
 } from '../../Shared/path';
-import styles from '../App/App.module.css';
-import { FeedElementPage } from '../../Pages/FeedElementPage';
-import { OrderElementPage } from '../../Pages/OrderElementPage';
 import OrderElement from '../OrderElement/OrderElement';
+import styles from '../App/App.module.css';
 
 const getId = (store: Store) => store.currentIngredient.ingredient;
+const getOrder = (store: Store) => store.feed.orders;
+const getHistory = (store: Store) => store.history.data;
 
 const Router = () => {
   const location = useLocation();
@@ -41,14 +43,16 @@ const Router = () => {
 
   const { _id } = useSelector(getId);
 
-  //@ts-ignore
-  const order = useSelector((store) => store.feed.orders);
+  const order = useSelector(getOrder);
+  const history = useSelector(getHistory);
 
   const orderId = order
     .map((item: any) => item._id)
-    .find(({ _id }: any) => order.includes(_id));
+    //@ts-ignore
+    .find(({ _id }) => order.includes(_id));
 
   const onClose = () => navigate(-1);
+
   return (
     <>
       <Routes location={background || location}>
@@ -110,7 +114,7 @@ const Router = () => {
             path={`/feed/:id`}
             element={
               <Modal onClose={onClose} open>
-                <OrderElement />
+                <OrderElement data={order} />
               </Modal>
             }
           />
@@ -118,7 +122,7 @@ const Router = () => {
             path={`/profile/orders/:id`}
             element={
               <Modal onClose={onClose} open>
-                <OrderElement />
+                <OrderElement data={history} />
               </Modal>
             }
           />
@@ -129,13 +133,3 @@ const Router = () => {
 };
 
 export default Router;
-// {
-//   /* <Route
-//         path={`/orders/:id`}
-//         element={
-//           <Modal onClose={onClose}>
-//             <OrderDetails />
-//           </Modal>
-//         }
-//       /> */
-// }

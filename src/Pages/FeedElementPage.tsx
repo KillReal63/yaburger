@@ -1,27 +1,23 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import OrderElement from '../Components/OrderElement/OrderElement';
-import styles from './FeedElementPage.module.css';
 import { useLocation } from 'react-router-dom';
-import { useSocket } from '../Services/Hooks/useSocket';
+import { useSelector } from 'react-redux';
+import { Store } from '../Shared/Types/Store';
+import styles from './FeedElementPage.module.css';
 
-const ws = 'wss://norma.nomoreparties.space/orders/all';
-
+const getOrder = (store: Store) => store.feed.orders;
 
 export const FeedElementPage = () => {
   const { pathname } = useLocation();
 
+  const data = useSelector(getOrder);
+
   const id = pathname.replace('/feed/', '');
-
-  const { getFeed } = useSocket(ws);
-
-  useEffect(() => {
-    getFeed();
-  }, []);
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.element}>
-        <OrderElement externalId={id} />
+        <OrderElement externalId={id} data={data} />
       </div>
     </div>
   );

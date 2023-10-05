@@ -9,34 +9,53 @@ import {
   text_default,
   text_medium,
   text_inactive,
+  digits_medium,
 } from '../../Shared/Typography';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Store } from '../../Shared/Types/Store';
 import styles from './OrderElement.module.css';
+
+type Data = {
+  createdAt?: string;
+  ingredients?: string[];
+  name?: string;
+  number?: number;
+  status?: string;
+  updatedAt?: string;
+  _id?: string;
+  length?: number;
+  find?: any;
+};
 
 type Props = {
   externalId?: string;
+  data: Data;
 };
 
-const OrderElement: FC<Props> = ({ externalId }) => {
+const getIngredients = (store: Store) => store.ingredients.data;
+
+const OrderElement: FC<Props> = ({ externalId, data }) => {
   const { id } = useParams();
 
-  //@ts-ignore
-  const data = useSelector((store) => store.feed.orders);
+  const ingredients = useSelector(getIngredients);
 
-  //@ts-ignore
-  const ingredients = useSelector((store) => store.ingredients.data);
+  if (ingredients.length === 0) {
+    return <div>...Loading</div>;
+  }
+
+  if (data.length === 0) {
+    return <div>...Loading</div>;
+  }
 
   const order = data.find(
     (item: any) => item._id === (externalId ? externalId : id)
   );
 
-  if (data.length === 0) return <div>...Loading</div>;
   const items = ingredients.filter(({ _id }: any) =>
     order.ingredients.includes(_id)
   );
 
-  //@ts-ignore
   const totalPrice = items.reduce((acc, item) => acc + item.price, 0);
 
   const date = () => {
@@ -51,9 +70,12 @@ const OrderElement: FC<Props> = ({ externalId }) => {
 
   return (
     <div className={styles.element}>
+      <p className={`${digits_medium} mb-4`}>#{order.number}</p>
       <div className='mb-15'>
         <p className={`${text_medium} mb-3`}>{order.name}</p>
-        <p className={styles.status}>Выполнен</p>
+        <p className={styles.status}>
+          {order.status === 'done' ? 'Выполнен' : 'В процессе'}
+        </p>
       </div>
       <div className={`${styles.about} mb-10`}>
         <p className={`${text_medium} mb-6`}>Состав:</p>

@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import React, { FC } from 'react';
 import {
   CurrencyIcon,
@@ -10,10 +8,12 @@ import {
   text_medium,
   text_inactive,
   digits_default,
+  digits_medium,
 } from '../../Shared/Typography';
-import styles from './OrderCard.module.css';
 import { Ingredient } from '../../Shared/Types/Ingredient';
 import { useSelector } from 'react-redux';
+import { Store } from '../../Shared/Types/Store';
+import styles from './OrderCard.module.css';
 
 type Props = Ingredient & {
   createdAt: string;
@@ -22,8 +22,10 @@ type Props = Ingredient & {
   number: number;
 };
 
+const getData = (store: Store) => store.ingredients.data;
+
 const OrderCard: FC<Props> = ({ ingredients, number, createdAt, name }) => {
-  const { data } = useSelector((store) => store.ingredients);
+  const data = useSelector(getData);
 
   const items = data.filter(({ _id }) => ingredients.includes(_id));
 
@@ -48,12 +50,13 @@ const OrderCard: FC<Props> = ({ ingredients, number, createdAt, name }) => {
       <h2 className={`${styles.name} ${text_medium} mb-6 mt-6`}>{name}</h2>
       <div className={`${styles.info} mb-6`}>
         <div className={styles.ingredients}>
-          {items.slice(0, 5).map((item) => (
+          {items.slice(0, 5).map((item, index) => (
             <Button
               htmlType='button'
               type='secondary'
               size='small'
               extraClass={styles.ingredient}
+              style={{ zIndex: items.length - index }}
               key={item._id}
             >
               <img src={item.image} className={styles.img} />
@@ -65,9 +68,10 @@ const OrderCard: FC<Props> = ({ ingredients, number, createdAt, name }) => {
               type='secondary'
               size='small'
               extraClass={styles.ingredient}
+              style={{ zIndex: 1 }}
             >
-              {items.length - 5}
-              <img src={'123'} className={styles.img} />
+              <p className={digits_medium}>+{items.length - 5}</p>
+              <img src={``} className={styles.img} />
             </Button>
           )}
         </div>

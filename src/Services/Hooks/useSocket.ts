@@ -4,7 +4,7 @@ import { connect } from '../Slices/feed';
 import { connect as connectHistory } from '../Slices/history';
 import { Token } from '../../Shared/Types/Token';
 import { getCookie } from '../../Helpers';
-import { getRefreshToken } from '../../Api/tokenApi';
+import { authUser } from '../../Api/userApi';
 
 export const useSocket = (url: string) => {
   const ws = useRef<WebSocket | null>(null);
@@ -16,7 +16,6 @@ export const useSocket = (url: string) => {
     };
     ws.current.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      
       dispatch(connect(data));
     };
   };
@@ -26,19 +25,18 @@ export const useSocket = (url: string) => {
     ws.current.onopen = () => {
       console.log('Complete');
     };
-    ws.current.onmessage = async (event) => {
+    ws.current.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      if (data.success === false) {
-        const oldRefreshToken = getCookie('refreshToken');
-        const { refreshToken, accessToken } = await getRefreshToken(
-          oldRefreshToken as Token
-        );
-        document.cookie = `refreshToken=${refreshToken};`;
-        document.cookie = `accessToken=${accessToken};`;
-        return { accessToken, refreshToken };
+      if (data.message === 'Invalid or missing token') {
+        const token = getCookie('accessToken');
+        dispatch(authUser({ token } as Token));
+        dispatch(connectHistory(data));
       } else {
         dispatch(connectHistory(data));
       }
+    };
+    ws.current.onerror = (event) => {
+      console.log(event, event);
     };
   };
   return { getFeed, getHistory };

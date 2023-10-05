@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { deleteCookie, getCookie } from '../Helpers/index';
+import { getCookie } from '../Helpers/index';
 import { getRefreshToken } from './tokenApi';
 import { User } from '../Shared/Types/User';
 import { NewUser } from '../Shared/Types/NewUser';
@@ -84,7 +84,6 @@ export const authUser = createAsyncThunk(
         const { refreshToken, accessToken } = await getRefreshToken(
           oldRefreshToken as Token
         );
-
         document.cookie = `refreshToken=${refreshToken};`;
         document.cookie = `accessToken=${accessToken};`;
         return { accessToken, refreshToken };

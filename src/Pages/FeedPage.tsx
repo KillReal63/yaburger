@@ -6,14 +6,18 @@ import {
   digits_large,
 } from '../Shared/Typography';
 import { Link, useLocation } from 'react-router-dom';
-import styles from './FeedPage.module.css';
 import { useSelector } from 'react-redux';
+import { Store } from '../Shared/Types/Store';
+import styles from './FeedPage.module.css';
+
+const getOrder = (store: Store) => store.feed.orders;
+const getTotal = (store: Store) => store.feed.total;
+const getTotalToday = (store: Store) => store.feed.totalToday;
 
 export const FeedPage = () => {
-  //@ts-ignore
-
-  const { orders, total, totalToday } = useSelector((store) => store.feed);
-
+  const orders = useSelector(getOrder);
+  const total = useSelector(getTotal);
+  const totalToday = useSelector(getTotalToday);
   const location = useLocation();
 
   if (orders.length === 0) return <div>...Loading</div>;
@@ -38,15 +42,29 @@ export const FeedPage = () => {
         <div className={styles.monitor}>
           <div className={styles.orders}>
             <p className={`${text_medium} mb-6`}>Готовы:</p>
-            <p className={`${styles.number} ${digits_default} mb-2`}>{12738}</p>
-            <p className={`${styles.number} ${digits_default} mb-2`}>{12738}</p>
-            <p className={`${styles.number} ${digits_default} mb-2`}>{12738}</p>
+            {orders
+              .filter((item: any) => item.status === 'done')
+              .map((item: any, index: number) => (
+                <p
+                  className={`${styles.number} ${digits_default} mb-2`}
+                  key={index}
+                >
+                  {item.number}
+                </p>
+              ))}
           </div>
           <div className={styles.orders}>
             <p className={`${text_medium} mb-6`}>В работе:</p>
-            <p className={`${digits_default} mb-2`}>{12738}</p>
-            <p className={`${digits_default} mb-2`}>{12738}</p>
-            <p className={`${digits_default} mb-2`}>{12738}</p>
+            {orders
+              .filter((item: any) => item.status === 'preparing')
+              .map((item: any, index: number) => (
+                <p
+                  className={`${styles.number} ${digits_default} mb-2`}
+                  key={index}
+                >
+                  {item.number}
+                </p>
+              ))}
           </div>
         </div>
         <div className='mt-15 mb-15'>

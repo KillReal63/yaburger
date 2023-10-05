@@ -4,6 +4,8 @@ import { open } from '../../Services/Slices/currentIngredient';
 import IngredientItem from '../IngredientItem/IngredientItem';
 import { Store } from '../../Shared/Types/Store';
 import { Ingredient } from '../../Shared/Types/Ingredient';
+import { AppDispatch } from '../../Services/store';
+import { text_medium } from '../../Shared/Typography';
 import styles from './Ingredients.module.css';
 
 const categories = [
@@ -22,7 +24,7 @@ const getData = (store: Store) => store.ingredients.data;
 const getLoading = (store: Store) => store.ingredients.loading;
 
 const Ingredients = ({ refs }: { refs: RefsType }) => {
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   const data = useSelector(getData);
   const loading = useSelector(getLoading);
@@ -38,7 +40,7 @@ const Ingredients = ({ refs }: { refs: RefsType }) => {
       {categories.map(({ name, slug }) =>
         slug === 'bun' ? (
           <section key={name} ref={refs.bunsRef}>
-            <span className='text text_type_main-medium'>{name}</span>
+            <span className={text_medium}>{name}</span>
             <div className={`${styles.categories} pl-4 pr-4`}>
               {data
                 .filter((item) => item.type === slug)
@@ -53,7 +55,7 @@ const Ingredients = ({ refs }: { refs: RefsType }) => {
           </section>
         ) : slug === 'sauce' ? (
           <section key={name} ref={refs.saucesRef}>
-            <span className='text text_type_main-medium'>{name}</span>
+            <span className={text_medium}>{name}</span>
             <div className={`${styles.categories} pl-4 pr-4`}>
               {data
                 .filter((item) => item.type === slug)
@@ -68,7 +70,7 @@ const Ingredients = ({ refs }: { refs: RefsType }) => {
           </section>
         ) : (
           <section key={name} ref={refs.mainsRef}>
-            <span className='text text_type_main-medium'>{name}</span>
+            <span className={text_medium}>{name}</span>
             <div className={`${styles.categories} pl-4 pr-4`}>
               {data
                 .filter((item) => item.type === slug)

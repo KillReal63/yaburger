@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
@@ -11,12 +9,13 @@ import { fetchIngredients } from '../../Api/ingredientsApi';
 import { Token } from '../../Shared/Types/Token';
 import { urlPath } from '../../Shared/path';
 import { useSocket } from '../../Services/Hooks/useSocket';
+import { AppDispatch } from '../../Services/store';
 
 const url = `${urlPath}/ingredients`;
 const ws = 'wss://norma.nomoreparties.space/orders/all';
 
 function App() {
-  const dispatch: any = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const token = getCookie('accessToken');
 
   useEffect(() => {

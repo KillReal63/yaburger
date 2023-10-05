@@ -6,6 +6,8 @@ import { ResetPasswordPage } from './ResetPassword';
 import { UserPage } from './User';
 import { FeedPage } from './FeedPage';
 import { OrdersHistoryPage } from './OrdersHistoryPage';
+import { FeedElementPage } from './FeedElementPage';
+import { OrderElementPage } from './OrderElementPage';
 
 export {
   ForgotPasswordPage,
@@ -16,4 +18,6 @@ export {
   UserPage,
   FeedPage,
   OrdersHistoryPage,
+  FeedElementPage,
+  OrderElementPage
 };

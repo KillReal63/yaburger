@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchIngredients } from '../../Api/ingredientsApi';
 import { Ingredient } from '../../Shared/Types/Ingredient';
-import { setLoading, setError } from '../../Helpers/response';
+import { setLoading, setError } from '../../Helpers/index';
 
 export type ingredientState = typeof initialState;
 

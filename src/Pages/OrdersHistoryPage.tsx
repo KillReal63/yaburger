@@ -8,11 +8,13 @@ import { logoutUser } from '../Api/userApi';
 import { deleteCookie } from '../Helpers';
 import { text_inactive, text_medium } from '../Shared/Typography';
 import OrderCard from '../Components/OrderCard/OrderCard';
-import styles from './OrdersHistoryPage.module.css';
 import { useSocket } from '../Services/Hooks/useSocket';
 import { getCookie } from '../Helpers/cookie';
+import { Store } from '../Shared/Types/Store';
+import styles from './OrdersHistoryPage.module.css';
 
 const ws = 'wss://norma.nomoreparties.space/orders';
+const getData = (store: Store) => store.history.data;
 
 export const OrdersHistoryPage = () => {
   const token = getCookie('accessToken');
@@ -20,9 +22,8 @@ export const OrdersHistoryPage = () => {
   const dispatch: any = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  //@ts-ignore
-  const { history } = useSelector((store) => store.history);
 
+  const history = useSelector(getData);
 
   const logout = () => {
     dispatch(deleteUser());
@@ -72,20 +73,22 @@ export const OrdersHistoryPage = () => {
         </p>
       </div>
       <div className={`${styles.orders_history} ${styles.custom_scroll} ml-25`}>
-        {history.length > 0
-          ? history.map((item: any, index: any) => {
-              return (
-                <Link
-                  className={`${styles.orders} mb-4`}
-                  to={`/profile/orders/${item._id}`}
-                  state={{ background: location }}
-                  key={index}
-                >
-                  <OrderCard {...item} />
-                </Link>
-              );
-            })
-          : null}
+        {history ? (
+          history.map((item: any, index: any) => {
+            return (
+              <Link
+                className={`${styles.orders} mb-4`}
+                to={`/profile/orders/${item._id}`}
+                state={{ background: location }}
+                key={index}
+              >
+                <OrderCard {...item} />
+              </Link>
+            );
+          })
+        ) : (
+          <div>Refresh page</div>
+        )}
       </div>
     </div>
   );

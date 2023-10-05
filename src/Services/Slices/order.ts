@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createOrder } from '../../Api/orderApi';
-import { setLoading, setError } from '../../Helpers/response';
+import { setLoading, setError } from '../../Helpers/index';
 
 export type orderState = typeof initialState;
 

@@ -2,9 +2,9 @@ import { configureStore } from '@reduxjs/toolkit';
 import ingredientsSlice from './Slices/ingredients';
 import cartSlice from './Slices/cart';
 import currentIngredientSlice from './Slices/currentIngredient';
-import counterSlice from './Slices/counter.ts';
-import orderSlice from './Slices//order';
-import userSlice from './Slices/user.ts';
+import counterSlice from './Slices/counter';
+import orderSlice from './Slices/order';
+import userSlice from './Slices/user';
 import feedSlice from './Slices/feed';
 import historySlice from './Slices/history';
 
@@ -25,5 +25,7 @@ const store = configureStore({
       serializableCheck: false,
     }),
 });
+
+export type AppDispatch = typeof store.dispatch;
 
 export default store;

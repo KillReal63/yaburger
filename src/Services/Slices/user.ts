@@ -6,7 +6,7 @@ import {
   updateUser,
 } from '../../Api/userApi';
 import { getCookie } from '../../Helpers';
-import { setLoading, setError } from '../../Helpers/response';
+import { setLoading, setError } from '../../Helpers/index';
 
 export type userState = typeof initialState;
 

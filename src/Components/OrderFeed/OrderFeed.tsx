@@ -3,6 +3,7 @@ import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink } from 'react-router-dom';
 import { path } from '../../Shared/Types/Pathname';
 import { feedPath } from '../../Shared/path';
+import { text_default, text_inactive } from '../../Shared/Typography';
 import styles from './OrderFeed.module.css';
 
 const OrderFeed = ({ pathname }: path) => {
@@ -12,8 +13,8 @@ const OrderFeed = ({ pathname }: path) => {
         to={feedPath}
         className={`${
           pathname === '/feed'
-            ? `${styles.link} text text_type_main-default`
-            : `${styles.disabled} text text_type_main-default text_color_inactive`
+            ? `${styles.link} ${text_default}`
+            : `${styles.disabled} ${text_inactive}`
         }`}
       >
         <ListIcon type={`${pathname === '/feed' ? 'primary' : 'secondary'}`} />

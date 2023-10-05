@@ -9,13 +9,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import { registerUser } from '../Api/userApi';
 import { useDispatch } from 'react-redux';
 import { loginPath } from '../Shared/path';
+import { AppDispatch } from '../Services/store';
+import { text_inactive } from '../Shared/Typography';
 import styles from './Register.module.css';
 
 export const RegisterPage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch: any = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -26,7 +28,7 @@ export const RegisterPage = () => {
 
   return (
     <div className={styles.wrapper}>
-      <h1>Регистрация</h1>
+      <h1 className='mb-4'>Регистрация</h1>
       <form className={styles.form} onSubmit={onSubmit}>
         <Input
           type={'text'}
@@ -59,9 +61,7 @@ export const RegisterPage = () => {
         </Button>
       </form>
       <div className={`mb-4 ${styles.login}`}>
-        <p className='text text_type_main-default text_color_inactive mr-2'>
-          Уже зарегестрированы?
-        </p>
+        <p className={`${text_inactive} mr-2`}>Уже зарегестрированы?</p>
         <Link to={loginPath}>Войти</Link>
       </div>
     </div>

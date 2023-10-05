@@ -18,7 +18,13 @@ import { getCookie } from '../../Helpers';
 import { Store } from '../../Shared/Types/Store';
 import { Ingredient } from '../../Shared/Types/Ingredient';
 import { digits_default } from '../../Shared/Typography';
+import { AppDispatch } from '../../Services/store';
+import { Token } from '../../Shared/Types/Token';
 import styles from './BurgerConstructor.module.css';
+
+type Props = Token & {
+  arr: string[];
+};
 
 const getTotalPrice = (store: Store) =>
   store.cart.ingredients.reduce((acc, item) => acc + item.price, 0);
@@ -29,7 +35,7 @@ const getIngredientsId = (store: Store) =>
 const getIsOpen = (store: Store) => store.order.isOpen;
 
 const BurgerConstructor = () => {
-  const dispatch: any = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const totalPrice = useSelector(getTotalPrice);
   const token = getCookie('accessToken');
   const bun = useSelector(getBun);
@@ -41,8 +47,7 @@ const BurgerConstructor = () => {
 
   const getOrder = () => {
     const arr = [bun.id, ...ingredientsId];
-    //@ts-ignore
-    dispatch(createOrder({ arr, token }));
+    dispatch(createOrder({ arr, token } as Props));
     dispatch(open(true));
   };
 

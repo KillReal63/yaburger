@@ -64,9 +64,7 @@ export const UserPage = () => {
             Профиль
           </button>
         </p>
-        <p
-          className={`${text_inactive} ${styles.nav}`}
-        >
+        <p className={`${text_inactive} ${styles.nav}`}>
           <button
             className={styles.navButton}
             type='button'
@@ -75,9 +73,7 @@ export const UserPage = () => {
             История заказов
           </button>
         </p>
-        <p
-          className={`${text_inactive} ${styles.nav}`}
-        >
+        <p className={`${text_inactive} ${styles.nav}`}>
           <button
             className={styles.navButton}
             type='button'
@@ -86,9 +82,7 @@ export const UserPage = () => {
             Выход
           </button>
         </p>
-        <p
-          className={`${text_inactive} mt-20 ${styles.about}`}
-        >
+        <p className={`${text_inactive} mt-20 ${styles.about}`}>
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </div>

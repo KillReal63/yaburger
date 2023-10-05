@@ -2,8 +2,8 @@ import React, { useEffect, FC, PropsWithChildren } from 'react';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { createPortal } from 'react-dom';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
-import { digits_medium, text_large } from '../../Shared/Typography';
-import style from './Modal.module.css';
+import { text_large } from '../../Shared/Typography';
+import styles from './Modal.module.css';
 
 const modal = document.getElementById('modals') as HTMLElement;
 
@@ -37,8 +37,8 @@ const Modal: FC<PropsWithChildren<Props>> = ({
   return createPortal(
     <>
       <ModalOverlay onClick={() => onClose()} />
-      <div className={style.modal}>
-        <header className={`${style.modal_header} ${text_large} mt-10`}>
+      <div className={styles.modal}>
+        <header className={`${styles.modal_header} ${text_large} mt-10`}>
           {title}
           <CloseIcon type='primary' onClick={() => onClose()} />
         </header>

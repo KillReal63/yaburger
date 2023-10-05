@@ -18,8 +18,6 @@ const ProtectedRouteElement = ({ auth, element }: elem) => {
     return <Navigate to={defaultPath} />;
   }
 
-  
-
   return element;
 };
 
