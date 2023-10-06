@@ -5,10 +5,11 @@ import { connect as connectHistory } from '../Slices/history';
 import { Token } from '../../Shared/Types/Token';
 import { getCookie } from '../../Helpers';
 import { authUser } from '../../Api/userApi';
+import { AppDispatch } from '../store';
 
 export const useSocket = (url: string) => {
   const ws = useRef<WebSocket | null>(null);
-  const dispatch: any = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const getFeed = () => {
     ws.current = new WebSocket(url);
     ws.current.onopen = () => {
@@ -26,17 +27,17 @@ export const useSocket = (url: string) => {
       console.log('Complete');
     };
     ws.current.onmessage = (event) => {
+      event.preventDefault();
       const data = JSON.parse(event.data);
       if (data.message === 'Invalid or missing token') {
         const token = getCookie('accessToken');
         dispatch(authUser({ token } as Token));
-        dispatch(connectHistory(data));
       } else {
         dispatch(connectHistory(data));
       }
     };
     ws.current.onerror = (event) => {
-      console.log(event, event);
+      console.log(event);
     };
   };
   return { getFeed, getHistory };

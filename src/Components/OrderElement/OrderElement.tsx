@@ -14,6 +14,7 @@ import {
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Store } from '../../Shared/Types/Store';
+import { Ingredient } from '../../Shared/Types/Ingredient';
 import styles from './OrderElement.module.css';
 
 type Data = {
@@ -52,8 +53,8 @@ const OrderElement: FC<Props> = ({ externalId, data }) => {
     (item: any) => item._id === (externalId ? externalId : id)
   );
 
-  const items = ingredients.filter(({ _id }: any) =>
-    order.ingredients.includes(_id)
+  const items = ingredients.filter((ingredient: Ingredient) =>
+    order.ingredients.includes(ingredient._id)
   );
 
   const totalPrice = items.reduce((acc, item) => acc + item.price, 0);
@@ -80,7 +81,7 @@ const OrderElement: FC<Props> = ({ externalId, data }) => {
       <div className={`${styles.about} mb-10`}>
         <p className={`${text_medium} mb-6`}>Состав:</p>
         <div className={`${styles.wrapper} ${styles.custom_scroll}`}>
-          {items.map((item: any, index: any) => (
+          {items.map((item: Ingredient, index: number) => (
             <div className={`${styles.ingredient_info} mb-4`} key={index}>
               <Button
                 htmlType='button'
@@ -93,7 +94,11 @@ const OrderElement: FC<Props> = ({ externalId, data }) => {
               <p className={`${text_default} ml-4 mr-4`}>{item.name}</p>
               <div className={`${styles.counter}`}>
                 <p className={`${digits_default} mr-2`}>
-                  {1} x {item.price}
+                  {
+                    order.ingredients.filter((elem: any) => elem === item._id)
+                      .length
+                  }{' '}
+                  x {item.price}
                 </p>
                 <CurrencyIcon type='primary' />
               </div>

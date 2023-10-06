@@ -12,10 +12,11 @@ import { useNavigate } from 'react-router-dom';
 import { defaultPath, profilePath, ordersPath } from '../Shared/path';
 import { deleteCookie, getCookie } from '../Helpers';
 import { text_inactive, text_medium } from '../Shared/Typography';
+import { AppDispatch } from '../Services/store';
 import styles from './User.module.css';
 
 export const UserPage = () => {
-  const dispatch: any = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -57,7 +58,7 @@ export const UserPage = () => {
       <div className={styles.navigation}>
         <p className={`${text_medium} ${styles.nav}`}>
           <button
-            className={styles.navButton}
+            className={`${styles.navButton} ${styles.link}`}
             type='button'
             onClick={() => navigate(profilePath)}
           >

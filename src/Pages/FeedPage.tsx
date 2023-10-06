@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import chunk from 'lodash.chunk';
 import OrderCard from '../Components/OrderCard/OrderCard';
 import {
   text_medium,
@@ -20,12 +21,14 @@ export const FeedPage = () => {
   const totalToday = useSelector(getTotalToday);
   const location = useLocation();
 
+  const ordersChunks = chunk(orders, 10);
+
   if (orders.length === 0) return <div>...Loading</div>;
 
   return (
     <div className={styles.page}>
       <div className={`${styles.feed} ${styles.custom_scroll}`}>
-        {orders.map((item: any, index: any) => {
+        {orders.map((item: any, index: number) => {
           return (
             <Link
               className={`${styles.wrapper} mb-4`}
@@ -40,31 +43,37 @@ export const FeedPage = () => {
       </div>
       <div className={`${styles.workspace}`}>
         <div className={styles.monitor}>
-          <div className={styles.orders}>
+          <div>
             <p className={`${text_medium} mb-6`}>Готовы:</p>
-            {orders
-              .filter((item: any) => item.status === 'done')
-              .map((item: any, index: number) => (
-                <p
-                  className={`${styles.number} ${digits_default} mb-2`}
-                  key={index}
-                >
-                  {item.number}
-                </p>
-              ))}
+            {ordersChunks.slice(4).map((order, index) => (
+              <div className={styles.orders} key={index}>
+                {order
+                  .filter((item: any) => item.status === 'done')
+                  .map((item: any, index: number) => (
+                    <p
+                      className={`${styles.number} ${digits_default} mb-2`}
+                      key={index}
+                    >
+                      {item.number}
+                    </p>
+                  ))}
+              </div>
+            ))}
           </div>
-          <div className={styles.orders}>
+          <div>
             <p className={`${text_medium} mb-6`}>В работе:</p>
-            {orders
-              .filter((item: any) => item.status === 'preparing')
-              .map((item: any, index: number) => (
-                <p
-                  className={`${styles.number} ${digits_default} mb-2`}
-                  key={index}
-                >
-                  {item.number}
-                </p>
-              ))}
+            <div className={styles.orders}>
+              {orders
+                .filter((item: any) => item.status === 'preparing')
+                .map((item: any, index: number) => (
+                  <p
+                    className={`${styles.number} ${digits_default} mb-2`}
+                    key={index}
+                  >
+                    {item.number}
+                  </p>
+                ))}
+            </div>
           </div>
         </div>
         <div className='mt-15 mb-15'>

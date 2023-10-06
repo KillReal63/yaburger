@@ -11,6 +11,7 @@ import OrderCard from '../Components/OrderCard/OrderCard';
 import { useSocket } from '../Services/Hooks/useSocket';
 import { getCookie } from '../Helpers/cookie';
 import { Store } from '../Shared/Types/Store';
+import { AppDispatch } from '../Services/store';
 import styles from './OrdersHistoryPage.module.css';
 
 const ws = 'wss://norma.nomoreparties.space/orders';
@@ -19,7 +20,7 @@ const getData = (store: Store) => store.history.data;
 export const OrdersHistoryPage = () => {
   const token = getCookie('accessToken');
 
-  const dispatch: any = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -41,7 +42,7 @@ export const OrdersHistoryPage = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.navigation}>
-        <p className={`${text_medium} ${styles.nav}`}>
+        <p className={`${text_inactive} ${styles.nav}`}>
           <button
             className={styles.navButton}
             type='button'
@@ -50,9 +51,9 @@ export const OrdersHistoryPage = () => {
             Профиль
           </button>
         </p>
-        <p className={`${text_inactive} ${styles.nav}`}>
+        <p className={`${text_medium} ${styles.nav}`}>
           <button
-            className={styles.navButton}
+            className={`${styles.navButton} ${styles.link}`}
             type='button'
             onClick={() => navigate(ordersPath)}
           >
@@ -73,8 +74,8 @@ export const OrdersHistoryPage = () => {
         </p>
       </div>
       <div className={`${styles.orders_history} ${styles.custom_scroll} ml-25`}>
-        {history ? (
-          history.map((item: any, index: any) => {
+        {history.length !== 0 ? (
+          history.map((item: any, index: number) => {
             return (
               <Link
                 className={`${styles.orders} mb-4`}

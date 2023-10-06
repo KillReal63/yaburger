@@ -50,7 +50,6 @@
 
 .orders {
   width: 272px;
-  height: 206px;
   display: flex;
   flex-direction: column;
 }

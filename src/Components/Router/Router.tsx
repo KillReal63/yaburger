@@ -31,6 +31,11 @@ import {
 import OrderElement from '../OrderElement/OrderElement';
 import styles from '../App/App.module.css';
 
+interface IOrder {
+  item?: string[];
+  _id: string;
+}
+
 const getId = (store: Store) => store.currentIngredient.ingredient;
 const getOrder = (store: Store) => store.feed.orders;
 const getHistory = (store: Store) => store.history.data;
@@ -44,12 +49,10 @@ const Router = () => {
   const { _id } = useSelector(getId);
 
   const order = useSelector(getOrder);
+
   const history = useSelector(getHistory);
 
-  const orderId = order
-    .map((item: any) => item._id)
-    //@ts-ignore
-    .find(({ _id }) => order.includes(_id));
+  const orderId = order.map((item: IOrder) => item._id).find((_id) => _id);
 
   const onClose = () => navigate(-1);
 
