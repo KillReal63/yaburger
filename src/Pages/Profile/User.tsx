@@ -5,18 +5,17 @@ import {
   PasswordInput,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
-import { deleteUser } from '../Services/Slices/user';
-import { logoutUser, updateUser } from '../Api/userApi';
+import { deleteUser } from '../../Services/Slices/user';
+import { logoutUser, updateUser } from '../../Api/userApi';
 import { useNavigate } from 'react-router-dom';
-import { defaultPath, profilePath, ordersPath } from '../Shared/path';
-import { deleteCookie, getCookie } from '../Helpers';
-import { text_inactive, text_medium } from '../Shared/Typography';
-import { AppDispatch } from '../Services/store';
+import { defaultPath, profilePath, ordersPath } from '../../Shared/path';
+import { deleteCookie, getCookie } from '../../Helpers';
+import { text_inactive, text_medium } from '../../Shared/Typography';
+import { useAppDispatch } from '../../Shared/Types/Store';
 import styles from './User.module.css';
 
 export const UserPage = () => {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');

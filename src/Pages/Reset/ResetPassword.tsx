@@ -5,9 +5,9 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom';
-import { resetPassword } from '../Api/passwordApi';
-import { loginPath, defaultPath, forgotPasswordPath } from '../Shared/path';
-import { text_inactive } from '../Shared/Typography';
+import { resetPassword } from '../../Api/passwordApi';
+import { loginPath, defaultPath, forgotPasswordPath } from '../../Shared/path';
+import { text_inactive } from '../../Shared/Typography';
 import styles from './ResetPassword.module.css';
 
 export const ResetPasswordPage = () => {

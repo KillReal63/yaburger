@@ -1,11 +1,10 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { open } from '../../Services/Slices/currentIngredient';
 import IngredientItem from '../IngredientItem/IngredientItem';
-import { Store } from '../../Shared/Types/Store';
 import { Ingredient } from '../../Shared/Types/Ingredient';
-import { AppDispatch } from '../../Services/store';
 import { text_medium } from '../../Shared/Typography';
+import { RootState, useAppDispatch } from '../../Shared/Types/Store';
 import styles from './Ingredients.module.css';
 
 const categories = [
@@ -20,11 +19,11 @@ type RefsType = {
   mainsRef: () => void;
 };
 
-const getData = (store: Store) => store.ingredients.data;
-const getLoading = (store: Store) => store.ingredients.loading;
+const getData = (store: RootState) => store.ingredients.data;
+const getLoading = (store: RootState) => store.ingredients.loading;
 
 const Ingredients = ({ refs }: { refs: RefsType }) => {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const data = useSelector(getData);
   const loading = useSelector(getLoading);

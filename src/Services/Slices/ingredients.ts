@@ -3,8 +3,6 @@ import { fetchIngredients } from '../../Api/ingredientsApi';
 import { Ingredient } from '../../Shared/Types/Ingredient';
 import { setLoading, setError } from '../../Helpers/index';
 
-export type ingredientState = typeof initialState;
-
 const initialState = {
   loading: false,
   error: null || undefined,

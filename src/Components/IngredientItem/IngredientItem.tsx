@@ -6,14 +6,14 @@ import {
   Counter,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Store } from '../../Shared/Types/Store';
+import { RootState } from '../../Shared/Types/Store';
 import { Ingredient } from '../../Shared/Types/Ingredient';
 import { ingredientsPath } from '../../Shared/path';
 import { digits_default, text_default } from '../../Shared/Typography';
 import styles from './IngredientItem.module.css';
 
-const getIds = (state: Store) => state.counter.ids;
-const getBun = (state: Store) => state.cart.bun;
+const getIds = (state: RootState) => state.counter.ids;
+const getBun = (state: RootState) => state.cart.bun;
 
 type Props = Ingredient & {
   onClick: () => void;

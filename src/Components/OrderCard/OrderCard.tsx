@@ -10,21 +10,14 @@ import {
   digits_default,
   digits_medium,
 } from '../../Shared/Typography';
-import { Ingredient } from '../../Shared/Types/Ingredient';
 import { useSelector } from 'react-redux';
-import { Store } from '../../Shared/Types/Store';
+import { RootState } from '../../Shared/Types/Store';
+import { Data } from '../../Services/Sockets/wsActions';
 import styles from './OrderCard.module.css';
 
-type Props = Ingredient & {
-  createdAt: string;
-  ingredients: string[];
-  status: string;
-  number: number;
-};
+const getData = (store: RootState) => store.ingredients.data;
 
-const getData = (store: Store) => store.ingredients.data;
-
-const OrderCard: FC<Props> = ({ ingredients, number, createdAt, name }) => {
+const OrderCard: FC<Data> = ({ ingredients, number, createdAt, name }) => {
   const data = useSelector(getData);
 
   const items = data.filter(({ _id }) => ingredients.includes(_id));

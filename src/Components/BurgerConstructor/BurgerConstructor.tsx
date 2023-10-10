@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import {
   ConstructorElement,
@@ -15,27 +15,26 @@ import { increment } from '../../Services/Slices/counter';
 import { open, close } from '../../Services/Slices/order';
 import { createOrder } from '../../Api/orderApi';
 import { getCookie } from '../../Helpers';
-import { Store } from '../../Shared/Types/Store';
 import { Ingredient } from '../../Shared/Types/Ingredient';
 import { digits_default } from '../../Shared/Typography';
-import { AppDispatch } from '../../Services/store';
 import { Token } from '../../Shared/Types/Token';
+import { RootState, useAppDispatch } from '../../Shared/Types/Store';
 import styles from './BurgerConstructor.module.css';
 
 type Props = Token & {
   arr: string[];
 };
 
-const getTotalPrice = (store: Store) =>
+const getTotalPrice = (store: RootState) =>
   store.cart.ingredients.reduce((acc, item) => acc + item.price, 0);
-const getBun = (store: Store) => store.cart.bun;
-const getIngredients = (store: Store) => store.cart.ingredients;
-const getIngredientsId = (store: Store) =>
+const getBun = (store: RootState) => store.cart.bun;
+const getIngredients = (store: RootState) => store.cart.ingredients;
+const getIngredientsId = (store: RootState) =>
   store.cart.ingredients.map((item) => item.id);
-const getIsOpen = (store: Store) => store.order.isOpen;
+const getIsOpen = (store: RootState) => store.order.isOpen;
 
 const BurgerConstructor = () => {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const totalPrice = useSelector(getTotalPrice);
   const token = getCookie('accessToken');
   const bun = useSelector(getBun);
@@ -43,7 +42,8 @@ const BurgerConstructor = () => {
   const ingredientsId = useSelector(getIngredientsId);
   const isOpen = useSelector(getIsOpen);
   const isAuth = getCookie('isAuth');
-  const onClose = () => dispatch(close());
+
+  const onClose = () => dispatch(close(false));
 
   const getOrder = () => {
     const arr = [bun.id, ...ingredientsId];

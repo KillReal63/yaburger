@@ -1,13 +1,13 @@
-import { ForgotPasswordPage } from './ForgotPassword';
-import { LoginPage } from './Login';
-import { IngredientPage } from './IngredientInfo';
-import { RegisterPage } from './Register';
-import { ResetPasswordPage } from './ResetPassword';
-import { UserPage } from './User';
-import { FeedPage } from './FeedPage';
-import { OrdersHistoryPage } from './OrdersHistoryPage';
-import { FeedElementPage } from './FeedElementPage';
-import { OrderElementPage } from './OrderElementPage';
+import { ForgotPasswordPage } from './Forgot/ForgotPassword';
+import { LoginPage } from './Login/Login';
+import { IngredientPage } from './IngregientInfo/IngredientInfo';
+import { RegisterPage } from './Register/Register';
+import { ResetPasswordPage } from './Reset/ResetPassword';
+import { UserPage } from './Profile/User';
+import { FeedPage } from './Feed/FeedPage';
+import { OrdersHistoryPage } from './OrderHistory/OrdersHistoryPage';
+import { FeedElementPage } from './FeedElement/FeedElementPage';
+import { OrderElementPage } from './OrderElement/OrderElementPage';
 
 export {
   ForgotPasswordPage,
@@ -19,5 +19,5 @@ export {
   FeedPage,
   OrdersHistoryPage,
   FeedElementPage,
-  OrderElementPage
+  OrderElementPage,
 };

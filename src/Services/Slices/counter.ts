@@ -1,7 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export type counterState = typeof initialState;
-
 const initialState = {
   ids: [] as string[],
 };

@@ -6,18 +6,17 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { registerUser } from '../Api/userApi';
-import { useDispatch } from 'react-redux';
-import { loginPath } from '../Shared/path';
-import { AppDispatch } from '../Services/store';
-import { text_inactive } from '../Shared/Typography';
+import { registerUser } from '../../Api/userApi';
+import { loginPath } from '../../Shared/path';
+import { text_inactive } from '../../Shared/Typography';
+import { useAppDispatch } from '../../Shared/Types/Store';
 import styles from './Register.module.css';
 
 export const RegisterPage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {

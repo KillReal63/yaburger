@@ -4,9 +4,9 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { forgotPassword } from '../Api/passwordApi';
-import { loginPath } from '../Shared/path';
-import { text_inactive } from '../Shared/Typography';
+import { forgotPassword } from '../../Api/passwordApi';
+import { loginPath } from '../../Shared/path';
+import { text_inactive } from '../../Shared/Typography';
 import styles from './ForgotPassword.module.css';
 
 export const ForgotPasswordPage = () => {

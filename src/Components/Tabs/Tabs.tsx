@@ -7,6 +7,7 @@ interface tab {
 }
 
 const Tabs = ({ activeTab }: tab) => {
+
   // const setTab = (tab) => {
   //   setActiveTab(tab);
   //   const element = document.getElementById(tab);

@@ -1,30 +1,43 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link, useLocation } from 'react-router-dom';
-import { profilePath, defaultPath, ordersPath } from '../Shared/path';
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteUser } from '../Services/Slices/user';
-import { logoutUser } from '../Api/userApi';
-import { deleteCookie } from '../Helpers';
-import { text_inactive, text_medium } from '../Shared/Typography';
-import OrderCard from '../Components/OrderCard/OrderCard';
-import { useSocket } from '../Services/Hooks/useSocket';
-import { getCookie } from '../Helpers/cookie';
-import { Store } from '../Shared/Types/Store';
-import { AppDispatch } from '../Services/store';
+import { profilePath, defaultPath, ordersPath } from '../../Shared/path';
+import { useSelector } from 'react-redux';
+import { deleteUser } from '../../Services/Slices/user';
+import { logoutUser } from '../../Api/userApi';
+import { deleteCookie } from '../../Helpers';
+import { text_inactive, text_medium } from '../../Shared/Typography';
+import OrderCard from '../../Components/OrderCard/OrderCard';
+import { getCookie } from '../../Helpers/cookie';
+import { RootState, useAppDispatch } from '../../Shared/Types/Store';
+import {
+  Data,
+  connectHistory,
+  disconnect,
+} from '../../Services/Sockets/wsActions';
 import styles from './OrdersHistoryPage.module.css';
 
-const ws = 'wss://norma.nomoreparties.space/orders';
-const getData = (store: Store) => store.history.data;
+const getMessage = (store: RootState) => store.ws.message;
 
 export const OrdersHistoryPage = () => {
   const token = getCookie('accessToken');
 
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const history = useSelector(getData);
+  const message = useSelector(getMessage);
+
+  useEffect(() => {
+    if (token) {
+      const wsToken = token.replace('Bearer ', '');
+      dispatch(connectHistory(wsToken));
+    }
+    return () => {
+      console.log('Connection CLOSED');
+      dispatch(disconnect());
+    };
+  }, [dispatch]);
 
   const logout = () => {
     dispatch(deleteUser());
@@ -33,11 +46,7 @@ export const OrdersHistoryPage = () => {
     navigate(defaultPath);
   };
 
-  const { getHistory } = useSocket(ws);
-
-  useEffect(() => {
-    getHistory(token as string);
-  }, []);
+  if (!message) return <div>Loading...</div>;
 
   return (
     <div className={styles.wrapper}>
@@ -74,22 +83,18 @@ export const OrdersHistoryPage = () => {
         </p>
       </div>
       <div className={`${styles.orders_history} ${styles.custom_scroll} ml-25`}>
-        {history.length !== 0 ? (
-          history.map((item: any, index: number) => {
-            return (
-              <Link
-                className={`${styles.orders} mb-4`}
-                to={`/profile/orders/${item._id}`}
-                state={{ background: location }}
-                key={index}
-              >
-                <OrderCard {...item} />
-              </Link>
-            );
-          })
-        ) : (
-          <div>Refresh page</div>
-        )}
+        {message.orders.map((item: Data, index: number) => {
+          return (
+            <Link
+              className={`${styles.orders} mb-4`}
+              to={`/profile/orders/${item._id}`}
+              state={{ background: location }}
+              key={index}
+            >
+              <OrderCard {...item} />
+            </Link>
+          );
+        })}
       </div>
     </div>
   );

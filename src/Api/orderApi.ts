@@ -25,14 +25,15 @@ export const createOrder = createAsyncThunk(
         }),
       });
       if (!response.ok) {
+        throw new Error('Нет ответа сети');
         //под вопросом
-        const oldRefreshToken = getCookie('refreshToken');
-        const { refreshToken, accessToken } = await getRefreshToken(
-          oldRefreshToken as Token
-        );
-        document.cookie = `refreshToken=${refreshToken};`;
-        document.cookie = `accessToken=${accessToken};`;
-        return { accessToken, refreshToken };
+        // const oldRefreshToken = getCookie('refreshToken');
+        // const { refreshToken, accessToken } = await getRefreshToken(
+        //   oldRefreshToken as Token
+        // );
+        // document.cookie = `refreshToken=${refreshToken};`;
+        // document.cookie = `accessToken=${accessToken};`;
+        // return { accessToken, refreshToken };
       }
       const result = await response.json();
       if (result.message === 'jwt expired') {

@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import Router from '../Router/Router';
 import AppHeader from '../AppHeader/AppHeader';
@@ -8,28 +7,20 @@ import { authUser } from '../../Api/userApi';
 import { fetchIngredients } from '../../Api/ingredientsApi';
 import { Token } from '../../Shared/Types/Token';
 import { urlPath } from '../../Shared/path';
-import { useSocket } from '../../Services/Hooks/useSocket';
-import { AppDispatch } from '../../Services/store';
+import { useAppDispatch } from '../../Shared/Types/Store';
 
 const url = `${urlPath}/ingredients`;
-const ws = 'wss://norma.nomoreparties.space/orders/all';
 
 function App() {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const token = getCookie('accessToken');
 
   useEffect(() => {
-    if (!token === undefined) {
+    if (!token) {
       dispatch(authUser(token as Token));
     }
     dispatch(fetchIngredients(url));
   }, [dispatch]);
-
-  const { getFeed } = useSocket(ws);
-
-  useEffect(() => {
-    getFeed();
-  }, []);
 
   return (
     <>

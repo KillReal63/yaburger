@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Done from '../../Assets/Images/done.jpg';
-import { Store } from '../../Shared/Types/Store';
+import { RootState } from '../../Shared/Types/Store';
 import {
   digits_large,
   text_default,
@@ -11,7 +11,7 @@ import {
 } from '../../Shared/Typography';
 import styles from './OrderDetails.module.css';
 
-const getOrderNumber = (store: Store) => store.order.orderNumber;
+const getOrderNumber = (store: RootState) => store.order.orderNumber;
 
 const OrderDetails = () => {
   const orderNumber = useSelector(getOrderNumber);

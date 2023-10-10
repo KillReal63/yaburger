@@ -8,8 +8,6 @@ import {
 import { getCookie } from '../../Helpers';
 import { setLoading, setError } from '../../Helpers/index';
 
-export type userState = typeof initialState;
-
 const initialState = {
   name: '',
   email: '',

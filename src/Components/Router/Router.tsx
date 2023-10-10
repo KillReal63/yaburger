@@ -17,7 +17,7 @@ import {
 } from '../../Pages/index';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
-import { Store } from '../../Shared/Types/Store';
+import { RootState } from '../../Shared/Types/Store';
 import {
   defaultPath,
   feedPath,
@@ -31,14 +31,7 @@ import {
 import OrderElement from '../OrderElement/OrderElement';
 import styles from '../App/App.module.css';
 
-interface IOrder {
-  item?: string[];
-  _id: string;
-}
-
-const getId = (store: Store) => store.currentIngredient.ingredient;
-const getOrder = (store: Store) => store.feed.orders;
-const getHistory = (store: Store) => store.history.data;
+const getId = (store: RootState) => store.currentIngredient.ingredient;
 
 const Router = () => {
   const location = useLocation();
@@ -46,13 +39,7 @@ const Router = () => {
   const { state } = location;
   const background = state && state.background;
 
-  const { _id } = useSelector(getId);
-
-  const order = useSelector(getOrder);
-
-  const history = useSelector(getHistory);
-
-  const orderId = order.map((item: IOrder) => item._id).find((_id) => _id);
+  const _id = useSelector(getId);
 
   const onClose = () => navigate(-1);
 
@@ -68,13 +55,9 @@ const Router = () => {
           }
         />
         <Route path={`/ingredients/:${_id}`} element={<IngredientPage />} />
-        <Route path={`/feed/:${orderId}`} element={<FeedElementPage />} />
-        <Route
-          path={`/profile/orders/:${orderId}`}
-          element={
-            <ProtectedRouteElement element={<OrderElementPage />} auth />
-          }
-        />
+        <Route path={`/feed/:id`} element={<FeedElementPage />} />
+        <Route path={`/profile/orders/:id`} element={<OrderElementPage />} />
+
         <Route
           path={loginPath}
           element={<ProtectedRouteElement element={<LoginPage />} />}
@@ -117,7 +100,7 @@ const Router = () => {
             path={`/feed/:id`}
             element={
               <Modal onClose={onClose} open>
-                <OrderElement data={order} />
+                <OrderElement data={{}} />
               </Modal>
             }
           />
@@ -125,7 +108,7 @@ const Router = () => {
             path={`/profile/orders/:id`}
             element={
               <Modal onClose={onClose} open>
-                <OrderElement data={history} />
+                <OrderElement data={{}} />
               </Modal>
             }
           />

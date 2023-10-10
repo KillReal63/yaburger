@@ -1,6 +1,5 @@
 import type { XYCoord, Identifier } from 'dnd-core';
 import React, { useRef, FC } from 'react';
-import { useDispatch } from 'react-redux';
 import { useDrag, useDrop, DragSourceMonitor } from 'react-dnd';
 import {
   ConstructorElement,
@@ -12,7 +11,7 @@ import {
 } from '../../Services/Slices/cart';
 import { decrement } from '../../Services/Slices/counter';
 import { Ingredient } from '../../Shared/Types/Ingredient';
-import { AppDispatch } from '../../Services/store';
+import { useAppDispatch } from '../../Shared/Types/Store';
 import styles from './BurgerConstructorElement.module.css';
 
 type Props = {
@@ -27,7 +26,7 @@ interface DragItem {
 }
 
 const BurgerConstructorElement: FC<Props> = ({ ingredient, index }) => {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const ref = useRef<HTMLDivElement>(null);
 
   const [{ handlerId }, drop] = useDrop<
@@ -47,6 +46,7 @@ const BurgerConstructorElement: FC<Props> = ({ ingredient, index }) => {
       if (dragIndex === hoverIndex) {
         return;
       }
+      //find fix this any
       const hoverBoundingRect: any =
         ref.current && ref.current.getBoundingClientRect();
       const hoverMiddleY =

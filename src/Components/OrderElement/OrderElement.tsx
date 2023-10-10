@@ -13,45 +13,41 @@ import {
 } from '../../Shared/Typography';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Store } from '../../Shared/Types/Store';
+import { RootState } from '../../Shared/Types/Store';
 import { Ingredient } from '../../Shared/Types/Ingredient';
 import styles from './OrderElement.module.css';
-
-type Data = {
-  createdAt?: string;
-  ingredients?: string[];
-  name?: string;
-  number?: number;
-  status?: string;
-  updatedAt?: string;
-  _id?: string;
-  length?: number;
-  find?: any;
-};
+import { Data } from '../../Services/Sockets/wsActions';
 
 type Props = {
   externalId?: string;
-  data: Data;
 };
 
-const getIngredients = (store: Store) => store.ingredients.data;
+const getIngredients = (store: RootState) => store.ingredients.data;
 
-const OrderElement: FC<Props> = ({ externalId, data }) => {
+const getMessage = (store: RootState) => store.ws.message;
+
+const OrderElement: FC<Props> = ({ externalId }) => {
   const { id } = useParams();
 
   const ingredients = useSelector(getIngredients);
 
-  if (ingredients.length === 0) {
+  const message = useSelector(getMessage);
+
+  if (!ingredients) {
     return <div>...Loading</div>;
   }
 
-  if (data.length === 0) {
+  if (!message) {
     return <div>...Loading</div>;
   }
 
-  const order = data.find(
-    (item: any) => item._id === (externalId ? externalId : id)
+  const order = message.orders.find(
+    (item: Data) => item._id === (externalId ? externalId : id)
   );
+
+  if (!order) {
+    return <div>...Loading</div>;
+  }
 
   const items = ingredients.filter((ingredient: Ingredient) =>
     order.ingredients.includes(ingredient._id)
@@ -95,8 +91,9 @@ const OrderElement: FC<Props> = ({ externalId, data }) => {
               <div className={`${styles.counter}`}>
                 <p className={`${digits_default} mr-2`}>
                   {
-                    order.ingredients.filter((elem: any) => elem === item._id)
-                      .length
+                    order.ingredients.filter(
+                      (elem: string) => elem === item._id
+                    ).length
                   }{' '}
                   x {item.price}
                 </p>

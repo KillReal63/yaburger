@@ -1,11 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Store } from '../../Shared/Types/Store';
 import { text_inactive, text_medium } from '../../Shared/Typography';
+import { RootState } from '../../Shared/Types/Store';
 import styles from './IngredientDetails.module.css';
 
-const getData = (store: Store) => store.ingredients.data;
+const getData = (store: RootState) => store.ingredients.data;
 
 const IngredientDetails = () => {
   const { id } = useParams();
