@@ -46,7 +46,7 @@ const BurgerConstructor = () => {
   const onClose = () => dispatch(close(false));
 
   const getOrder = () => {
-    const arr = [bun.id, ...ingredientsId];
+    const arr = [bun.id, bun.id, ...ingredientsId];
     dispatch(createOrder({ arr, token } as Props));
     dispatch(open(true));
   };
