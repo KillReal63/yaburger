@@ -10,8 +10,6 @@ export const OrderElementPage = () => {
   const dispatch = useAppDispatch();
   const token = getCookie('accessToken');
 
-  const { id } = useParams();
-
   useEffect(() => {
     if (token) {
       const wsToken = token.replace('Bearer ', '');
@@ -26,7 +24,7 @@ export const OrderElementPage = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.element}>
-        <OrderElement externalId={id} />
+        <OrderElement />
       </div>
     </div>
   );

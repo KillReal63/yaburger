@@ -8,8 +8,6 @@ import styles from './FeedElementPage.module.css';
 export const FeedElementPage = () => {
   const dispatch = useAppDispatch();
 
-  const { id } = useParams();
-
   useEffect(() => {
     dispatch(connectAll());
     return () => {
@@ -21,7 +19,7 @@ export const FeedElementPage = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.element}>
-        <OrderElement externalId={id} />
+        <OrderElement />
       </div>
     </div>
   );

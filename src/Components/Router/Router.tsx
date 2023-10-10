@@ -31,15 +31,11 @@ import {
 import OrderElement from '../OrderElement/OrderElement';
 import styles from '../App/App.module.css';
 
-const getId = (store: RootState) => store.currentIngredient.ingredient;
-
 const Router = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { state } = location;
   const background = state && state.background;
-
-  const _id = useSelector(getId);
 
   const onClose = () => navigate(-1);
 
@@ -54,7 +50,7 @@ const Router = () => {
             </div>
           }
         />
-        <Route path={`/ingredients/:${_id}`} element={<IngredientPage />} />
+        <Route path={`/ingredients/:id`} element={<IngredientPage />} />
         <Route path={`/feed/:id`} element={<FeedElementPage />} />
         <Route path={`/profile/orders/:id`} element={<OrderElementPage />} />
 

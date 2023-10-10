@@ -15,8 +15,8 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../Shared/Types/Store';
 import { Ingredient } from '../../Shared/Types/Ingredient';
-import { Data } from '../../Services/Sockets/wsActions';
 import styles from './OrderElement.module.css';
+import { Data } from '../../Services/Sockets/wsActions';
 
 type Props = {
   externalId?: string;
@@ -26,7 +26,7 @@ const getIngredients = (store: RootState) => store.ingredients.data;
 
 const getMessage = (store: RootState) => store.ws.message;
 
-const OrderElement: FC<Props> = ({ externalId }) => {
+const OrderElement: FC<Props> = () => {
   const { id } = useParams();
 
   const ingredients = useSelector(getIngredients);
@@ -41,9 +41,7 @@ const OrderElement: FC<Props> = ({ externalId }) => {
     return <div>...Loading</div>;
   }
 
-  const order = message.orders.find(
-    (item: Data) => item._id === (externalId ? externalId : id)
-  );
+  const order = message.orders.find((item: Data) => item._id === id);
 
   if (!order) {
     return <div>...Loading</div>;
@@ -54,10 +52,10 @@ const OrderElement: FC<Props> = ({ externalId }) => {
   );
 
   const totalPrice = items
-  .map((item: Ingredient) =>
-    item.type === 'bun' ? item.price * 2 : item.price
-  )
-  .reduce((acc, item) => acc + item, 0);
+    .map((item: Ingredient) =>
+      item.type === 'bun' ? item.price * 2 : item.price
+    )
+    .reduce((acc, item) => acc + item, 0);
 
   const date = () => {
     const dateFromServer = `${order.createdAt}`;
