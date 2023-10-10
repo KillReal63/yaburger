@@ -15,8 +15,8 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../Shared/Types/Store';
 import { Ingredient } from '../../Shared/Types/Ingredient';
-import styles from './OrderElement.module.css';
 import { Data } from '../../Services/Sockets/wsActions';
+import styles from './OrderElement.module.css';
 
 type Props = {
   externalId?: string;
@@ -53,7 +53,11 @@ const OrderElement: FC<Props> = ({ externalId }) => {
     order.ingredients.includes(ingredient._id)
   );
 
-  const totalPrice = items.reduce((acc, item) => acc + item.price, 0);
+  const totalPrice = items
+  .map((item: Ingredient) =>
+    item.type === 'bun' ? item.price * 2 : item.price
+  )
+  .reduce((acc, item) => acc + item, 0);
 
   const date = () => {
     const dateFromServer = `${order.createdAt}`;

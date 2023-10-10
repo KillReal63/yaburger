@@ -13,6 +13,7 @@ import {
 import { useSelector } from 'react-redux';
 import { RootState } from '../../Shared/Types/Store';
 import { Data } from '../../Services/Sockets/wsActions';
+import { Ingredient } from '../../Shared/Types/Ingredient';
 import styles from './OrderCard.module.css';
 
 const getData = (store: RootState) => store.ingredients.data;
@@ -22,7 +23,11 @@ const OrderCard: FC<Data> = ({ ingredients, number, createdAt, name }) => {
 
   const items = data.filter(({ _id }) => ingredients.includes(_id));
 
-  const totalPrice = items.reduce((acc, item) => acc + item.price, 0);
+  const totalPrice = items
+    .map((item: Ingredient) =>
+      item.type === 'bun' ? item.price * 2 : item.price
+    )
+    .reduce((acc, item) => acc + item, 0);
 
   const date = () => {
     const dateFromServer = createdAt;
