@@ -100,7 +100,7 @@ const Router = () => {
             path={`/feed/:id`}
             element={
               <Modal onClose={onClose} open>
-                <OrderElement data={{}} />
+                <OrderElement />
               </Modal>
             }
           />
@@ -108,7 +108,7 @@ const Router = () => {
             path={`/profile/orders/:id`}
             element={
               <Modal onClose={onClose} open>
-                <OrderElement data={{}} />
+                <OrderElement />
               </Modal>
             }
           />
