@@ -1,10 +1,10 @@
 import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { open } from '../../Services/Slices/currentIngredient';
 import IngredientItem from '../IngredientItem/IngredientItem';
-import { Store } from '../../Shared/Types/Store';
 import { Ingredient } from '../../Shared/Types/Ingredient';
+import { text_medium } from '../../Shared/Typography';
+import { RootState, useAppDispatch } from '../../Shared/Types/Store';
 import styles from './Ingredients.module.css';
 
 const categories = [
@@ -19,11 +19,11 @@ type RefsType = {
   mainsRef: () => void;
 };
 
-const getData = (store: Store) => store.ingredients.data;
-const getLoading = (store: Store) => store.ingredients.loading;
+const getData = (store: RootState) => store.ingredients.data;
+const getLoading = (store: RootState) => store.ingredients.loading;
 
 const Ingredients = ({ refs }: { refs: RefsType }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const data = useSelector(getData);
   const loading = useSelector(getLoading);
@@ -35,11 +35,11 @@ const Ingredients = ({ refs }: { refs: RefsType }) => {
   if (loading || data.length === 0) return <div>...Loading</div>;
 
   return (
-    <div className={styles.ingredients}>
+    <div className={`${styles.ingredients} ${styles.custom_scroll}`}>
       {categories.map(({ name, slug }) =>
         slug === 'bun' ? (
           <section key={name} ref={refs.bunsRef}>
-            <span className='text text_type_main-medium'>{name}</span>
+            <span className={text_medium}>{name}</span>
             <div className={`${styles.categories} pl-4 pr-4`}>
               {data
                 .filter((item) => item.type === slug)
@@ -54,7 +54,7 @@ const Ingredients = ({ refs }: { refs: RefsType }) => {
           </section>
         ) : slug === 'sauce' ? (
           <section key={name} ref={refs.saucesRef}>
-            <span className='text text_type_main-medium'>{name}</span>
+            <span className={text_medium}>{name}</span>
             <div className={`${styles.categories} pl-4 pr-4`}>
               {data
                 .filter((item) => item.type === slug)
@@ -69,7 +69,7 @@ const Ingredients = ({ refs }: { refs: RefsType }) => {
           </section>
         ) : (
           <section key={name} ref={refs.mainsRef}>
-            <span className='text text_type_main-medium'>{name}</span>
+            <span className={text_medium}>{name}</span>
             <div className={`${styles.categories} pl-4 pr-4`}>
               {data
                 .filter((item) => item.type === slug)

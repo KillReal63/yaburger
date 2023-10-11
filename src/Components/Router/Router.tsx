@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import Main from '../Main/Main';
 import Modal from '../Modal/Modal';
@@ -9,14 +9,15 @@ import {
   RegisterPage,
   ResetPasswordPage,
   UserPage,
-  OrderPage,
+  FeedPage,
   IngredientPage,
+  OrdersHistoryPage,
+  FeedElementPage,
+  OrderElementPage,
 } from '../../Pages/index';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
-import { getCookie } from '../../Helpers';
-import { authUser } from '../../Api/userApi';
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
-import { Store } from '../../Shared/Types/Store';
+import { RootState } from '../../Shared/Types/Store';
 import {
   defaultPath,
   feedPath,
@@ -27,28 +28,17 @@ import {
   registerPath,
   resetPasswordPath,
 } from '../../Shared/path';
+import OrderElement from '../OrderElement/OrderElement';
 import styles from '../App/App.module.css';
 
-const getId = (store: Store) => store.currentIngredient.ingredient;
-
 const Router = () => {
-  const token = getCookie('accessToken');
-
-  const dispatch: any = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const { state } = location;
   const background = state && state.background;
 
-  const { _id } = useSelector(getId);
-
-  useEffect(() => {
-    if (!token === undefined) {
-      dispatch(authUser({ token }));
-    }
-  }, [dispatch]);
-
   const onClose = () => navigate(-1);
+
   return (
     <>
       <Routes location={background || location}>
@@ -60,7 +50,10 @@ const Router = () => {
             </div>
           }
         />
-        <Route path={`/ingredients/:${_id}`} element={<IngredientPage />} />
+        <Route path={`/ingredients/:id`} element={<IngredientPage />} />
+        <Route path={`/feed/:id`} element={<FeedElementPage />} />
+        <Route path={`/profile/orders/:id`} element={<OrderElementPage />} />
+
         <Route
           path={loginPath}
           element={<ProtectedRouteElement element={<LoginPage />} />}
@@ -81,9 +74,12 @@ const Router = () => {
           path={profilePath}
           element={<ProtectedRouteElement element={<UserPage />} auth />}
         />
+        <Route path={feedPath} element={<FeedPage />} />
         <Route
-          path={feedPath}
-          element={<ProtectedRouteElement element={<OrderPage />} auth />}
+          path={ordersPath}
+          element={
+            <ProtectedRouteElement element={<OrdersHistoryPage />} auth />
+          }
         />
       </Routes>
       {background && (
@@ -91,8 +87,24 @@ const Router = () => {
           <Route
             path={`/ingredients/:id`}
             element={
-              <Modal onClose={onClose} title='Детали ингредиента'>
+              <Modal onClose={onClose} title='Детали ингредиента' open>
                 <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path={`/feed/:id`}
+            element={
+              <Modal onClose={onClose} open>
+                <OrderElement />
+              </Modal>
+            }
+          />
+          <Route
+            path={`/profile/orders/:id`}
+            element={
+              <Modal onClose={onClose} open>
+                <OrderElement />
               </Modal>
             }
           />
@@ -103,13 +115,3 @@ const Router = () => {
 };
 
 export default Router;
-// {
-//   /* <Route
-//         path={`/orders/:id`}
-//         element={
-//           <Modal onClose={onClose}>
-//             <OrderDetails />
-//           </Modal>
-//         }
-//       /> */
-// }

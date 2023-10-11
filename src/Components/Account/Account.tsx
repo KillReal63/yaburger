@@ -3,6 +3,7 @@ import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { NavLink } from 'react-router-dom';
 import { path } from '../../Shared/Types/Pathname';
 import { profilePath } from '../../Shared/path';
+import { text_default, text_inactive } from '../../Shared/Typography';
 import styles from './Account.module.css';
 
 const Account = ({ pathname }: path) => {
@@ -12,8 +13,8 @@ const Account = ({ pathname }: path) => {
         to={profilePath}
         className={`${
           pathname === '/profile'
-            ? `${styles.link} text text_type_main-default`
-            : `${styles.disabled} text text_type_main-default text_color_inactive`
+            ? `${styles.link} ${text_default}`
+            : `${styles.disabled} ${text_inactive}`
         }`}
       >
         <ProfileIcon

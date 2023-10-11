@@ -5,16 +5,17 @@ import {
   PasswordInput,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
-import { deleteUser } from '../Services/Slices/user';
-import { logoutUser, updateUser } from '../Api/userApi';
+import { deleteUser } from '../../Services/Slices/user';
+import { logoutUser, updateUser } from '../../Api/userApi';
 import { useNavigate } from 'react-router-dom';
-import { defaultPath } from '../Shared/path';
-import { deleteCookie, getCookie } from '../Helpers';
+import { defaultPath, profilePath, ordersPath } from '../../Shared/path';
+import { deleteCookie, getCookie } from '../../Helpers';
+import { text_inactive, text_medium } from '../../Shared/Typography';
+import { useAppDispatch } from '../../Shared/Types/Store';
 import styles from './User.module.css';
 
 export const UserPage = () => {
-  const dispatch: any = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -54,15 +55,25 @@ export const UserPage = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.navigation}>
-        <p className={`text text_type_main-medium ${styles.nav}`}>Профиль</p>
-        <p
-          className={`text text_type_main-medium text_color_inactive ${styles.nav}`}
-        >
-          История заказов
+        <p className={`${text_medium} ${styles.nav}`}>
+          <button
+            className={`${styles.navButton} ${styles.link}`}
+            type='button'
+            onClick={() => navigate(profilePath)}
+          >
+            Профиль
+          </button>
         </p>
-        <p
-          className={`text text_type_main-medium text_color_inactive ${styles.nav}`}
-        >
+        <p className={`${text_inactive} ${styles.nav}`}>
+          <button
+            className={styles.navButton}
+            type='button'
+            onClick={() => navigate(ordersPath)}
+          >
+            История заказов
+          </button>
+        </p>
+        <p className={`${text_inactive} ${styles.nav}`}>
           <button
             className={styles.navButton}
             type='button'
@@ -71,9 +82,7 @@ export const UserPage = () => {
             Выход
           </button>
         </p>
-        <p
-          className={`text text_type_main-default text_color_inactive mt-20 ${styles.about}`}
-        >
+        <p className={`${text_inactive} mt-20 ${styles.about}`}>
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </div>

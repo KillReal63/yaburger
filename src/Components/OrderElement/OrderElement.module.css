@@ -1,0 +1,80 @@
+.element {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 50px;
+  padding: 30px;
+}
+
+.status {
+  color: rgba(0, 204, 204, 1);
+}
+
+.about {
+  width: 640px;
+  height: 366px;
+}
+
+.wrapper {
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  padding-right: 5px;
+}
+
+.custom_scroll::-webkit-scrollbar {
+  width: 12px;
+}
+
+.custom_scroll::-webkit-scrollbar-thumb {
+  background: #8585ad;
+  border: 3px solid #2f2f37;
+  border-radius: 6px;
+}
+
+.ingredient_info {
+  width: 100%;
+  height: 64px;
+  display: flex;
+  align-items: center;
+
+}
+
+.ingredient {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 100px;
+  background-color: #131316;
+  border: 2px solid;
+  margin-right: 4px;
+}
+
+.img {
+  width: 112px;
+  height: 56px;
+}
+
+.counter {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.total {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

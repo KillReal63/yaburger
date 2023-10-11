@@ -1,0 +1,11 @@
+.wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.element {
+  width: 640px;
+  height: 620px;
+  margin-top: 60px;
+}

@@ -40,3 +40,11 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.link {
+  text-decoration: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

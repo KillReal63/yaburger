@@ -5,18 +5,23 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../Api/userApi';
-import { Store } from '../Shared/Types/Store';
-import { registerPath, forgotPasswordPath, defaultPath } from '../Shared/path';
+import { useSelector } from 'react-redux';
+import { loginUser } from '../../Api/userApi';
+import { RootState, useAppDispatch } from '../../Shared/Types/Store';
+import {
+  registerPath,
+  forgotPasswordPath,
+  defaultPath,
+} from '../../Shared/path';
+import { text_inactive } from '../../Shared/Typography';
 import styles from './Login.module.css';
 
-const getIsAuth = (store: Store) => store.user.isAuth;
+const getIsAuth = (store: RootState) => store.user.isAuth;
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch: any = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const isAuth = useSelector(getIsAuth);
@@ -59,13 +64,11 @@ export const LoginPage = () => {
         </Button>
       </form>
       <div className={`mb-4 ${styles.register}`}>
-        <p className='text text_type_main-default text_color_inactive mr-2'>
-          Вы - новый пользователь?
-        </p>
+        <p className={`${text_inactive} mr-2`}>Вы - новый пользователь?</p>
         <Link to={registerPath}>Зарегестрироваться</Link>
       </div>
       <div className={styles.forgotPassword}>
-        <p className='text text_type_main-default text_color_inactive'>
+        <p className={text_inactive}>
           Забыли пароль?
           <Link to={forgotPasswordPath} className='ml-2'>
             Восстановить

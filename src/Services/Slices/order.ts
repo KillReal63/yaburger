@@ -1,8 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 import { createOrder } from '../../Api/orderApi';
-import { setLoading, setError } from '../../Helpers/response';
-
-export type orderState = typeof initialState;
+import { setLoading, setError } from '../../Helpers/index';
 
 const initialState = {
   isOpen: false,
@@ -16,11 +15,11 @@ const orderSlice = createSlice({
   name: 'order',
   initialState,
   reducers: {
-    open(state, action) {
-      state.isOpen = true;
+    open(state, action: PayloadAction<boolean>) {
+      state.isOpen = action.payload;
     },
-    close(state) {
-      state.isOpen = false;
+    close(state, action: PayloadAction<boolean>) {
+      state.isOpen = action.payload;
     },
   },
   extraReducers: (builder) => {

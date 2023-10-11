@@ -1,8 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 import { Ingredient } from '../../Shared/Types/Ingredient';
 import { v4 as uuidv4 } from 'uuid';
-
-export type cartState = typeof initialState;
 
 const initialState = {
   bun: {
@@ -18,13 +17,13 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addIngredient(state, action) {
+    addIngredient(state, action: PayloadAction<Ingredient>) {
       state.ingredients = [
         ...state.ingredients,
         { ...action.payload, unID: uuidv4() },
       ];
     },
-    deleteIngredient(state, action) {
+    deleteIngredient(state, action: PayloadAction<Ingredient>) {
       state.ingredients = [...state.ingredients].filter(
         (item) => item.unID !== action.payload.unID
       );
@@ -32,7 +31,7 @@ const cartSlice = createSlice({
     toggleBun(state, action) {
       state.bun = action.payload;
     },
-    constructorReorder(state, action) {
+    constructorReorder(state, action: PayloadAction<any>) {
       const ingredients = [...state.ingredients];
       ingredients.splice(
         action.payload.to,

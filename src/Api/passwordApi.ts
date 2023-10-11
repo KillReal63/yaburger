@@ -4,7 +4,6 @@ import { urlPath } from '../Shared/path';
 const url = `${urlPath}/password-reset`;
 const resetUrl = `${urlPath}/password-reset/reset`;
 
-
 export const forgotPassword = ({ email }: PasswordReset) => {
   fetch(url, {
     method: 'POST',

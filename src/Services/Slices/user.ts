@@ -6,9 +6,7 @@ import {
   updateUser,
 } from '../../Api/userApi';
 import { getCookie } from '../../Helpers';
-import { setLoading, setError } from '../../Helpers/response';
-
-export type userState = typeof initialState;
+import { setLoading, setError } from '../../Helpers/index';
 
 const initialState = {
   name: '',

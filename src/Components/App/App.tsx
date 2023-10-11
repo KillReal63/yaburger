@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import Router from '../Router/Router';
 import AppHeader from '../AppHeader/AppHeader';
@@ -8,15 +7,16 @@ import { authUser } from '../../Api/userApi';
 import { fetchIngredients } from '../../Api/ingredientsApi';
 import { Token } from '../../Shared/Types/Token';
 import { urlPath } from '../../Shared/path';
+import { useAppDispatch } from '../../Shared/Types/Store';
 
 const url = `${urlPath}/ingredients`;
 
 function App() {
-  const dispatch: any = useDispatch();
+  const dispatch = useAppDispatch();
   const token = getCookie('accessToken');
 
   useEffect(() => {
-    if (!token === undefined) {
+    if (!token) {
       dispatch(authUser(token as Token));
     }
     dispatch(fetchIngredients(url));

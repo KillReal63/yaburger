@@ -88,8 +88,9 @@ export const authUser = createAsyncThunk(
         document.cookie = `accessToken=${accessToken};`;
         return { accessToken, refreshToken };
       }
-    } catch (e) {
-      console.log(e, 'error');
+    } catch (error) {
+      console.log(error, 'error');
+      throw error;
     }
   }
 );

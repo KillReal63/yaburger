@@ -1,3 +1,5 @@
+//find state & actions typing
+
 export const setLoading = (state: any) => {
   state.loading = true;
 };

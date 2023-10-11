@@ -1,21 +1,16 @@
-import { cartState } from '../../Services/Slices/cart';
-import { orderState } from '../../Services/Slices/order';
-import { ingredientState } from '../../Services/Slices/ingredients';
-import { counterState } from '../../Services/Slices/counter';
-import { userState } from '../../Services/Slices/user';
+import { useDispatch } from 'react-redux';
+import type { ThunkAction } from 'redux-thunk';
+import store from '../../Services/store';
+import { WSActions } from '../../Services/Sockets/wsActions';
 
-type currentIngredient = {
-  isOpen: boolean;
-  ingredient: {
-    _id: '';
-  };
-};
+export type AppActions = WSActions;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch: () => AppDispatch = useDispatch;
 
-export type Store = {
-  cart: cartState;
-  order: orderState;
-  ingredients: ingredientState;
-  counter: counterState;
-  currentIngredient: currentIngredient;
-  user: userState;
-};
+export type AppThunkAction<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  AppActions
+>;

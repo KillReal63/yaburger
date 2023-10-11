@@ -1,9 +1,9 @@
 .modal_ingredient {
   width: 720px;
-  height: 539px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 10px;
 }
 
 
