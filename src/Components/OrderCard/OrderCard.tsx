@@ -23,11 +23,20 @@ const OrderCard: FC<Data> = ({ ingredients, number, createdAt, name }) => {
 
   const items = data.filter(({ _id }) => ingredients.includes(_id));
 
-  const totalPrice = items
-    .map((item: Ingredient) =>
-      item.type === 'bun' ? item.price * 2 : item.price
-    )
-    .reduce((acc, item) => acc + item, 0);
+  const calculateTotalPrice = () => {
+    let totalPrice = 0;
+
+    ingredients.forEach((ingredientId) => {
+      const ingredient = data.find((item) => item._id === ingredientId);
+      if (ingredient) {
+        totalPrice += ingredient.price;
+      }
+    });
+
+    return totalPrice;
+  };
+
+  const totalPrice = calculateTotalPrice();
 
   const date = () => {
     const dateFromServer = createdAt;
