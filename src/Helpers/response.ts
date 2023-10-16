@@ -6,7 +6,5 @@ export const setLoading = (state: any) => {
 
 export const setError = (state: any, action: any) => {
   state.loading = false;
-  if (state.error !== undefined) {
-    action.error.message;
-  }
+  state.error = action.error.message;
 };

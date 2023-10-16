@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import ingredientsSlice from './Slices/ingredients';
-import cartSlice from './Slices/cart';
-import currentIngredientSlice from './Slices/currentIngredient';
-import counterSlice from './Slices/counter';
-import orderSlice from './Slices/order';
-import userSlice from './Slices/user';
+import ingredientsSlice from './Slices/Ingredients/ingredients';
+import cartSlice from './Slices/Cart/cart';
+import currentIngredientSlice from './Slices/CurrentIngredient/currentIngredient';
+import counterSlice from './Slices/Counter/counter';
+import orderSlice from './Slices/Order/order';
+import userSlice from './User/user';
 import { wsReducer } from './Sockets/wsReducer';
 import { socketMiddleware } from './Sockets/socketMiddleware';
 import {

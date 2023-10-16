@@ -5,7 +5,7 @@ import {
   PasswordInput,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { deleteUser } from '../../Services/Slices/user';
+import { deleteUser } from '../../Services/User/user';
 import { logoutUser, updateUser } from '../../Api/userApi';
 import { useNavigate } from 'react-router-dom';
 import { defaultPath, profilePath, ordersPath } from '../../Shared/path';

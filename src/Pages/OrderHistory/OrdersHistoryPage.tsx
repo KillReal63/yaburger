@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Link, useLocation } from 'react-router-dom';
 import { profilePath, defaultPath, ordersPath } from '../../Shared/path';
 import { useSelector } from 'react-redux';
-import { deleteUser } from '../../Services/Slices/user';
+import { deleteUser } from '../../Services/User/user';
 import { logoutUser } from '../../Api/userApi';
 import { deleteCookie } from '../../Helpers';
 import { text_inactive, text_medium } from '../../Shared/Typography';

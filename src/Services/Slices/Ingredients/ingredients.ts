@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchIngredients } from '../../Api/ingredientsApi';
-import { Ingredient } from '../../Shared/Types/Ingredient';
-import { setLoading, setError } from '../../Helpers/index';
+import { fetchIngredients } from '../../../Api/ingredientsApi';
+import { Ingredient } from '../../../Shared/Types/Ingredient';
+import { setLoading, setError } from '../../../Helpers/index';
 
 const initialState = {
   loading: false,

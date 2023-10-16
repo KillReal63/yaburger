@@ -48,19 +48,16 @@ const userSlice = createSlice({
       .addCase(loginUser.rejected, setError)
       .addCase(authUser.pending, setLoading)
       .addCase(authUser.fulfilled, (state, action) => {
-        const { email, name, isAuth } = JSON.parse(getCookie('user') as string);
+        const getUser = JSON.parse(getCookie('user') as string);
+        if (document.cookie) {}
+        const { email, name, isAuth } = getUser;
         state.email = email;
         state.name = name;
         state.password = '123456';
         state.isAuth = isAuth;
         state.loading = false;
       })
-      .addCase(authUser.rejected, (state, action) => {
-        state.loading = false;
-        if (state.error !== undefined) {
-          action.error.message;
-        }
-      })
+      .addCase(authUser.rejected, setError)
       .addCase(updateUser.pending, setLoading)
       .addCase(updateUser.fulfilled, (state, { payload }) => {
         state.loading = false;

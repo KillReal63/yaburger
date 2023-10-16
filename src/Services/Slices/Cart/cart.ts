@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { Ingredient } from '../../Shared/Types/Ingredient';
+import { Ingredient } from '../../../Shared/Types/Ingredient';
 import { v4 as uuidv4 } from 'uuid';
 
 const initialState = {
@@ -52,4 +52,5 @@ export const {
   toggleBun,
   constructorReorder,
 } = cartSlice.actions;
+
 export default cartSlice.reducer;
