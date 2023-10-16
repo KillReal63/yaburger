@@ -8,7 +8,7 @@ import styles from './Account.module.css';
 
 const Account = ({ pathname }: path) => {
   return (
-    <div className={`${styles.account} pt-4 pr-5 pb-4 pl-5`}>
+    <div className={`${styles.account} pt-4 pr-5 pb-4 pl-5`} data-id='user-profile'>
       <NavLink
         to={profilePath}
         className={`${

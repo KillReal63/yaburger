@@ -16,7 +16,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../Shared/Types/Store';
 import { Ingredient } from '../../Shared/Types/Ingredient';
 import styles from './OrderElement.module.css';
-import { Data } from '../../Services/Sockets/wsActions';
+import { Data } from '../../Services/Slices/Sockets/wsActions';
 
 type Props = {
   externalId?: string;

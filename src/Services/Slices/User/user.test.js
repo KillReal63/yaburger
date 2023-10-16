@@ -3,7 +3,7 @@ import {
   loginUser,
   authUser,
   updateUser,
-} from '../../Api/userApi';
+} from '../../../Api/userApi';
 import { deleteUser } from './user';
 import userSlice from './user';
 

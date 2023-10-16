@@ -12,7 +12,7 @@ import {
 } from '../../Shared/Typography';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../Shared/Types/Store';
-import { Data } from '../../Services/Sockets/wsActions';
+import { Data } from '../../Services/Slices/Sockets/wsActions';
 import { Ingredient } from '../../Shared/Types/Ingredient';
 import styles from './OrderCard.module.css';
 

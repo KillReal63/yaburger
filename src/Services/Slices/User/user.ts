@@ -4,9 +4,9 @@ import {
   loginUser,
   authUser,
   updateUser,
-} from '../../Api/userApi';
-import { getCookie } from '../../Helpers';
-import { setLoading, setError } from '../../Helpers/index';
+} from '../../../Api/userApi';
+import { getCookie } from '../../../Helpers';
+import { setLoading, setError } from '../../../Helpers/index';
 
 const initialState = {
   name: '',

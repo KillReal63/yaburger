@@ -81,6 +81,7 @@ const BurgerConstructor = () => {
       <div
         ref={dropBun}
         className={`${styles.burger_constructor} ml-10 mt-20 pl-4 pr-4`}
+        data-bunid='drop-bun-area'
       >
         <ConstructorElement
           type='top'
@@ -90,7 +91,11 @@ const BurgerConstructor = () => {
           thumbnail={image as string}
           extraClass={`${styles.bun} ml-6 mb-4`}
         />
-        <div ref={drop} className={`${styles.items} ${styles.custom_scroll}`}>
+        <div
+          ref={drop}
+          data-id='drop-area'
+          className={`${styles.items} ${styles.custom_scroll}`}
+        >
           {ingredients.map((item, index) => (
             <BurgerConstructorElement
               ingredient={item}
@@ -120,6 +125,7 @@ const BurgerConstructor = () => {
               type='primary'
               size='large'
               onClick={() => getOrder()}
+              data-id='checkout'
             >
               Нажми на меня
             </Button>
