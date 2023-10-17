@@ -1,5 +1,5 @@
 import { Middleware, MiddlewareAPI } from 'redux';
-import { AppActions, AppDispatch, RootState } from '../../Shared/Types/Store';
+import { AppActions, AppDispatch, RootState } from '../../../Shared/Types/Store';
 import { Message, WSStoreActions } from './wsActions';
 
 export const socketMiddleware = (wsActions: WSStoreActions): Middleware => {

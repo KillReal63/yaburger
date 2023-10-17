@@ -9,7 +9,7 @@ import {
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../Shared/Types/Store';
-import { Data, connectAll, disconnect } from '../../Services/Sockets/wsActions';
+import { Data, connectAll, disconnect } from '../../Services/Slices/Sockets/wsActions';
 import styles from './FeedPage.module.css';
 
 const getMessage = (store: RootState) => store.ws.message;

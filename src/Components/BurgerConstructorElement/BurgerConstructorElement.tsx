@@ -8,8 +8,8 @@ import {
 import {
   deleteIngredient,
   constructorReorder,
-} from '../../Services/Slices/cart';
-import { decrement } from '../../Services/Slices/counter';
+} from '../../Services/Slices/Cart/cart';
+import { decrement } from '../../Services/Slices/Counter/counter';
 import { Ingredient } from '../../Shared/Types/Ingredient';
 import { useAppDispatch } from '../../Shared/Types/Store';
 import styles from './BurgerConstructorElement.module.css';

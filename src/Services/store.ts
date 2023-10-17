@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import ingredientsSlice from './Slices/ingredients';
-import cartSlice from './Slices/cart';
-import currentIngredientSlice from './Slices/currentIngredient';
-import counterSlice from './Slices/counter';
-import orderSlice from './Slices/order';
-import userSlice from './Slices/user';
-import { wsReducer } from './Sockets/wsReducer';
-import { socketMiddleware } from './Sockets/socketMiddleware';
+import ingredientsSlice from './Slices/Ingredients/ingredients';
+import cartSlice from './Slices/Cart/cart';
+import currentIngredientSlice from './Slices/CurrentIngredient/currentIngredient';
+import counterSlice from './Slices/Counter/counter';
+import orderSlice from './Slices/Order/order';
+import userSlice from './Slices/User/user';
+import { wsReducer } from './Slices/Sockets/wsReducer';
+import { socketMiddleware } from './Slices/Sockets/socketMiddleware';
 import {
   WS_CONNECTION_START,
   WS_CLOSE,
@@ -15,7 +15,7 @@ import {
   WS_GET_MESSAGE,
   WS_CONNECTION_ERROR,
   WSStoreActions,
-} from './Sockets/wsActions';
+} from './Slices/Sockets/wsActions';
 
 const wsActions: WSStoreActions = {
   wsInit: WS_CONNECTION_START,

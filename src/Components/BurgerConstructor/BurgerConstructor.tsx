@@ -10,9 +10,9 @@ import OrderDetails from '../OrderDetails/OrderDetails';
 import Modal from '../Modal/Modal';
 import BurgerConstructorElement from '../BurgerConstructorElement/BurgerConstructorElement';
 import { v4 as uuidv4 } from 'uuid';
-import { addIngredient, toggleBun } from '../../Services/Slices/cart';
-import { increment } from '../../Services/Slices/counter';
-import { open, close } from '../../Services/Slices/order';
+import { addIngredient, toggleBun } from '../../Services/Slices/Cart/cart';
+import { increment } from '../../Services/Slices/Counter/counter';
+import { open, close } from '../../Services/Slices/Order/order';
 import { createOrder } from '../../Api/orderApi';
 import { getCookie } from '../../Helpers';
 import { Ingredient } from '../../Shared/Types/Ingredient';
@@ -81,6 +81,7 @@ const BurgerConstructor = () => {
       <div
         ref={dropBun}
         className={`${styles.burger_constructor} ml-10 mt-20 pl-4 pr-4`}
+        data-bunid='drop-bun-area'
       >
         <ConstructorElement
           type='top'
@@ -90,7 +91,11 @@ const BurgerConstructor = () => {
           thumbnail={image as string}
           extraClass={`${styles.bun} ml-6 mb-4`}
         />
-        <div ref={drop} className={`${styles.items} ${styles.custom_scroll}`}>
+        <div
+          ref={drop}
+          data-id='drop-area'
+          className={`${styles.items} ${styles.custom_scroll}`}
+        >
           {ingredients.map((item, index) => (
             <BurgerConstructorElement
               ingredient={item}
@@ -120,6 +125,7 @@ const BurgerConstructor = () => {
               type='primary'
               size='large'
               onClick={() => getOrder()}
+              data-id='checkout'
             >
               Нажми на меня
             </Button>

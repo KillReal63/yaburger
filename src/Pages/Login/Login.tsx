@@ -47,18 +47,21 @@ export const LoginPage = () => {
           extraClass='mt-6'
           name={'email'}
           isIcon={false}
+          data-id='email_input'
         />
         <PasswordInput
           onChange={(e) => setPassword(e.target.value)}
           value={password}
           name={'password'}
           extraClass='mb-6 mt-6'
+          data-id='password_input'
         />
         <Button
           htmlType='submit'
           type='primary'
           size='large'
           extraClass='mb-20'
+          data-id='login-button'
         >
           Войти
         </Button>

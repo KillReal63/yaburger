@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../Shared/Types/Store';
 import styles from './OrderElementPage.module.css';
 import { getCookie } from '../../Helpers';
-import { connectHistory, disconnect } from '../../Services/Sockets/wsActions';
+import { connectHistory, disconnect } from '../../Services/Slices/Sockets/wsActions';
 
 export const OrderElementPage = () => {
   const dispatch = useAppDispatch();

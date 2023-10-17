@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { open } from '../../Services/Slices/currentIngredient';
+import { open } from '../../Services/Slices/CurrentIngredient/currentIngredient';
 import IngredientItem from '../IngredientItem/IngredientItem';
 import { Ingredient } from '../../Shared/Types/Ingredient';
 import { text_medium } from '../../Shared/Typography';

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { createOrder } from '../../Api/orderApi';
-import { setLoading, setError } from '../../Helpers/index';
+import { createOrder } from '../../../Api/orderApi';
+import { setLoading, setError } from '../../../Helpers/index';
 
 const initialState = {
   isOpen: false,
