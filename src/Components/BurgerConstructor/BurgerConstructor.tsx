@@ -19,19 +19,17 @@ import { Ingredient } from '../../Shared/Types/Ingredient';
 import { digits_default } from '../../Shared/Typography';
 import { Token } from '../../Shared/Types/Token';
 import { RootState, useAppDispatch } from '../../Shared/Types/Store';
+import {
+  getBun,
+  getIngredients,
+  getTotalPrice,
+} from '../../Services/Slices/Cart/cartSelectors';
+import { getIsOpen } from '../../Services/Slices/Order/orderSelectors';
 import styles from './BurgerConstructor.module.css';
 
 type Props = Token & {
   arr: string[];
 };
-
-const getTotalPrice = (store: RootState) =>
-  store.cart.ingredients.reduce((acc, item) => acc + item.price, 0);
-const getBun = (store: RootState) => store.cart.bun;
-const getIngredients = (store: RootState) => store.cart.ingredients;
-const getIngredientsId = (store: RootState) =>
-  store.cart.ingredients.map((item) => item.id);
-const getIsOpen = (store: RootState) => store.order.isOpen;
 
 const BurgerConstructor = () => {
   const dispatch = useAppDispatch();
@@ -39,9 +37,10 @@ const BurgerConstructor = () => {
   const token = getCookie('accessToken');
   const bun = useSelector(getBun);
   const ingredients = useSelector(getIngredients);
-  const ingredientsId = useSelector(getIngredientsId);
   const isOpen = useSelector(getIsOpen);
   const isAuth = getCookie('isAuth');
+
+  const ingredientsId = ingredients.map((item) => item.id);
 
   const onClose = () => dispatch(close(false));
 

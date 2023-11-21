@@ -9,15 +9,14 @@ import { deleteCookie } from '../../Helpers';
 import { text_inactive, text_medium } from '../../Shared/Typography';
 import OrderCard from '../../Components/OrderCard/OrderCard';
 import { getCookie } from '../../Helpers/cookie';
-import { RootState, useAppDispatch } from '../../Shared/Types/Store';
+import { useAppDispatch } from '../../Shared/Types/Store';
 import {
   Data,
   connectHistory,
   disconnect,
 } from '../../Services/Slices/Sockets/wsActions';
+import { getMessage } from '../../Services/Slices/Sockets/wsSelectors';
 import styles from './OrdersHistoryPage.module.css';
-
-const getMessage = (store: RootState) => store.ws.message;
 
 export const OrdersHistoryPage = () => {
   const token = getCookie('accessToken');

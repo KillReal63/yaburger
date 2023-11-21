@@ -5,7 +5,11 @@ import { open } from '../../Services/Slices/CurrentIngredient/currentIngredient'
 import IngredientItem from '../IngredientItem/IngredientItem';
 import { Ingredient } from '../../Shared/Types/Ingredient';
 import { text_medium } from '../../Shared/Typography';
-import { RootState, useAppDispatch } from '../../Shared/Types/Store';
+import { useAppDispatch } from '../../Shared/Types/Store';
+import {
+  getData,
+  getLoading,
+} from '../../Services/Slices/Ingredients/ingredientsSelectors';
 import styles from './Ingredients.module.css';
 
 type Refs = Record<string, () => void>;
@@ -15,9 +19,6 @@ const categories = [
   { name: 'Соусы', slug: 'sauce' },
   { name: 'Начинки', slug: 'main' },
 ];
-
-const getData = (store: RootState) => store.ingredients.data;
-const getLoading = (store: RootState) => store.ingredients.loading;
 
 const Ingredients = ({ refs }: { refs: Refs }) => {
   const dispatch = useAppDispatch();
