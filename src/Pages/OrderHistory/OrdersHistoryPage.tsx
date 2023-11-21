@@ -82,7 +82,7 @@ export const OrdersHistoryPage = () => {
         </p>
       </div>
       <div className={`${styles.orders_history} ${styles.custom_scroll} ml-25`}>
-        {message.orders.map((item: Data, index: number) => {
+        {[...message.orders].reverse().map((item: Data, index: number) => {
           return (
             <Link
               className={`${styles.orders} mb-4`}
