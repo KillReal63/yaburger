@@ -9,9 +9,8 @@ import {
   text_large,
   text_medium,
 } from '../../Shared/Typography';
+import { getOrderNumber } from '../../Services/Slices/Order/orderSelectors';
 import styles from './OrderDetails.module.css';
-
-const getOrderNumber = (store: RootState) => store.order.orderNumber;
 
 const OrderDetails = () => {
   const orderNumber = useSelector(getOrderNumber);
@@ -25,7 +24,11 @@ const OrderDetails = () => {
           <span className={`${text_large} mt-4 mb-8`}>Ожидайте</span>
         )}
         <span className={text_medium}>идентификатор заказа</span>
-        <img src={Done} alt='' className={`${styles.order_img} mb-15 mt-15`} />
+        <img
+          src={Done}
+          alt='знак выполнения'
+          className={`${styles.order_img} mb-15 mt-15`}
+        />
         <span className={`${text_default} mb-2`}>
           Ваш заказ начали готовить
         </span>

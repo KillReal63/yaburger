@@ -11,12 +11,9 @@ import {
   digits_medium,
 } from '../../Shared/Typography';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../Shared/Types/Store';
 import { Data } from '../../Services/Slices/Sockets/wsActions';
-import { Ingredient } from '../../Shared/Types/Ingredient';
+import { getData } from '../../Services/Slices/Ingredients/ingredientsSelectors';
 import styles from './OrderCard.module.css';
-
-const getData = (store: RootState) => store.ingredients.data;
 
 const OrderCard: FC<Data> = ({ ingredients, number, createdAt, name }) => {
   const data = useSelector(getData);
