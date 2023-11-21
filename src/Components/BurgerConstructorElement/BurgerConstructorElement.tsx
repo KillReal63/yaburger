@@ -41,13 +41,15 @@ const BurgerConstructorElement: FC<Props> = ({ ingredient, index }) => {
       };
     },
     hover(item: DragItem, monitor) {
+      if (!ref.current) {
+        return;
+      }
       const dragIndex = item.index;
       const hoverIndex = index;
       if (dragIndex === hoverIndex) {
         return;
       }
-      //find fix this any
-      const hoverBoundingRect: any =
+      const hoverBoundingRect =
         ref.current && ref.current.getBoundingClientRect();
       const hoverMiddleY =
         hoverBoundingRect &&

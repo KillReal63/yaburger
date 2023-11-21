@@ -74,7 +74,12 @@ const BurgerConstructor = () => {
     drop: (item: Ingredient) => addBun(item),
   }));
 
-  const image = bun.image !== '' ? bun.image : null;
+  const image =
+    bun.image !== ''
+      ? bun.image
+      : 'https://code.s3.yandex.net/react/code/bun-01.png';
+
+  const bunName = bun.name !== '' ? bun.name : 'Выберите булку';
 
   return (
     <>
@@ -86,7 +91,7 @@ const BurgerConstructor = () => {
         <ConstructorElement
           type='top'
           isLocked={true}
-          text={bun.name}
+          text={bunName}
           price={bun.price}
           thumbnail={image as string}
           extraClass={`${styles.bun} ml-6 mb-4`}
@@ -96,13 +101,17 @@ const BurgerConstructor = () => {
           data-id='drop-area'
           className={`${styles.items} ${styles.custom_scroll}`}
         >
-          {ingredients.map((item, index) => (
-            <BurgerConstructorElement
-              ingredient={item}
-              index={index}
-              key={uuidv4()}
-            />
-          ))}
+          {ingredients.length > 0 ? (
+            ingredients.map((item, index) => (
+              <BurgerConstructorElement
+                ingredient={item}
+                index={index}
+                key={uuidv4()}
+              />
+            ))
+          ) : (
+            <div>Добавьте ингредиенты</div>
+          )}
         </div>
         <ConstructorElement
           type='bottom'
