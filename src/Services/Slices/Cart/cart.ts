@@ -43,6 +43,15 @@ const cartSlice = createSlice({
         ingredients: ingredients,
       };
     },
+    resetCart(state, action) {
+      state.ingredients = action.payload;
+      state.bun = {
+        price: 0,
+        id: '',
+        name: '',
+        image: '',
+      };
+    },
   },
 });
 
@@ -51,6 +60,7 @@ export const {
   deleteIngredient,
   toggleBun,
   constructorReorder,
+  resetCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -10,7 +10,11 @@ import OrderDetails from '../OrderDetails/OrderDetails';
 import Modal from '../Modal/Modal';
 import BurgerConstructorElement from '../BurgerConstructorElement/BurgerConstructorElement';
 import { v4 as uuidv4 } from 'uuid';
-import { addIngredient, toggleBun } from '../../Services/Slices/Cart/cart';
+import {
+  addIngredient,
+  resetCart,
+  toggleBun,
+} from '../../Services/Slices/Cart/cart';
 import { increment } from '../../Services/Slices/Counter/counter';
 import { open, close } from '../../Services/Slices/Order/order';
 import { createOrder } from '../../Api/orderApi';
@@ -18,7 +22,7 @@ import { getCookie } from '../../Helpers';
 import { Ingredient } from '../../Shared/Types/Ingredient';
 import { digits_default } from '../../Shared/Typography';
 import { Token } from '../../Shared/Types/Token';
-import { RootState, useAppDispatch } from '../../Shared/Types/Store';
+import { useAppDispatch } from '../../Shared/Types/Store';
 import {
   getBun,
   getIngredients,
@@ -48,6 +52,7 @@ const BurgerConstructor = () => {
     const arr = [bun.id, bun.id, ...ingredientsId];
     dispatch(createOrder({ arr, token } as Props));
     dispatch(open(true));
+    dispatch(resetCart([]));
   };
 
   const addItem = (item: Ingredient) => {
