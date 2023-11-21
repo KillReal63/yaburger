@@ -1,18 +1,14 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import { useSelector } from 'react-redux';
-import {
-  useTransition,
-  useSpringRef,
-  useSpring,
-  animated,
-} from '@react-spring/web';
+import { useTransition, useSpringRef, animated } from '@react-spring/web';
 import { open } from '../../Services/Slices/CurrentIngredient/currentIngredient';
 import IngredientItem from '../IngredientItem/IngredientItem';
 import { Ingredient } from '../../Shared/Types/Ingredient';
 import { text_medium } from '../../Shared/Typography';
 import { RootState, useAppDispatch } from '../../Shared/Types/Store';
-import { type tabRefs } from '../BurgerIngredients/BurgerIngredients'
 import styles from './Ingredients.module.css';
+
+type Refs = Record<string, () => void>;
 
 const categories = [
   { name: 'Булки', slug: 'bun' },
@@ -23,14 +19,15 @@ const categories = [
 const getData = (store: RootState) => store.ingredients.data;
 const getLoading = (store: RootState) => store.ingredients.loading;
 
-const Ingredients = ({ refs }: { refs: tabRefs }) => {
+const Ingredients = ({ refs }: { refs: Refs }) => {
   const dispatch = useAppDispatch();
 
   const data = useSelector(getData);
   const loading = useSelector(getLoading);
 
   const springRef = useSpringRef();
-  const [activeIndex, setActiveIndex] = useState(0);
+
+  let activeIndex = 0;
 
   const setModalItem = (item: Ingredient) => {
     dispatch(open(item));
@@ -59,11 +56,10 @@ const Ingredients = ({ refs }: { refs: tabRefs }) => {
 
   return (
     <div className={`${styles.ingredients} ${styles.custom_scroll}`}>
-      {categories.map(({ name, slug }, index) => {
-        // @ts-ignore
+      {categories.map(({ name, slug }) => {
         const ref = refs[slug];
         return (
-          <section key={index} ref={ref}>
+          <section key={slug} ref={ref}>
             <span className={text_medium}>{name}</span>
             <div className={`${styles.categories} pl-4 pr-4`}>
               {data

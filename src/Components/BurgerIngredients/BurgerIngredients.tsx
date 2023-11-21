@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Ingredients from '../Ingredients/Ingredients';
 import Tabs from '../Tabs/Tabs';
-import { useInView, type IntersectionOptions, InViewHookResponse } from 'react-intersection-observer';
+import { useInView } from 'react-intersection-observer';
 import { text_large } from '../../Shared/Typography';
 import styles from './BurgerIngredients.module.css';
-
-export type tabRefs = {
-  bun: InViewHookResponse[0];
-  main: InViewHookResponse[0];
-  sauce: InViewHookResponse[0];
-}
 
 const BurgerIngredients = () => {
   const [activeTab, setActiveTab] = useState('buns');
@@ -26,7 +20,7 @@ const BurgerIngredients = () => {
     threshold: 0,
   });
 
-  const refs: tabRefs = { bun: bunsRef, sauce: saucesRef, main: mainsRef };
+  const refs = { bun: bunsRef, sauce: saucesRef, main: mainsRef };
 
   useEffect(() => {
     if (inViewBuns) {
@@ -40,9 +34,7 @@ const BurgerIngredients = () => {
 
   return (
     <div className={styles.burger_ingredients}>
-      <div className={`${text_large} mt-10 mb-5`}>
-        Соберите бургер
-      </div>
+      <div className={`${text_large} mt-10 mb-5`}>Соберите бургер</div>
       <Tabs activeTab={activeTab} />
       <Ingredients refs={refs} />
     </div>
