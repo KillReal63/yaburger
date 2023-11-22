@@ -72,10 +72,9 @@ const OrderCard: FC<Data> = ({ ingredients, number, createdAt, name }) => {
               type='secondary'
               size='small'
               extraClass={styles.ingredient}
-              style={{ zIndex: 1 }}
             >
               <p className={digits_medium}>+{items.length - 5}</p>
-              <img src={``} className={styles.img} />
+              <img src={``} className={styles.img} alt='пустая картинка у кнопки' />
             </Button>
           )}
         </div>
