@@ -8,7 +8,6 @@ import { logoutUser } from '../../Api/userApi';
 import { deleteCookie } from '../../Helpers';
 import { text_inactive, text_medium } from '../../Shared/Typography';
 import OrderCard from '../../Components/OrderCard/OrderCard';
-import { getCookie } from '../../Helpers/cookie';
 import { useAppDispatch } from '../../Shared/Types/Store';
 import {
   Data,
@@ -16,11 +15,10 @@ import {
   disconnect,
 } from '../../Services/Slices/Sockets/wsActions';
 import { getMessage } from '../../Services/Slices/Sockets/wsSelectors';
+import { accessToken } from '../../Helpers/tokens';
 import styles from './OrdersHistoryPage.module.css';
 
 export const OrdersHistoryPage = () => {
-  const token = getCookie('accessToken');
-
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -28,8 +26,8 @@ export const OrdersHistoryPage = () => {
   const message = useSelector(getMessage);
 
   useEffect(() => {
-    if (token) {
-      const wsToken = token.replace('Bearer ', '');
+    if (accessToken) {
+      const wsToken = accessToken.replace('Bearer ', '');
       dispatch(connectHistory(wsToken));
     }
     return () => {

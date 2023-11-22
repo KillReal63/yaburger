@@ -27,7 +27,7 @@ interface DragItem {
 
 const BurgerConstructorElement: FC<Props> = ({ ingredient, index }) => {
   const dispatch = useAppDispatch();
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLLIElement>(null);
 
   const [{ handlerId }, drop] = useDrop<
     DragItem,
@@ -89,21 +89,20 @@ const BurgerConstructorElement: FC<Props> = ({ ingredient, index }) => {
   };
 
   return ingredient.type === 'sauce' || ingredient.type === 'main' ? (
-    <div ref={ref}>
-      <li
-        className={`${styles.cart_item} mb-4`}
-        style={{ opacity }}
-        data-handler-id={handlerId}
-      >
-        <DragIcon type='primary' />
-        <ConstructorElement
-          text={ingredient.name}
-          price={ingredient.price}
-          thumbnail={ingredient.image}
-          handleClose={() => deleteItem(ingredient)}
-        />
-      </li>
-    </div>
+    <li
+      className={`${styles.cart_item} mb-4`}
+      style={{ opacity }}
+      data-handler-id={handlerId}
+      ref={ref}
+    >
+      <DragIcon type='primary' />
+      <ConstructorElement
+        text={ingredient.name}
+        price={ingredient.price}
+        thumbnail={ingredient.image}
+        handleClose={() => deleteItem(ingredient)}
+      />
+    </li>
   ) : null;
 };
 

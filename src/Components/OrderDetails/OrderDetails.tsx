@@ -29,9 +29,13 @@ const OrderDetails = () => {
           alt='знак выполнения'
           className={`${styles.order_img} mb-15 mt-15`}
         />
-        <span className={`${text_default} mb-2`}>
-          Ваш заказ начали готовить
-        </span>
+        {orderNumber ? (
+          <span className={`${text_default} mb-2`}>Ваш заказ готов</span>
+        ) : (
+          <span className={`${text_default} mb-2`}>
+            Ваш заказ начали готовить
+          </span>
+        )}
         <span className={`${text_inactive} mb-30`}>
           Дождитесь готовности на орбитальной станции
         </span>
