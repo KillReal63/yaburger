@@ -29,6 +29,7 @@ import {
   getTotalPrice,
 } from '../../Services/Slices/Cart/cartSelectors';
 import { getIsOpen } from '../../Services/Slices/Order/orderSelectors';
+import { accessToken } from '../../Helpers/tokens';
 import styles from './BurgerConstructor.module.css';
 
 type Props = Token & {
@@ -38,7 +39,7 @@ type Props = Token & {
 const BurgerConstructor = () => {
   const dispatch = useAppDispatch();
   const totalPrice = useSelector(getTotalPrice);
-  const token = getCookie('accessToken');
+
   const bun = useSelector(getBun);
   const ingredients = useSelector(getIngredients);
   const isOpen = useSelector(getIsOpen);
@@ -50,7 +51,7 @@ const BurgerConstructor = () => {
 
   const getOrder = () => {
     const arr = [bun.id, bun.id, ...ingredientsId];
-    dispatch(createOrder({ arr, token } as Props));
+    dispatch(createOrder({ arr, accessToken } as Props));
     dispatch(open(true));
     dispatch(resetCart([]));
   };
