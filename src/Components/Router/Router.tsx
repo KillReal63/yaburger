@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import Main from '../Main/Main';
 import Modal from '../Modal/Modal';
@@ -17,7 +16,6 @@ import {
 } from '../../Pages/index';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
-import { RootState } from '../../Shared/Types/Store';
 import {
   defaultPath,
   feedPath,
@@ -39,77 +37,102 @@ const Router = () => {
 
   const onClose = () => navigate(-1);
 
+  const routes = [
+    {
+      name: 'main',
+      path: `${defaultPath}`,
+      element: (
+        <div className={styles.app}>
+          <Main />
+        </div>
+      ),
+    },
+    {
+      name: 'ingredients',
+      path: `/ingredients/:id`,
+      element: <IngredientPage />,
+    },
+    { name: 'feed-element', path: `/feed/:id`, element: <FeedElementPage /> },
+    {
+      name: 'order-element',
+      path: '/profile/orders/:id',
+      element: <OrderElementPage />,
+    },
+    {
+      name: 'login',
+      path: `${loginPath}`,
+      element: <ProtectedRouteElement element={<LoginPage />} />,
+    },
+    {
+      name: 'register',
+      path: `${registerPath}`,
+      element: <ProtectedRouteElement element={<RegisterPage />} />,
+    },
+    {
+      name: 'forgot-password',
+      path: `${forgotPasswordPath}`,
+      element: <ProtectedRouteElement element={<ForgotPasswordPage />} />,
+    },
+    {
+      name: 'reset-password',
+      path: `${resetPasswordPath}`,
+      element: <ProtectedRouteElement element={<ResetPasswordPage />} />,
+    },
+    {
+      name: 'profile',
+      path: `${profilePath}`,
+      element: <ProtectedRouteElement element={<UserPage />} auth />,
+    },
+    { name: 'feed', path: `${feedPath}`, element: <FeedPage /> },
+    {
+      name: 'order-hitstory',
+      path: `${ordersPath}`,
+      element: <ProtectedRouteElement element={<OrdersHistoryPage />} auth />,
+    },
+  ];
+
+  const modalRoutes = [
+    {
+      name: 'ingredients-modal',
+      path: `/ingredients/:id`,
+      element: (
+        <Modal onClose={onClose} title='Детали ингредиента' open>
+          <IngredientDetails />
+        </Modal>
+      ),
+    },
+    {
+      name: 'feed-modal',
+      path: `/feed/:id`,
+      element: (
+        <Modal onClose={onClose} open>
+          <OrderElement />
+        </Modal>
+      ),
+    },
+    {
+      name: 'order-modal',
+      path: `/profile/orders/:id`,
+      element: (
+        <Modal onClose={onClose} open>
+          <OrderElement />
+        </Modal>
+      ),
+    },
+  ];
+
+  const routesComponents = routes.map(({ name, path, element }) => (
+    <Route key={name} path={path} element={element} />
+  ));
+
+  const modalRoutesComponents = modalRoutes.map(({ name, path, element }) => (
+    <Route key={name} path={path} element={element} />
+  ));
+
   return (
     <>
-      <Routes location={background || location}>
-        <Route
-          path={defaultPath}
-          element={
-            <div className={styles.app}>
-              <Main />
-            </div>
-          }
-        />
-        <Route path={`/ingredients/:id`} element={<IngredientPage />} />
-        <Route path={`/feed/:id`} element={<FeedElementPage />} />
-        <Route path={`/profile/orders/:id`} element={<OrderElementPage />} />
-
-        <Route
-          path={loginPath}
-          element={<ProtectedRouteElement element={<LoginPage />} />}
-        />
-        <Route
-          path={registerPath}
-          element={<ProtectedRouteElement element={<RegisterPage />} />}
-        />
-        <Route
-          path={forgotPasswordPath}
-          element={<ProtectedRouteElement element={<ForgotPasswordPage />} />}
-        />
-        <Route
-          path={resetPasswordPath}
-          element={<ProtectedRouteElement element={<ResetPasswordPage />} />}
-        />
-        <Route
-          path={profilePath}
-          element={<ProtectedRouteElement element={<UserPage />} auth />}
-        />
-        <Route path={feedPath} element={<FeedPage />} />
-        <Route
-          path={ordersPath}
-          element={
-            <ProtectedRouteElement element={<OrdersHistoryPage />} auth />
-          }
-        />
-      </Routes>
-      {background && (
-        <Routes>
-          <Route
-            path={`/ingredients/:id`}
-            element={
-              <Modal onClose={onClose} title='Детали ингредиента' open>
-                <IngredientDetails />
-              </Modal>
-            }
-          />
-          <Route
-            path={`/feed/:id`}
-            element={
-              <Modal onClose={onClose} open>
-                <OrderElement />
-              </Modal>
-            }
-          />
-          <Route
-            path={`/profile/orders/:id`}
-            element={
-              <Modal onClose={onClose} open>
-                <OrderElement />
-              </Modal>
-            }
-          />
-        </Routes>
-      )}
+      <Routes location={background || location}>{routesComponents}</Routes>
+      {background && modalRoutesComponents}
     </>
   );
 };
