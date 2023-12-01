@@ -36,12 +36,12 @@ self.__precacheManifest = [
     "url": "/yaburger/static/media/iceland.44e2d48c.woff2"
   },
   {
-    "revision": "df042be2e40babc665f1f8a2d67d0f86",
-    "url": "/yaburger/static/media/iceland.df042be2.woff"
-  },
-  {
     "revision": "896f23850b33cd1df94eb955d4b60079",
     "url": "/yaburger/static/media/JetBrainsMono-Bold.896f2385.woff"
+  },
+  {
+    "revision": "df042be2e40babc665f1f8a2d67d0f86",
+    "url": "/yaburger/static/media/iceland.df042be2.woff"
   },
   {
     "revision": "048e2f890d1a7f6dc613912a6893a244",
