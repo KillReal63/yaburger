@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { redirect } from 'react-router-dom';
 import Main from '../Main/Main';
 import Modal from '../Modal/Modal';
 import {
@@ -88,6 +89,15 @@ const Router = () => {
       name: 'order-hitstory',
       path: `${ordersPath}`,
       element: <ProtectedRouteElement element={<OrdersHistoryPage />} auth />,
+    },
+    {
+      name: 'yaburger-no-page',
+      path: `/yaburger/`,
+      element: (
+        <div className={styles.app}>
+          <Main />
+        </div>
+      ),
     },
   ];
 
