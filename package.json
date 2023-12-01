@@ -2,7 +2,7 @@
   "name": "react-burger",
   "version": "0.1.0",
   "private": true,
-  "homepage": "./",
+  "homepage": "./yaburger/",
   "dependencies": {
     "@4tw/cypress-drag-drop": "^2.2.5",
     "@babel/preset-env": "^7.22.20",
