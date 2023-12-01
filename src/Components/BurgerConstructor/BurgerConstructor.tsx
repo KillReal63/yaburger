@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import {
@@ -45,16 +45,16 @@ const BurgerConstructor = () => {
   const isOpen = useSelector(getIsOpen);
   const isAuth = getCookie('isAuth');
 
-  const ingredientsId = ingredients.map((item) => item.id);
+  const ingredientsId = useMemo(() => ingredients.map((item) => item.id), [ingredients]);
 
-  const onClose = () => dispatch(close(false));
+  const onClose = useCallback(() => dispatch(close(false)), [dispatch]);
 
-  const getOrder = () => {
+  const getOrder = useCallback(() => {
     const arr = [bun.id, bun.id, ...ingredientsId];
     dispatch(createOrder({ arr, accessToken } as Props));
     dispatch(open(true));
     dispatch(resetCart([]));
-  };
+  }, [bun.id, ingredientsId, dispatch, accessToken]);
 
   const addItem = (item: Ingredient) => {
     if (item.type !== 'bun') {

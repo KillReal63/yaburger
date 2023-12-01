@@ -132,7 +132,7 @@ const Router = () => {
   return (
     <>
       <Routes location={background || location}>{routesComponents}</Routes>
-      {background && modalRoutesComponents}
+      {background && <Routes>{modalRoutesComponents}</Routes>}
     </>
   );
 };
