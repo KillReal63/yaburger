@@ -20,7 +20,7 @@ const BurgerIngredients = () => {
     threshold: 0,
   });
 
-  const refs = { bunsRef, saucesRef, mainsRef };
+  const refs = { bun: bunsRef, sauce: saucesRef, main: mainsRef };
 
   useEffect(() => {
     if (inViewBuns) {
@@ -34,9 +34,7 @@ const BurgerIngredients = () => {
 
   return (
     <div className={styles.burger_ingredients}>
-      <div className={`${text_large} mt-10 mb-5`}>
-        Соберите бургер
-      </div>
+      <div className={`${text_large} mt-10 mb-5`}>Соберите бургер</div>
       <Tabs activeTab={activeTab} />
       <Ingredients refs={refs} />
     </div>

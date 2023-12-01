@@ -1,11 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { RootState } from '../../Shared/Types/Store';
 import { text_inactive_medium, text_medium } from '../../Shared/Typography';
+import { getData } from '../../Services/Slices/Ingredients/ingredientsSelectors';
 import styles from './IngredientInfo.module.css';
-
-const getData = (store: RootState) => store.ingredients.data;
 
 export const IngredientPage = () => {
   const { pathname } = useLocation();

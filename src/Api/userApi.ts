@@ -1,11 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getCookie } from '../Helpers/index';
 import { getRefreshToken } from './tokenApi';
 import { User } from '../Shared/Types/User';
 import { NewUser } from '../Shared/Types/NewUser';
 import { LoginUser } from '../Shared/Types/LoginUser';
 import { Token } from '../Shared/Types/Token';
 import { urlAuthPath } from '../Shared/path';
+import {
+  accessToken,
+  refreshToken as oldRefreshToken,
+} from '../Helpers/tokens';
 
 const registerUrl = `${urlAuthPath}/register`;
 const loginUrl = `${urlAuthPath}/login`;
@@ -80,7 +83,6 @@ export const authUser = createAsyncThunk(
       }
       const result = await response.json();
       if (result.message === 'jwt expired') {
-        const oldRefreshToken = getCookie('refreshToken');
         const { refreshToken, accessToken } = await getRefreshToken(
           oldRefreshToken as Token
         );
@@ -101,7 +103,7 @@ export const logoutUser = createAsyncThunk('user/logout-user', async () => {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ token: getCookie('refreshToken') }),
+    body: JSON.stringify({ token: oldRefreshToken }),
   });
   const result = await response.json();
   return result;
@@ -110,18 +112,16 @@ export const logoutUser = createAsyncThunk('user/logout-user', async () => {
 export const updateUser = createAsyncThunk(
   'user/update-user',
   async ({ email, name }: User) => {
-    const token = getCookie('accessToken');
     const response = await fetch(userUrl, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        authorization: token,
+        authorization: accessToken,
       } as Token,
       body: JSON.stringify({ email, name }),
     });
     const result = await response.json();
     if (result.message === 'jwt expired') {
-      const oldRefreshToken = getCookie('refreshToken');
       const { refreshToken, accessToken } = await getRefreshToken(
         oldRefreshToken as Token
       );

@@ -7,16 +7,15 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { loginUser } from '../../Api/userApi';
-import { RootState, useAppDispatch } from '../../Shared/Types/Store';
+import { useAppDispatch } from '../../Shared/Types/Store';
 import {
   registerPath,
   forgotPasswordPath,
   defaultPath,
 } from '../../Shared/path';
 import { text_inactive } from '../../Shared/Typography';
+import { getIsAuth } from '../../Services/Slices/User/userSelectors';
 import styles from './Login.module.css';
-
-const getIsAuth = (store: RootState) => store.user.isAuth;
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');

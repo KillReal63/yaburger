@@ -13,23 +13,20 @@ import {
 } from '../../Shared/Typography';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../Shared/Types/Store';
 import { Ingredient } from '../../Shared/Types/Ingredient';
-import styles from './OrderElement.module.css';
 import { Data } from '../../Services/Slices/Sockets/wsActions';
+import { getData } from '../../Services/Slices/Ingredients/ingredientsSelectors';
+import { getMessage } from '../../Services/Slices/Sockets/wsSelectors';
+import styles from './OrderElement.module.css';
 
 type Props = {
   externalId?: string;
 };
 
-const getIngredients = (store: RootState) => store.ingredients.data;
-
-const getMessage = (store: RootState) => store.ws.message;
-
 const OrderElement: FC<Props> = () => {
   const { id } = useParams();
 
-  const ingredients = useSelector(getIngredients);
+  const ingredients = useSelector(getData);
 
   const message = useSelector(getMessage);
 

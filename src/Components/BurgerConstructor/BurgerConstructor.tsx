@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import {
@@ -10,7 +10,11 @@ import OrderDetails from '../OrderDetails/OrderDetails';
 import Modal from '../Modal/Modal';
 import BurgerConstructorElement from '../BurgerConstructorElement/BurgerConstructorElement';
 import { v4 as uuidv4 } from 'uuid';
-import { addIngredient, toggleBun } from '../../Services/Slices/Cart/cart';
+import {
+  addIngredient,
+  resetCart,
+  toggleBun,
+} from '../../Services/Slices/Cart/cart';
 import { increment } from '../../Services/Slices/Counter/counter';
 import { open, close } from '../../Services/Slices/Order/order';
 import { createOrder } from '../../Api/orderApi';
@@ -18,38 +22,39 @@ import { getCookie } from '../../Helpers';
 import { Ingredient } from '../../Shared/Types/Ingredient';
 import { digits_default } from '../../Shared/Typography';
 import { Token } from '../../Shared/Types/Token';
-import { RootState, useAppDispatch } from '../../Shared/Types/Store';
+import { useAppDispatch } from '../../Shared/Types/Store';
+import {
+  getBun,
+  getIngredients,
+  getTotalPrice,
+} from '../../Services/Slices/Cart/cartSelectors';
+import { getIsOpen } from '../../Services/Slices/Order/orderSelectors';
+import { accessToken } from '../../Helpers/tokens';
 import styles from './BurgerConstructor.module.css';
 
 type Props = Token & {
   arr: string[];
 };
 
-const getTotalPrice = (store: RootState) =>
-  store.cart.ingredients.reduce((acc, item) => acc + item.price, 0);
-const getBun = (store: RootState) => store.cart.bun;
-const getIngredients = (store: RootState) => store.cart.ingredients;
-const getIngredientsId = (store: RootState) =>
-  store.cart.ingredients.map((item) => item.id);
-const getIsOpen = (store: RootState) => store.order.isOpen;
-
 const BurgerConstructor = () => {
   const dispatch = useAppDispatch();
   const totalPrice = useSelector(getTotalPrice);
-  const token = getCookie('accessToken');
+
   const bun = useSelector(getBun);
   const ingredients = useSelector(getIngredients);
-  const ingredientsId = useSelector(getIngredientsId);
   const isOpen = useSelector(getIsOpen);
   const isAuth = getCookie('isAuth');
 
-  const onClose = () => dispatch(close(false));
+  const ingredientsId = useMemo(() => ingredients.map((item) => item.id), [ingredients]);
 
-  const getOrder = () => {
+  const onClose = useCallback(() => dispatch(close(false)), [dispatch]);
+
+  const getOrder = useCallback(() => {
     const arr = [bun.id, bun.id, ...ingredientsId];
-    dispatch(createOrder({ arr, token } as Props));
+    dispatch(createOrder({ arr, accessToken } as Props));
     dispatch(open(true));
-  };
+    dispatch(resetCart([]));
+  }, [bun.id, ingredientsId, dispatch, accessToken]);
 
   const addItem = (item: Ingredient) => {
     if (item.type !== 'bun') {
@@ -74,7 +79,12 @@ const BurgerConstructor = () => {
     drop: (item: Ingredient) => addBun(item),
   }));
 
-  const image = bun.image !== '' ? bun.image : null;
+  const image =
+    bun.image !== ''
+      ? bun.image
+      : 'https://code.s3.yandex.net/react/code/bun-01.png';
+
+  const bunName = bun.name !== '' ? bun.name : 'Выберите булку';
 
   return (
     <>
@@ -86,7 +96,7 @@ const BurgerConstructor = () => {
         <ConstructorElement
           type='top'
           isLocked={true}
-          text={bun.name}
+          text={bunName}
           price={bun.price}
           thumbnail={image as string}
           extraClass={`${styles.bun} ml-6 mb-4`}
@@ -96,13 +106,17 @@ const BurgerConstructor = () => {
           data-id='drop-area'
           className={`${styles.items} ${styles.custom_scroll}`}
         >
-          {ingredients.map((item, index) => (
-            <BurgerConstructorElement
-              ingredient={item}
-              index={index}
-              key={uuidv4()}
-            />
-          ))}
+          {ingredients.length > 0 ? (
+            ingredients.map((item, index) => (
+              <BurgerConstructorElement
+                ingredient={item}
+                index={index}
+                key={uuidv4()}
+              />
+            ))
+          ) : (
+            <div>Добавьте ингредиенты</div>
+          )}
         </div>
         <ConstructorElement
           type='bottom'

@@ -1,18 +1,19 @@
 import React, { useEffect } from 'react';
 import OrderElement from '../../Components/OrderElement/OrderElement';
-import { useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../Shared/Types/Store';
+import {
+  connectHistory,
+  disconnect,
+} from '../../Services/Slices/Sockets/wsActions';
+import { accessToken } from '../../Helpers/tokens';
 import styles from './OrderElementPage.module.css';
-import { getCookie } from '../../Helpers';
-import { connectHistory, disconnect } from '../../Services/Slices/Sockets/wsActions';
 
 export const OrderElementPage = () => {
   const dispatch = useAppDispatch();
-  const token = getCookie('accessToken');
 
   useEffect(() => {
-    if (token) {
-      const wsToken = token.replace('Bearer ', '');
+    if (accessToken) {
+      const wsToken = accessToken.replace('Bearer ', '');
       dispatch(connectHistory(wsToken));
     }
     return () => {

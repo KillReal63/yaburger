@@ -27,6 +27,8 @@
 
 .ingredients {
   display: flex;
+  width: 100%;
+  margin-left: 10px;
 }
 
 .ingredient {
@@ -40,6 +42,7 @@
   border: 2px solid;
   margin-right: 4px;
   margin-left: -20px;
+  z-index: 1;
 }
 
 .img {

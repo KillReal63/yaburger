@@ -1,8 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { urlPath } from '../Shared/path';
 import { Token } from '../Shared/Types/Token';
-import { getCookie } from '../Helpers';
-import { getRefreshToken } from './tokenApi';
 
 type Props = Token & {
   arr: string[];
