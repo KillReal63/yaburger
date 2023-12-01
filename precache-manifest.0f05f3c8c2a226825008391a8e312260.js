@@ -20,12 +20,12 @@ self.__precacheManifest = [
     "url": "/yaburger/static/js/2.dced1248.chunk.js"
   },
   {
-    "revision": "21ba2c11275a07ccf3890fbeab585525",
-    "url": "/yaburger/static/media/JetBrainsMono-Regular.21ba2c11.woff2"
-  },
-  {
     "revision": "2fe9a2bdaa6daf61e770a2edb7252040",
     "url": "/yaburger/static/media/JetBrainsMono-Regular.2fe9a2bd.woff"
+  },
+  {
+    "revision": "21ba2c11275a07ccf3890fbeab585525",
+    "url": "/yaburger/static/media/JetBrainsMono-Regular.21ba2c11.woff2"
   },
   {
     "revision": "a492f7427b1561cc96ace88f5756d94e",
