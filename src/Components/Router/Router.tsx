@@ -89,15 +89,6 @@ const Router = () => {
       path: `${ordersPath}`,
       element: <ProtectedRouteElement element={<OrdersHistoryPage />} auth />,
     },
-    {
-      name: 'yaburger',
-      path: `yaburger/`,
-      element: (
-        <div className={styles.app}>
-          <Main />
-        </div>
-      ),
-    },
   ];
 
   const modalRoutes = [
