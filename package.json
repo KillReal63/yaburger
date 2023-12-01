@@ -64,6 +64,7 @@
     "@4tw/cypress-drag-drop": "^2.2.5",
     "cypress": "^13.3.1",
     "gh-pages": "^6.1.0",
-    "prettier": "2.8.7"
+    "prettier": "2.8.7",
+    "ts-loader": "^9.5.1"
   }
 }
