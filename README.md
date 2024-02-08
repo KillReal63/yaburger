@@ -1,5 +1,3 @@
-https://killreal63.github.io/yaburger/
-
 Проект YaBurger
 
 ![Проект](https://github.com/KillReal63/yaburger/assets/104447337/48cd583f-faba-4e0a-9ea1-a0f8e961f7dc)
@@ -37,5 +35,5 @@ YaBurger - это веб-приложение, которое позволяет
 
 Приложение будет доступно по адресу http://localhost:3000
 
-Демонстрация проекта с помощью GitHub Pages
+Демонстрация проекта с помощью [GitHub Pages](https://killreal63.github.io/yaburger/)
 
